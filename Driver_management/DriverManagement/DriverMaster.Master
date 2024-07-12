@@ -1,0 +1,70 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="DriverMaster.master.cs" Inherits="Driver_management.DriverManagement.DriverMaster" %>
+
+<!DOCTYPE html>
+<html dir="rtl">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.rtl.min.css" />
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="AddressesByMonth.aspx">דף הבית</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ShowMap.aspx">מפה</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="AddressesByCity.aspx">מסלול</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="MyShipments.aspx">הכתובות שלי</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <asp:Label ID="lblUsername" runat="server" CssClass="nav-link"></asp:Label>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+
+            </div>
+        </div>
+    </nav>
+
+    <form id="form1" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="MainCnt" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+    <script src="~/js/bootstrap.min.js"></script>
+    <asp:ContentPlaceHolder ID="FooterCnt" runat="server">
+    </asp:ContentPlaceHolder>
+</body>
+</html>
