@@ -156,6 +156,7 @@
     <Content Include="AdminManager\js\sb-admin-2.js" />
     <Content Include="AdminManager\UserAddEdit.aspx" />
     <Content Include="AdminManager\UserList.aspx" />
+    <Content Include="ClientManagement\ClientHome.aspx" />
     <Content Include="ClientManagement\ClientOrder.aspx" />
     <Content Include="ClientManagement\TrackingOrders.aspx" />
     <Content Include="css\bootstrap-grid.css" />
@@ -270,6 +271,13 @@
     </Compile>
     <Compile Include="AdminManager\ClientsList.aspx.designer.cs">
       <DependentUpon>ClientsList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientManagement\ClientHome.aspx.cs">
+      <DependentUpon>ClientHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientManagement\ClientHome.aspx.designer.cs">
+      <DependentUpon>ClientHome.aspx</DependentUpon>
     </Compile>
     <Compile Include="ClientManagement\ClientMaster.Master.cs">
       <DependentUpon>ClientMaster.Master</DependentUpon>
