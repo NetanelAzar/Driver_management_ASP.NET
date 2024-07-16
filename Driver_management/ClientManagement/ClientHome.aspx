@@ -21,6 +21,46 @@
             text-align: center;
             margin-bottom: 30px;
         }
+        .chat-panel {
+            position: fixed;
+            bottom: 0;
+            right: 20px;
+            width: 300px;
+            z-index: 1000;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 15px 15px 0 0;
+            display: none;
+        }
+        .chat-panel .panel-heading {
+            border-radius: 15px 15px 0 0;
+            background: linear-gradient(to right, #007bff, #6610f2);
+            color: white;
+            padding: 10px 15px;
+        }
+        .chat-panel .panel-body {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+        }
+        .chat-panel .chat {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .chat-panel .chat li {
+            margin-bottom: 10px;
+        }
+        .chat-panel .chat li .chat-img {
+            width: 50px;
+            height: 50px;
+        }
+        .chat-panel .chat li .chat-body {
+            margin-left: 60px;
+        }
+        .panel-footer {
+            padding: 10px 15px;
+        }
     </style>
 </asp:Content>
 
@@ -90,10 +130,86 @@
                     </div>
                     <div class="card-body p-4">
                         <p>יש לך שאלה או בעיה? צור איתנו קשר:</p>
-                        <a href="ContactUs.aspx" class="btn btn-warning btn-custom">צור קשר</a>
+                         <button id="btnOpenChat" class="btn btn-warning btn-custom" type="button">צור קשר</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- חלון הצ'אט -->
+    <div id="chatWindow" class="chat-panel panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-comments fa-fw"></i> צ'אט
+            <button type="button" class="btn btn-default btn-xs pull-left" id="btnCloseChat">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+        <div class="panel-body">
+            <ul class="chat" id="chatMessages">
+                <li class="left clearfix">
+                    <span class="chat-img pull-left">
+                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+                    </span>
+                    <div class="chat-body clearfix">
+                        <div class="header">
+                            <strong class="primary-font"> <asp:Label ID="lblUsername" runat="server" CssClass="nav-link"></asp:Label></strong>
+                            <small class="pull-right text-muted">
+                                <asp:Label ID="lblLastLogin" runat="server" CssClass="text-muted"></asp:Label>
+
+                            </small>
+                        </div>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="panel-footer">
+            <div class="input-group">
+                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                <span class="input-group-btn">
+                    <button class="btn btn-warning btn-sm" id="btn-chat" type="button">שלח</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</asp:Content>
+
+<asp:Content ID="underFooter" ContentPlaceHolderID="underFooter" runat="server">
+    <script>
+        window.onload = function () {
+            document.getElementById('btnOpenChat').addEventListener('click', function () {
+                document.getElementById('chatWindow').style.display = 'block';
+            });
+
+            document.getElementById('btnCloseChat').addEventListener('click', function () {
+                document.getElementById('chatWindow').style.display = 'none';
+            });
+
+            document.getElementById('btn-chat').addEventListener('click', function () {
+                var message = document.getElementById('btn-input').value;
+                var chatMessages = document.getElementById('chatMessages');
+                var newMessage = document.createElement('li');
+                newMessage.classList.add('right', 'clearfix');
+                newMessage.innerHTML = `
+                    <span class="chat-img pull-right">
+                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+                    </span>
+                    <div class="chat-body clearfix">
+                        <div class="header">
+                            <strong class="primary-font pull-right">אתה</strong>
+                            <small class="pull-left text-muted">
+                                <i class="fa fa-clock-o fa-fw"></i> עכשיו
+                            </small>
+                        </div>
+                        <p>${message}</p>
+                    </div>`;
+                chatMessages.appendChild(newMessage);
+                document.getElementById('btn-input').value = '';
+                // הוסף קוד לשליחת ההודעה לשרת
+            });
+        }
+    </script>
 </asp:Content>

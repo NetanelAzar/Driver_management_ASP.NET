@@ -22,11 +22,11 @@ namespace Driver_management.ClientManagement
 			{
 				if (Session["Login"] is Drivers loggedInDriver)
 				{
-					lblUsername.Text = "Welcome, " + loggedInDriver.DriverName;
+					lblUsername.Text =  loggedInDriver.DriverName;
 				}
 				else if (Session["Login"] is Client loggedInClient)
 				{
-					lblUsername.Text = "Welcome, " + loggedInClient.ClientName;
+					lblUsername.Text = loggedInClient.ClientName;
 				}
 			}
 		}

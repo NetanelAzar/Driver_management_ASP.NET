@@ -16,6 +16,18 @@ namespace Driver_management.ClientManagement
 				LoadOrders();
 				BindNews();
 			}
+
+			if (Session["Login"] is Client loggedInClient)
+			{
+				lblUsername.Text = loggedInClient.ClientName;
+
+				// Calculate time since last login
+				DateTime lastLoginTime = loggedInClient.LastLoginTime;
+				TimeSpan timeSinceLogin = DateTime.Now - lastLoginTime;
+
+				// Update the UI with the time since last login
+				lblLastLogin.Text = $"{timeSinceLogin.TotalMinutes:N0} minutes ago";
+			}
 		}
 
 
