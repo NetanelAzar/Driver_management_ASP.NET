@@ -249,6 +249,7 @@
     <Compile Include="App_Code\BLL\Drivers.cs" />
     <Compile Include="App_Code\BLL\GlobFunk.cs" />
     <Compile Include="App_Code\BLL\Manager.cs" />
+    <Compile Include="App_Code\BLL\News.cs" />
     <Compile Include="App_Code\BLL\Shipment.cs" />
     <Compile Include="App_Code\BLL\Zone.cs" />
     <Compile Include="App_Code\DAL\CityDAL.cs" />

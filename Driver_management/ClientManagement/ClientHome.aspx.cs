@@ -2,6 +2,7 @@
 using DAL;
 using System;
 using System.Collections.Generic;
+using System.Linq; // הוספת LINQ לסינון ההזמנות
 using System.Web.UI;
 
 namespace Driver_management.ClientManagement
@@ -13,8 +14,19 @@ namespace Driver_management.ClientManagement
 			if (!IsPostBack)
 			{
 				LoadOrders();
+				BindNews();
 			}
 		}
+
+
+
+		private void BindNews()
+		{
+			List<News> newsList = News.GetAll();
+			rptNews.DataSource = newsList;
+			rptNews.DataBind();
+		}
+
 
 		private void LoadOrders()
 		{
@@ -31,8 +43,11 @@ namespace Driver_management.ClientManagement
 			// Fetch orders for the logged-in client
 			List<Shipment> orders = BLL.Shipment.GetShipmentsByCustomerId(loggedInClient.ClientID);
 
+			// Filter out orders with status "נמסר"
+			var filteredOrders = orders.Where(order => order.ShippingStatus != "נמסר").ToList();
+
 			// Bind orders to Repeater
-			RptOrders.DataSource = orders;
+			RptOrders.DataSource = filteredOrders;
 			RptOrders.DataBind();
 		}
 

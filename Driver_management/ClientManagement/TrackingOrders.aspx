@@ -6,13 +6,12 @@
     <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <style>
         /* Custom styles for right-to-left layout */
-
         .page-header {
             margin-top: 20px;
             margin-bottom: 20px;
             text-align: right;
         }
-        .panel-heading {
+        .card-header {
             font-size: 18px;
             font-weight: bold;
             text-align: right;

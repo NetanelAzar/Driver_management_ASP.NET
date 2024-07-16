@@ -24,6 +24,7 @@ namespace DAL
 					DriverCode = dr["DriverCode"].ToString(),
 					Address = dr["Address"].ToString(),
 					CityCode = Convert.ToInt32(dr["CityCode"]),
+					zoneID=dr["zoneID"].ToString(),
 					DriverMail = dr["DriverMail"].ToString(),
 					DriverPassword = dr["DriverPassword"].ToString(),
 					DriverPhone = dr["DriverPhone"].ToString(),
@@ -57,6 +58,7 @@ namespace DAL
 					DriverName = dr["DriverName"].ToString(),
 					Address = dr["Address"].ToString(),
 					CityCode = Convert.ToInt32(dr["CityCode"]),
+					zoneID = dr["zoneID"].ToString(),
 					DriverMail = dr["DriverMail"].ToString(),
 					DriverPassword = dr["DriverPassword"].ToString(),
 					DriverPhone = dr["DriverPhone"].ToString(),
@@ -78,8 +80,8 @@ namespace DAL
 
 			if (driver.DriverID < 0)
 			{
-				Sql = $"INSERT INTO Drivers (DriverCode, DriverName, Address, CityCode, DriverMail, DriverPassword, Picname, Status, MaxDeliveries) " +
-					  $"VALUES ('{driver.DriverCode}', '{driver.DriverName}', '{driver.Address}', {driver.CityCode}, '{driver.DriverMail}', '{driver.DriverPassword}', '{driver.Picname}', {driver.Status}, {driver.MaxDeliveries})";
+				Sql = $"INSERT INTO Drivers (DriverCode, DriverName, Address, CityCode,zoneID ,DriverMail, DriverPassword, Picname, Status, MaxDeliveries) " +
+					  $"VALUES ('{driver.DriverCode}', '{driver.DriverName}', '{driver.Address}', {driver.CityCode},'{driver.zoneID}', '{driver.DriverMail}', '{driver.DriverPassword}', '{driver.Picname}', {driver.Status}, {driver.MaxDeliveries})";
 			}
 			else
 			{
@@ -88,6 +90,7 @@ namespace DAL
 					  $"DriverName = '{driver.DriverName}', " +
 					  $"Address = '{driver.Address}', " +
 					  $"CityCode = {driver.CityCode}, " +
+					  $"ZoneID = { driver.zoneID }, " +
 					  $"DriverMail = '{driver.DriverMail}', " +
 					  $"DriverPassword = '{driver.DriverPassword}', " +
 					  $"Picname = '{driver.Picname}', " +

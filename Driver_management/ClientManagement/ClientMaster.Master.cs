@@ -11,7 +11,9 @@ namespace Driver_management.ClientManagement
 	public partial class ClientMaster : System.Web.UI.MasterPage
 	{
 		protected void Page_Load(object sender, EventArgs e)
+
 		{
+
 			if (Session["Login"] == null && !Page.AppRelativeVirtualPath.Equals("~/LoginRegister.aspx", StringComparison.OrdinalIgnoreCase))
 			{
 				Response.Redirect("~/LoginRegister.aspx");
@@ -28,5 +30,7 @@ namespace Driver_management.ClientManagement
 				}
 			}
 		}
+
+
 	}
 }
