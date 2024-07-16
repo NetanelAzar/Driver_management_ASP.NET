@@ -70,7 +70,7 @@ namespace Driver_management.User_Controls
 					if (client.ClientMail.Equals(Email, StringComparison.OrdinalIgnoreCase) && client.ClientPassword == Password)
 					{
 						Session["Login"] = client;
-						Response.Redirect("~/ClientManagement/TrackingOrders.aspx"); // דף הלקוחות
+						Response.Redirect("~/ClientManagement/ClientHome.aspx"); // דף הלקוחות
 						isValidUser = true;
 						break;
 					}
