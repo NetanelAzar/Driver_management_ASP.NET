@@ -87,6 +87,24 @@ namespace Driver_management.ClientManagement
 		protected global::System.Web.UI.WebControls.DropDownList DdlCityDestination;
 
 		/// <summary>
+		/// LblTotalAmount control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.Label LblTotalAmount;
+
+		/// <summary>
+		/// LblTotalAmountValue control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.Label LblTotalAmountValue;
+
+		/// <summary>
 		/// BtnSubmit control.
 		/// </summary>
 		/// <remarks>

@@ -36,7 +36,7 @@
                         </div>
                         <div class="form-group">
                             <asp:Label ID="LblNumberOfPackages" runat="server" AssociatedControlID="TxtNumberOfPackages" Text="מספר חבילות:" CssClass="font-weight-bold"></asp:Label>
-                            <asp:TextBox ID="TxtNumberOfPackages" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:TextBox ID="TxtNumberOfPackages" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="TxtNumberOfPackages_TextChanged"></asp:TextBox>
                         </div>
                         <div class="form-group">
                             <asp:Label ID="LblOrderDate" runat="server" AssociatedControlID="TxtOrderDate" Text="תאריך הזמנה:" CssClass="font-weight-bold"></asp:Label>
@@ -46,7 +46,12 @@
                             <asp:Label ID="LblCityDestination" runat="server" AssociatedControlID="DdlCityDestination" Text="עיר יעד:" CssClass="font-weight-bold"></asp:Label>
                             <asp:DropDownList ID="DdlCityDestination" runat="server" CssClass="form-control">
                                 <asp:ListItem Text="בחר עיר..." Value=""></asp:ListItem>
+                                <%-- Add city options here --%>
                             </asp:DropDownList>
+                        </div>
+                        <div class="form-group">
+                            <asp:Label ID="LblTotalAmount" runat="server" Text="סכום לתשלום: " CssClass="font-weight-bold"></asp:Label>
+                            <asp:Label ID="LblTotalAmountValue" runat="server" Text="0" CssClass="font-weight-bold"></asp:Label>
                         </div>
                         <div class="form-group text-center">
                             <asp:Button ID="BtnSubmit" runat="server" Text="שלח" OnClick="BtnSubmit_Click" CssClass="btn btn-modern btn-lg text-white" />
@@ -57,4 +62,3 @@
         </div>
     </div>
 </asp:Content>
-<%--  --%>
