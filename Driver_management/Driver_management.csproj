@@ -190,6 +190,7 @@
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\bootstrap.rtl.css" />
     <Content Include="css\bootstrap.rtl.min.css" />
+    <Content Include="DriverManagement\DriverHome.aspx" />
     <Content Include="DriverManagement\ShowMap.aspx" />
     <Content Include="LoginRegister.aspx" />
     <Content Include="DriverManagement\MyShipments.aspx" />
@@ -322,6 +323,13 @@
     </Compile>
     <Compile Include="ClientManagement\TrackingOrders.aspx.designer.cs">
       <DependentUpon>TrackingOrders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DriverManagement\DriverHome.aspx.cs">
+      <DependentUpon>DriverHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverManagement\DriverHome.aspx.designer.cs">
+      <DependentUpon>DriverHome.aspx</DependentUpon>
     </Compile>
     <Compile Include="DriverManagement\DriverMaster.Master.cs">
       <DependentUpon>DriverMaster.Master</DependentUpon>

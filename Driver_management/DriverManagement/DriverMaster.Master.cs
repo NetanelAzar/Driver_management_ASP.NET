@@ -12,17 +12,19 @@ namespace Driver_management.DriverManagement
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-
 			if (Session["Login"] == null && !Page.AppRelativeVirtualPath.Equals("~/LoginRegister.aspx", StringComparison.OrdinalIgnoreCase))
 			{
 				Response.Redirect("~/LoginRegister.aspx");
 			}
 			else if (Session["Login"] != null)
 			{
-				Drivers loggedInUser = Session["Login"] as Drivers;
-				if (loggedInUser != null)
+				if (Session["Login"] is Drivers loggedInDriver)
 				{
-					lblUsername.Text = "Welcome, " + loggedInUser.DriverName;
+					lblUsername.Text = loggedInDriver.DriverName;
+				}
+				else if (Session["Login"] is Client loggedInClient)
+				{
+					lblUsername.Text = loggedInClient.ClientName;
 				}
 			}
 		}
