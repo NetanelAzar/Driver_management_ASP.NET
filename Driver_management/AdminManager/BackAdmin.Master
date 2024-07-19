@@ -286,7 +286,7 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="Default.aspx"><i class="fa fa-dashboard fa-fw"></i> ראשי</a>
+                            <a href="AdminHomePage.aspx"><i class="fa fa-dashboard fa-fw"></i> ראשי</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-tag"></i> משלוחים<span class="fa arrow"></span></a>

@@ -126,6 +126,7 @@
     <Content Include="AdminManager\AddressAddEdit.aspx" />
     <Content Include="AdminManager\AddressList.aspx" />
     <Content Include="AdminManager\AddressUserList.aspx" />
+    <Content Include="AdminManager\AdminHomePage.aspx" />
     <Content Include="AdminManager\CitiesList.aspx" />
     <Content Include="AdminManager\ClientsAddEdit.aspx" />
     <Content Include="AdminManager\ClientsList.aspx" />
@@ -231,6 +232,13 @@
     </Compile>
     <Compile Include="AdminManager\AddressUserList.aspx.designer.cs">
       <DependentUpon>AddressUserList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminManager\AdminHomePage.aspx.cs">
+      <DependentUpon>AdminHomePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminManager\AdminHomePage.aspx.designer.cs">
+      <DependentUpon>AdminHomePage.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminManager\CitiesList.aspx.cs">
       <DependentUpon>CitiesList.aspx</DependentUpon>
