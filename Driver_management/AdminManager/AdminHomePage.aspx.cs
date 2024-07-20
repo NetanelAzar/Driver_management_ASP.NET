@@ -1,5 +1,8 @@
-﻿using System;
+﻿using DATA;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 
 namespace Driver_management.AdminManager
@@ -19,8 +22,47 @@ namespace Driver_management.AdminManager
 
 				// Update label with active users count
 				lblActiveUsersCount.Text = GetActiveUsersCount().ToString();
+				LoadMonthlyShipments();
 			}
 		}
+		private void LoadMonthlyShipments()
+		{
+			DbContext Db = new DbContext();
+			int currentYear = DateTime.Now.Year;
+
+			string Sql = $@"SELECT MONTH(OrderDate) AS Month, COUNT(*) AS ShipmentCount 
+                    FROM Shipments 
+                    WHERE YEAR(OrderDate) = {currentYear} 
+                    GROUP BY MONTH(OrderDate) 
+                    ORDER BY MONTH(OrderDate)";
+
+			DataTable Dt = Db.Execute(Sql);
+
+			List<int> months = new List<int>();
+			List<int> shipmentCounts = new List<int>();
+
+			foreach (DataRow row in Dt.Rows)
+			{
+				int month = Convert.ToInt32(row["Month"]);
+				int count = Convert.ToInt32(row["ShipmentCount"]);
+
+				// עבור כל חודש, הדפס את הנתונים למעקב
+				Console.WriteLine($"Month: {month}, ShipmentCount: {count}");
+
+				months.Add(month);
+				shipmentCounts.Add(count);
+			}
+
+			JavaScriptSerializer serializer = new JavaScriptSerializer();
+			string monthsJson = serializer.Serialize(months);
+			string shipmentCountsJson = serializer.Serialize(shipmentCounts);
+
+			ClientScript.RegisterStartupScript(this.GetType(), "loadChart",
+				$"window.onload = function() {{ loadChart({monthsJson}, {shipmentCountsJson}); }};",
+				true);
+		}
+
+
 
 		public void UserLogin(string username)
 		{
