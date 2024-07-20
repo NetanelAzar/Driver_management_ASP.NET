@@ -37,11 +37,9 @@ namespace Driver_management.User_Controls
 			string Email = TxtEmail.Text;
 			string Password = TxtPassword.Text;
 
-			// בדיקת משתמשים מתוך רשימת הנהגים והלקוחות
 			List<Drivers> LstDrivers = Application["Drivers"] as List<Drivers>;
 			List<Client> LstClients = Application["Clients"] as List<Client>;
 
-			// בדיקה אם הרשימות לא ריקות ולא מוגדרות
 			bool isValidUser = false;
 
 			if (LstDrivers != null)
@@ -51,6 +49,7 @@ namespace Driver_management.User_Controls
 					if (driver.DriverMail.Equals(Email, StringComparison.OrdinalIgnoreCase) && driver.DriverPassword == Password)
 					{
 						Session["Login"] = driver;
+						AddLoginNotification($"{driver.DriverName} התחבר כמנהל נהגים");
 						Response.Redirect("~/DriverManagement/MyShipments.aspx");
 						isValidUser = true;
 						break;
@@ -70,6 +69,7 @@ namespace Driver_management.User_Controls
 					if (client.ClientMail.Equals(Email, StringComparison.OrdinalIgnoreCase) && client.ClientPassword == Password)
 					{
 						Session["Login"] = client;
+						AddLoginNotification($"{client.ClientName} התחבר כלקוח");
 						Response.Redirect("~/ClientManagement/ClientHome.aspx"); // דף הלקוחות
 						isValidUser = true;
 						break;
@@ -88,16 +88,26 @@ namespace Driver_management.User_Controls
 			}
 		}
 
-
-		protected void LinkToRegister_Click(object sender, EventArgs e)
+		private void AddLoginNotification(string message)
 		{
-			// Switch to registration view
-			MultiView1.ActiveViewIndex = 1;
+			var notifications = Session["LoginNotifications"] as List<string> ?? new List<string>();
+
+			string time = DateTime.Now.ToString("HH:mm:ss");
+			notifications.Add($"{message} - {time}");
+
+			// Keep only the last 10 notifications
+			if (notifications.Count > 10)
+			{
+				notifications.RemoveAt(0);
+			}
+
+			Session["LoginNotifications"] = notifications;
 		}
+
+
 
 		protected void BtnRegister_Click(object sender, EventArgs e)
 		{
-			// Implement registration logic here
 			List<Client> clients = (List<Client>)Application["Clients"] ?? new List<Client>();
 
 			Client newClient = new Client
@@ -128,15 +138,30 @@ namespace Driver_management.User_Controls
 				Application["Clients"] = clients;
 				Session["Login"] = newClient;
 				LtlRegMsg.Text = "הרשמה מוצלחת!";
-				// Redirect or perform further actions upon successful registration
 				Response.Redirect("ProductsList.aspx");
 			}
 		}
 
+
+		private void AddActiveUser(string username)
+		{
+			var activeUsers = Application["ActiveUsers"] as List<string> ?? new List<string>();
+			if (!activeUsers.Contains(username))
+			{
+				activeUsers.Add(username);
+				Application["ActiveUsers"] = activeUsers;
+			}
+		}
+
+		protected void LinkToRegister_Click(object sender, EventArgs e)
+		{
+			MultiView1.ActiveViewIndex = 1;
+		}
+
 		protected void LinkToLogin_Click(object sender, EventArgs e)
 		{
-			// Switch to login view
 			MultiView1.ActiveViewIndex = 0;
 		}
+
 	}
 }

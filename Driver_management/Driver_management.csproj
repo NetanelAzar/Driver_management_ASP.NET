@@ -169,6 +169,7 @@
     <Content Include="AdminManager\js\morris\morris.min.js" />
     <Content Include="AdminManager\js\raphael\raphael.min.js" />
     <Content Include="AdminManager\js\sb-admin-2.js" />
+    <Content Include="AdminManager\js\ShipmentsChart.js" />
     <Content Include="AdminManager\UserAddEdit.aspx" />
     <Content Include="AdminManager\UserList.aspx" />
     <Content Include="ClientManagement\ClientHome.aspx" />

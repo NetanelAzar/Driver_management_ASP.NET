@@ -137,6 +137,12 @@
         </div>
     </div>
 
+
+
+
+
+
+
     <!-- חלון הצ'אט -->
     <div id="chatWindow" class="chat-panel panel panel-default">
         <div class="panel-heading">
@@ -176,7 +182,9 @@
         </div>
     </div>
 </asp:Content>
+<asp:Content ID="Footer" ContentPlaceHolderID="Footer" runat="server">
 
+</asp:Content>
 <asp:Content ID="underFooter" ContentPlaceHolderID="underFooter" runat="server">
     <script>
         window.onload = function () {
@@ -208,7 +216,7 @@
                     </div>`;
                 chatMessages.appendChild(newMessage);
                 document.getElementById('btn-input').value = '';
-                // הוסף קוד לשליחת ההודעה לשרת
+                
             });
         }
     </script>

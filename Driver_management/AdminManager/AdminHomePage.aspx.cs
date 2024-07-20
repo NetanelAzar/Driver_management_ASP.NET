@@ -23,6 +23,7 @@ namespace Driver_management.AdminManager
 				// Update label with active users count
 				lblActiveUsersCount.Text = GetActiveUsersCount().ToString();
 				LoadMonthlyShipments();
+				LoadNotifications();
 			}
 		}
 		private void LoadMonthlyShipments()
@@ -98,8 +99,17 @@ namespace Driver_management.AdminManager
 
 		public int GetActiveUsersCount()
 		{
-			var loggedInUsers = Session["Login"] as List<string>;
-			return loggedInUsers != null ? loggedInUsers.Count : 0;
+			var activeUsers = Application["ActiveUsers"] as List<string>;
+			return activeUsers != null ? activeUsers.Count : 0;
+		}
+
+
+		private void LoadNotifications()
+		{
+			var notifications = Session["LoginNotifications"] as List<string> ?? new List<string>();
+
+			rptNotifications.DataSource = notifications;
+			rptNotifications.DataBind();
 		}
 	}
 }

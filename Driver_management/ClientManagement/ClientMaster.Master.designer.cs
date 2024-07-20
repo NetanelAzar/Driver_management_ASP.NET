@@ -51,6 +51,15 @@ namespace Driver_management.ClientManagement
 		protected global::System.Web.UI.WebControls.ContentPlaceHolder MainCnt;
 
 		/// <summary>
+		/// Footer control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.ContentPlaceHolder Footer;
+
+		/// <summary>
 		/// underFooter control.
 		/// </summary>
 		/// <remarks>

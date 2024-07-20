@@ -61,7 +61,11 @@
             <asp:ContentPlaceHolder ID="MainCnt" runat="server">
             </asp:ContentPlaceHolder>
         </div>
-        
+         <asp:ContentPlaceHolder ID="Footer" runat="server">
+
+
+             </asp:ContentPlaceHolder>
+
         <asp:ContentPlaceHolder ID="underFooter" runat="server">
             <script>
     $(document).ready(function () {
