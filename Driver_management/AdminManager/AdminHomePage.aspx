@@ -10,16 +10,16 @@
         <!-- /.col-lg-12 -->
     </div>
     <div class="row">
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-primary">
+          <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-4">
-                            <i class="fa fa-comments fa-5x"></i>
+                            <i class="fa fa-tasks fa-5x"></i>
                         </div>
                         <div class="col-xs-8 text-right">
-                            <div class="huge">26</div>
-                            <div>New Comments!</div>
+                            <div class="huge"><asp:Label ID="lblActiveUsersCount" runat="server"></asp:Label></div>
+                            <div>לקוחות מחוברים</div>
                         </div>
                     </div>
                 </div>
