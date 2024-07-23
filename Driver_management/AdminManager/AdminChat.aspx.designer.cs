@@ -33,6 +33,24 @@ namespace Driver_management.AdminManager
 		protected global::System.Web.UI.WebControls.Repeater rptMessages;
 
 		/// <summary>
+		/// txtNewMessage control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.TextBox txtNewMessage;
+
+		/// <summary>
+		/// btnSendMessage control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.Button btnSendMessage;
+
+		/// <summary>
 		/// hfSelectedCustomerID control.
 		/// </summary>
 		/// <remarks>

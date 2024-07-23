@@ -38,11 +38,11 @@ namespace Driver_management.AdminManager
 			try
 			{
 				string sql = @"
-            SELECT c.ClientID, c.ClientName
-            FROM Client c
-            INNER JOIN CustomerMessages cm ON c.ClientID = cm.CustomerID
-            GROUP BY c.ClientID, c.ClientName
-        ";
+                    SELECT c.ClientID, c.ClientName
+                    FROM Client c
+                    INNER JOIN CustomerMessages cm ON c.ClientID = cm.CustomerID
+                    GROUP BY c.ClientID, c.ClientName
+                ";
 
 				DataTable dt = db.Execute(sql);
 
@@ -70,51 +70,49 @@ namespace Driver_management.AdminManager
 			rptCustomers.DataBind();
 		}
 
-
 		private void LoadMessages(int customerId)
-{
-    List<CustomerMessage> messages = new List<CustomerMessage>();
-    DbContext db = new DbContext();
+		{
+			List<CustomerMessage> messages = new List<CustomerMessage>();
+			DbContext db = new DbContext();
 
-    try
-    {
-        string sql = "SELECT * FROM CustomerMessages WHERE CustomerID = @CustomerID ORDER BY SentDate";
-        using (SqlCommand cmd = new SqlCommand(sql, db.Conn))
-        {
-            cmd.Parameters.AddWithValue("@CustomerID", customerId);
+			try
+			{
+				string sql = "SELECT * FROM CustomerMessages WHERE CustomerID = @CustomerID ORDER BY SentDate";
+				using (SqlCommand cmd = new SqlCommand(sql, db.Conn))
+				{
+					cmd.Parameters.AddWithValue("@CustomerID", customerId);
 
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
+					SqlDataAdapter da = new SqlDataAdapter(cmd);
+					DataTable dt = new DataTable();
+					da.Fill(dt);
 
-            foreach (DataRow row in dt.Rows)
-            {
-                CustomerMessage message = new CustomerMessage
-                {
-                    MessageID = Convert.ToInt32(row["MessageID"]),
-                    CustomerID = Convert.ToInt32(row["CustomerID"]),
-                    MessageText = row["MessageText"].ToString(),
-                    SentDate = Convert.ToDateTime(row["SentDate"]),
-                    IsFromCustomer = Convert.ToBoolean(row["IsFromCustomer"])
-                };
+					foreach (DataRow row in dt.Rows)
+					{
+						CustomerMessage message = new CustomerMessage
+						{
+							MessageID = Convert.ToInt32(row["MessageID"]),
+							CustomerID = Convert.ToInt32(row["CustomerID"]),
+							MessageText = row["MessageText"].ToString(),
+							SentDate = Convert.ToDateTime(row["SentDate"]),
+							IsFromCustomer = Convert.ToBoolean(row["IsFromCustomer"])
+						};
 
-                messages.Add(message);
-            }
-        }
-    }
-    catch (Exception ex)
-    {
-        System.Diagnostics.Debug.WriteLine("Error loading messages: " + ex.Message);
-    }
-    finally
-    {
-        db.Close(); // Ensure connection is closed
-    }
+						messages.Add(message);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine("Error loading messages: " + ex.Message);
+			}
+			finally
+			{
+				db.Close(); // Ensure connection is closed
+			}
 
-    rptMessages.DataSource = messages;
-    rptMessages.DataBind();
-}
-
+			rptMessages.DataSource = messages;
+			rptMessages.DataBind();
+		}
 
 		protected void btnPostBack_Click(object sender, EventArgs e)
 		{
@@ -126,6 +124,44 @@ namespace Driver_management.AdminManager
 				if (int.TryParse(selectedCustomerID, out int customerId))
 				{
 					LoadMessages(customerId);
+				}
+			}
+		}
+
+		protected void btnSendMessage_Click(object sender, EventArgs e)
+		{
+			string selectedCustomerID = hfSelectedCustomerID.Value;
+			string newMessageText = txtNewMessage.Text;
+
+			if (!string.IsNullOrEmpty(selectedCustomerID) && !string.IsNullOrEmpty(newMessageText))
+			{
+				if (int.TryParse(selectedCustomerID, out int customerId))
+				{
+					DbContext db = new DbContext();
+					try
+					{
+						string sql = "INSERT INTO CustomerMessages (CustomerID, MessageText, SentDate, IsFromCustomer) VALUES (@CustomerID, @MessageText, @SentDate, 0)";
+						using (SqlCommand cmd = new SqlCommand(sql, db.Conn))
+						{
+							cmd.Parameters.AddWithValue("@CustomerID", customerId);
+							cmd.Parameters.AddWithValue("@MessageText", newMessageText);
+							cmd.Parameters.AddWithValue("@SentDate", DateTime.Now);
+
+							cmd.ExecuteNonQuery();
+						}
+
+						// Optionally, reload messages after sending
+						LoadMessages(customerId);
+						txtNewMessage.Text = ""; // Clear the text box
+					}
+					catch (Exception ex)
+					{
+						System.Diagnostics.Debug.WriteLine("Error sending message: " + ex.Message);
+					}
+					finally
+					{
+						db.Close(); // Ensure connection is closed
+					}
 				}
 			}
 		}
