@@ -60,6 +60,7 @@
                                     <th>תאריך משלוח</th>
                                     <th>תאריך מסירה</th>                                    
                                     <th>סטטוס משלוח</th> <!-- שדה חדש -->
+                                    <th>תשלום</th>
                                     <th>ניהול</th> <!-- פעולות חדשות -->
                                 </tr>
                             </thead>
@@ -82,6 +83,7 @@
                                             <td><%# FormatDate(Eval("ShipmentDate")) %></td>
                                             <td><%# FormatDate(Eval("DeliveryDate")) %></td>
                                             <td><%# Eval("ShippingStatus") %></td>
+                                            <td><%# Eval("Payment") %></td>
                                             <!-- Binding to new field -->
                                             <td class="center">
                                                 <a href="AddressAddEdit.aspx?ShipmentID=<%# Eval("ShipmentID") %>">ערוך <span class="fa fa-pencil" /></a> |

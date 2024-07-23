@@ -99,7 +99,7 @@ namespace Driver_management.AdminManager
 
 		public int GetActiveUsersCount()
 		{
-			var activeUsers = Application["ActiveUsers"] as List<string>;
+			var activeUsers = Application["Login"] as List<string>;
 			return activeUsers != null ? activeUsers.Count : 0;
 		}
 

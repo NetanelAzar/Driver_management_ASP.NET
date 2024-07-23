@@ -23,6 +23,7 @@ namespace BLL
 		public string ShippingStatus { get; set; } // New field
 		public DateTime OrderDate { get; set; }    // New field
 		public int OrderNumber { get; set; }  // New property for order number
+		public int Payment {  get; set; }
 
 		public static List<Shipment> GetAll()
 		{
@@ -115,7 +116,8 @@ namespace BLL
 					DriverID = row["DriverID"] != DBNull.Value ? Convert.ToInt32(row["DriverID"]) : 0,
 					ShippingStatus = row["ShippingStatus"].ToString(),
 					OrderDate = row["OrderDate"] != DBNull.Value ? Convert.ToDateTime(row["OrderDate"]) : DateTime.MinValue,
-					OrderNumber = row["OrderNumber"] != DBNull.Value ? Convert.ToInt32(row["OrderNumber"]) : 0
+					OrderNumber = row["OrderNumber"] != DBNull.Value ? Convert.ToInt32(row["OrderNumber"]) : 0,
+					Payment =row["Payment"] != DBNull.Value ? Convert.ToInt32(row["Payment"]) : 0,
 				};
 				shipments.Add(shipment);
 			}
@@ -156,7 +158,8 @@ namespace BLL
 					DriverID = Convert.ToInt32(row["DriverID"]),
 					ShippingStatus = row["ShippingStatus"].ToString(),
 					OrderDate = row["OrderDate"] != DBNull.Value ? Convert.ToDateTime(row["OrderDate"]) : DateTime.MinValue,
-					OrderNumber = Convert.ToInt32(row["OrderNumber"])
+					OrderNumber = Convert.ToInt32(row["OrderNumber"]),
+					Payment = row["Payment"] != DBNull.Value ? Convert.ToInt32(row["Payment"]) : 0,
 				};
 				shipments.Add(shipment);
 			}

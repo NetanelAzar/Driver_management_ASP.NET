@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ClientManagement/ClientMaster.Master" AutoEventWireup="true" CodeBehind="ClientHome.aspx.cs" Inherits="Driver_management.ClientManagement.ClientHome" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ClientManagement/ClientMaster.Master" AutoEventWireup="true" CodeBehind="ClientHome.aspx.cs" Inherits="Driver_management.ClientManagement.ClientHome" Async="true" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
@@ -64,10 +64,11 @@
     </style>
 </asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="MainCnt" runat="server">
+<asp:Content ID="MainCnt" ContentPlaceHolderID="MainCnt" runat="server">
     <div class="container mt-5">
         <div class="header-title">
             <h1>ברוך הבא</h1>
+            <asp:Label ID="lblUsername" runat="server" CssClass="nav-link"></asp:Label>
         </div>
         <div class="row">
             <div class="col-lg-8">
@@ -130,94 +131,133 @@
                     </div>
                     <div class="card-body p-4">
                         <p>יש לך שאלה או בעיה? צור איתנו קשר:</p>
-                         <button id="btnOpenChat" class="btn btn-warning btn-custom" type="button">צור קשר</button>
+                        <button id="btnOpenChat" class="btn btn-warning btn-custom" type="button">צור קשר</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-    <!-- חלון הצ'אט -->
-    <div id="chatWindow" class="chat-panel panel panel-default">
+    <div id="chatPanel" class="chat-panel">
         <div class="panel-heading">
-            <i class="fa fa-comments fa-fw"></i> צ'אט
-            <button type="button" class="btn btn-default btn-xs pull-left" id="btnCloseChat">
-                <i class="fa fa-times"></i>
+            <h4 class="panel-title">שוחח עם שירות הלקוחות</h4>
+            <button id="btnCloseChat" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="panel-body">
-            <ul class="chat" id="chatMessages">
-                <li class="left clearfix">
-                    <span class="chat-img pull-left">
-                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                    </span>
-                    <div class="chat-body clearfix">
-                        <div class="header">
-                            <strong class="primary-font"> <asp:Label ID="lblUsername" runat="server" CssClass="nav-link"></asp:Label></strong>
-                            <small class="pull-right text-muted">
-                                <asp:Label ID="lblLastLogin" runat="server" CssClass="text-muted"></asp:Label>
-
-                            </small>
-                        </div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        </p>
-                    </div>
-                </li>
+            <ul id="chatMessages" class="chat">
+                <!-- Messages will be appended here -->
             </ul>
         </div>
         <div class="panel-footer">
             <div class="input-group">
-                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                <span class="input-group-btn">
-                    <button class="btn btn-warning btn-sm" id="btn-chat" type="button">שלח</button>
-                </span>
+                <input id="messageInput" type="text" class="form-control" placeholder="הקלד את ההודעה שלך כאן..." />
+                <div class="input-group-append">
+                    <button id="btnSendMessage" class="btn btn-primary">שלח</button>
+                </div>
             </div>
         </div>
     </div>
 </asp:Content>
-<asp:Content ID="Footer" ContentPlaceHolderID="Footer" runat="server">
 
-</asp:Content>
-<asp:Content ID="underFooter" ContentPlaceHolderID="underFooter" runat="server">
-    <script>
-        window.onload = function () {
-            document.getElementById('btnOpenChat').addEventListener('click', function () {
-                document.getElementById('chatWindow').style.display = 'block';
+<asp:Content ID="Content4" ContentPlaceHolderID="underFooter" runat="server">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#btnOpenChat').click(function () {
+            $('#chatPanel').show();
+            loadMessages();
+        });
+
+        $('#btnCloseChat').click(function () {
+            $('#chatPanel').hide();
+        });
+
+        $('#btnSendMessage').click(function (e) {
+            e.preventDefault();
+
+            var message = $('#messageInput').val().trim();
+            if (message === '') {
+                alert('אנא הקלד הודעה');
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: 'ClientHome.aspx/SendMessage',
+                data: JSON.stringify({ message: message }),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    $('#chatMessages').append('<li><strong>אני:</strong> ' + message + '</li>');
+                    $('#messageInput').val('');
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error sending message: ", error);
+                }
             });
+        });
 
-            document.getElementById('btnCloseChat').addEventListener('click', function () {
-                document.getElementById('chatWindow').style.display = 'none';
-            });
 
-            document.getElementById('btn-chat').addEventListener('click', function () {
-                var message = document.getElementById('btn-input').value;
-                var chatMessages = document.getElementById('chatMessages');
-                var newMessage = document.createElement('li');
-                newMessage.classList.add('right', 'clearfix');
-                newMessage.innerHTML = `
-                    <span class="chat-img pull-right">
-                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                    </span>
-                    <div class="chat-body clearfix">
-                        <div class="header">
-                            <strong class="primary-font pull-right">אתה</strong>
-                            <small class="pull-left text-muted">
-                                <i class="fa fa-clock-o fa-fw"></i> עכשיו
-                            </small>
-                        </div>
-                        <p>${message}</p>
-                    </div>`;
-                chatMessages.appendChild(newMessage);
-                document.getElementById('btn-input').value = '';
-                
+
+        function loadMessages() {
+            $.ajax({
+                type: "POST",
+                url: "ClientHome.aspx/GetMessages",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    try {
+                        var messages = JSON.parse(response.d); // Ensure parsing response correctly
+                        if (Array.isArray(messages)) {
+                            $('#chatMessages').empty(); // Clear existing messages
+                            messages.forEach(function (msg) {
+                                var sender = msg.IsFromCustomer ? 'לקוח' : 'מנהל';
+                                var messageHtml = '<li><strong>' + sender + ':</strong> ' + msg.MessageText + ' <small>(' + new Date(parseInt(msg.SentDate.substr(6))).toLocaleString() + ')</small></li>';
+                                $('#chatMessages').append(messageHtml);
+                            });
+                        } else {
+                            console.error("Unexpected response format: ", response.d);
+                        }
+                    } catch (e) {
+                        console.error("Error parsing JSON: ", e);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error loading messages: ", error);
+                }
             });
         }
-    </script>
+
+
+
+
+        function sendMessage(message) {
+            $.ajax({
+                type: "POST",
+                url: "ClientHome.aspx/SendMessage",
+                data: JSON.stringify({ message: message }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    try {
+                        var result = JSON.parse(response.d); // Ensure parsing response correctly
+                        if (result.success) {
+                            console.log(result.success);
+                        } else {
+                            console.error(result.error);
+                        }
+                    } catch (e) {
+                        console.error("Error parsing JSON: ", e);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error sending message: ", error);
+                }
+            });
+        }
+
+    });
+</script>
+
 </asp:Content>

@@ -1,8 +1,16 @@
 ﻿using BLL;
 using DAL;
+using DATA;
+using Stripe;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq; // הוספת LINQ לסינון ההזמנות
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.Services;
 using System.Web.UI;
 
 namespace Driver_management.ClientManagement
@@ -21,7 +29,7 @@ namespace Driver_management.ClientManagement
 			{
 				lblUsername.Text = loggedInClient.ClientName;
 
-		
+
 			}
 		}
 
@@ -85,5 +93,99 @@ namespace Driver_management.ClientManagement
 			}
 			return string.Empty;
 		}
+
+		[WebMethod]
+		public static string SendMessage(string message)
+		{
+			int customerId = GetLoggedInCustomerId();
+			DbContext db = new DbContext();
+
+			try
+			{
+				if (customerId == -1)
+				{
+					return "Error: Customer is not logged in.";
+				}
+
+				string sql = $"INSERT INTO CustomerMessages (CustomerID, MessageText, SentDate, IsFromCustomer) " +
+							 $"VALUES ({customerId}, N'{message}', GETDATE(), 1)";
+
+				db.Execute(sql);
+
+				return "Message sent successfully.";
+			}
+			catch (Exception ex)
+			{
+				// Log the exception or write to console
+				Console.WriteLine("Error: " + ex.Message);
+				return "Error: " + ex.Message;
+			}
+			finally
+			{
+				db.Close();
+			}
+		}
+
+
+
+
+
+		[WebMethod]
+		public static string GetMessages()
+		{
+			int customerId = GetLoggedInCustomerId();
+			List<CustomerMessage> messages = new List<CustomerMessage>();
+
+			string sql = $"SELECT MessageText, SentDate, IsFromCustomer FROM CustomerMessages WHERE CustomerID = {customerId} ORDER BY SentDate ASC";
+			DbContext db = new DbContext();
+
+			try
+			{
+				DataTable dt = db.Execute(sql);
+				foreach (DataRow row in dt.Rows)
+				{
+					messages.Add(new CustomerMessage
+					{
+						MessageText = row["MessageText"].ToString(),
+						SentDate = Convert.ToDateTime(row["SentDate"]),
+						IsFromCustomer = Convert.ToBoolean(row["IsFromCustomer"])
+					});
+				}
+				db.Close();
+				return new JavaScriptSerializer().Serialize(messages);
+			}
+			catch (Exception ex)
+			{
+				// Log the exception
+				Console.WriteLine("Error: " + ex.Message);
+				return new JavaScriptSerializer().Serialize(new { error = "Error: " + ex.Message });
+			}
+			finally
+			{
+				db.Close();
+			}
+		}
+
+
+
+
+
+
+
+		private static int GetLoggedInCustomerId()
+		{
+			Client loggedInClient = HttpContext.Current.Session["Login"] as Client;
+			if (loggedInClient == null)
+			{
+				Console.WriteLine("Error: No client is logged in.");
+			}
+			return loggedInClient != null ? loggedInClient.ClientID : -1;
+		}
+
+
+
+
+
 	}
 }
+

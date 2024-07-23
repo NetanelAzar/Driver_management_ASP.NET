@@ -7,38 +7,47 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Driver_management.ClientManagement
+namespace Driver_management.AdminManager
 {
 
 
-	public partial class ClientHome
+	public partial class AdminChat
 	{
 
 		/// <summary>
-		/// lblUsername control.
+		/// rptCustomers control.
 		/// </summary>
 		/// <remarks>
 		/// Auto-generated field.
 		/// To modify move field declaration from designer file to code-behind file.
 		/// </remarks>
-		protected global::System.Web.UI.WebControls.Label lblUsername;
+		protected global::System.Web.UI.WebControls.Repeater rptCustomers;
 
 		/// <summary>
-		/// RptOrders control.
+		/// rptMessages control.
 		/// </summary>
 		/// <remarks>
 		/// Auto-generated field.
 		/// To modify move field declaration from designer file to code-behind file.
 		/// </remarks>
-		protected global::System.Web.UI.WebControls.Repeater RptOrders;
+		protected global::System.Web.UI.WebControls.Repeater rptMessages;
 
 		/// <summary>
-		/// rptNews control.
+		/// hfSelectedCustomerID control.
 		/// </summary>
 		/// <remarks>
 		/// Auto-generated field.
 		/// To modify move field declaration from designer file to code-behind file.
 		/// </remarks>
-		protected global::System.Web.UI.WebControls.Repeater rptNews;
+		protected global::System.Web.UI.WebControls.HiddenField hfSelectedCustomerID;
+
+		/// <summary>
+		/// btnPostBack control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.Button btnPostBack;
 	}
 }

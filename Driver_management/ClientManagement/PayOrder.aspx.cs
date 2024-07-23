@@ -1,6 +1,7 @@
 ﻿using BLL;
 using Stripe;
 using System;
+using System.Globalization;
 using System.Web.UI;
 
 namespace Driver_management.ClientManagement
@@ -25,6 +26,7 @@ namespace Driver_management.ClientManagement
 					return;
 				}
 
+				// הצגת הערכים בתוויות
 				LblNumberOfPackages.Text = numberOfPackages;
 				LblTotalAmount.Text = totalAmount + " ₪";
 			}
@@ -45,9 +47,18 @@ namespace Driver_management.ClientManagement
 			{
 				StripeConfiguration.ApiKey = "sk_test_51PdnnDCGGvtn75QCMzNS6MyqelYDtwVcloq4UWvnaucr0nS4iVjnK1drXlXFNhXbwZWMP4ABw07ZgTrTYTmoATTC00i6f3nHbM";
 
+				// ניקוי הסמל "₪" והמרת הסכום למספר שלם
+				string totalAmount = Request.Form["totalAmount"].Replace("₪", "").Trim();
+				decimal totalAmountDecimal;
+				if (!decimal.TryParse(totalAmount, NumberStyles.Any, CultureInfo.InvariantCulture, out totalAmountDecimal))
+				{
+					Response.Write("שגיאה: סכום התשלום אינו תקין.");
+					return;
+				}
+
 				var chargeOptions = new ChargeCreateOptions
 				{
-					Amount = Convert.ToInt64(decimal.Parse(Request.Form["totalAmount"]) * 100), // amount in cents
+					Amount = Convert.ToInt64(totalAmountDecimal * 100), // amount in cents
 					Currency = "ILS",
 					Description = "תשלום עבור הזמנה",
 					Source = stripeToken,
@@ -68,7 +79,8 @@ namespace Driver_management.ClientManagement
 						DestinationCity = int.Parse(Request.Form["destinationCity"]),
 						CustomerID = loggedInClient.ClientID,
 						CustomerPhone = loggedInClient.ClientPhone,
-						ShippingStatus = "התקבל במערכת"
+						ShippingStatus = "התקבל במערכת",
+						Payment = (int)totalAmountDecimal // כאן נשמר הערך המומר בשדה Payment
 					};
 
 					shipment.Save();

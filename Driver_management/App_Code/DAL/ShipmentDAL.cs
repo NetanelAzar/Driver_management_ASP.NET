@@ -8,6 +8,7 @@ namespace DAL
 {
 	public class ShipmentDAL
 	{
+		// בקוד אחר שבו מתבצעת המרה של DateTime
 		public static List<Shipment> GetAll()
 		{
 			DbContext Db = new DbContext();
@@ -24,17 +25,17 @@ namespace DAL
 					SourceAddress = row["SourceAddress"].ToString(),
 					SourceCity = row["SourceCity"].ToString(),
 					DestinationAddress = row["DestinationAddress"].ToString(),
-					DestinationCity = Convert.ToInt32(row["DestinationCity"]),
+					DestinationCity = row["DestinationCity"] != DBNull.Value ? Convert.ToInt32(row["DestinationCity"]) : 0,
 					CustomerPhone = row["CustomerPhone"].ToString(),
-					PickupDate = row["PickupDate"] != DBNull.Value ? Convert.ToDateTime(row["PickupDate"]) : DateTime.MinValue,
-					DeliveryDate = row["DeliveryDate"] != DBNull.Value ? Convert.ToDateTime(row["DeliveryDate"]) : DateTime.MinValue,
-					ShipmentDate = row["ShipmentDate"] != DBNull.Value ? Convert.ToDateTime(row["ShipmentDate"]) : DateTime.MinValue,
-					NumberOfPackages = Convert.ToInt32(row["NumberOfPackages"]),
+					PickupDate = row["PickupDate"] != DBNull.Value ? DateTime.Parse(row["PickupDate"].ToString()) : new DateTime(1, 1, 1),
+					DeliveryDate = row["DeliveryDate"] != DBNull.Value ? DateTime.Parse(row["DeliveryDate"].ToString()) : new DateTime(1, 1, 1),
+					ShipmentDate = row["ShipmentDate"] != DBNull.Value ? DateTime.Parse(row["ShipmentDate"].ToString()) : new DateTime(1, 1, 1),
+					NumberOfPackages = row["NumberOfPackages"] != DBNull.Value ? Convert.ToInt32(row["NumberOfPackages"]) : 0,
 					DriverID = row["DriverID"] != DBNull.Value ? Convert.ToInt32(row["DriverID"]) : 0,
 					ShippingStatus = row["ShippingStatus"].ToString(),
-					OrderDate = row["OrderDate"] != DBNull.Value ? Convert.ToDateTime(row["OrderDate"]) : DateTime.MinValue,
-					OrderNumber = row["OrderNumber"] != DBNull.Value ? Convert.ToInt32(row["OrderNumber"]) : 0
-
+					OrderDate = row["OrderDate"] != DBNull.Value ? DateTime.Parse(row["OrderDate"].ToString()) : new DateTime(1, 1, 1),
+					OrderNumber = row["OrderNumber"] != DBNull.Value ? Convert.ToInt32(row["OrderNumber"]) : 0,
+					Payment = row["Payment"] != DBNull.Value ? Convert.ToInt32(row["Payment"]) : 0,
 				};
 				shipments.Add(shipment);
 			}
@@ -42,6 +43,7 @@ namespace DAL
 			Db.Close();
 			return shipments;
 		}
+
 
 		public static Shipment GetById(int id)
 		{
@@ -60,22 +62,24 @@ namespace DAL
 					SourceAddress = row["SourceAddress"].ToString(),
 					SourceCity = row["SourceCity"].ToString(),
 					DestinationAddress = row["DestinationAddress"].ToString(),
-					DestinationCity = Convert.ToInt32(row["DestinationCity"]),
+					DestinationCity = row["DestinationCity"] != DBNull.Value ? Convert.ToInt32(row["DestinationCity"]) : 0,
 					CustomerPhone = row["CustomerPhone"].ToString(),
-					PickupDate = row["PickupDate"] != DBNull.Value ? Convert.ToDateTime(row["PickupDate"]) : new DateTime(1, 1, 1),
-					DeliveryDate = row["DeliveryDate"] != DBNull.Value ? Convert.ToDateTime(row["DeliveryDate"]) : new DateTime(1, 1, 1),
-					ShipmentDate = row["ShipmentDate"] != DBNull.Value ? Convert.ToDateTime(row["ShipmentDate"]) : new DateTime(1, 1, 1),
-					NumberOfPackages = Convert.ToInt32(row["NumberOfPackages"]),
+					PickupDate = row["PickupDate"] != DBNull.Value ? DateTime.Parse(row["PickupDate"].ToString()) : new DateTime(1, 1, 1),
+					DeliveryDate = row["DeliveryDate"] != DBNull.Value ? DateTime.Parse(row["DeliveryDate"].ToString()) : new DateTime(1, 1, 1),
+					ShipmentDate = row["ShipmentDate"] != DBNull.Value ? DateTime.Parse(row["ShipmentDate"].ToString()) : new DateTime(1, 1, 1),
+					NumberOfPackages = row["NumberOfPackages"] != DBNull.Value ? Convert.ToInt32(row["NumberOfPackages"]) : 0,
 					DriverID = row["DriverID"] != DBNull.Value ? Convert.ToInt32(row["DriverID"]) : 0,
 					ShippingStatus = row["ShippingStatus"].ToString(),
-					OrderDate = row["OrderDate"] != DBNull.Value ? Convert.ToDateTime(row["OrderDate"]) : new DateTime(1, 1, 1),
-					OrderNumber = row["OrderNumber"] != DBNull.Value ? Convert.ToInt32(row["OrderNumber"]) : 0  // Added check for DBNull.Value
+					OrderDate = row["OrderDate"] != DBNull.Value ? DateTime.Parse(row["OrderDate"].ToString()) : new DateTime(1, 1, 1),
+					OrderNumber = row["OrderNumber"] != DBNull.Value ? Convert.ToInt32(row["OrderNumber"]) : 0,
+					Payment = row["Payment"] != DBNull.Value ? Convert.ToInt32(row["Payment"]) : 0,
 				};
 			}
 
 			Db.Close();
 			return shipment;
 		}
+
 
 
 		public static void Save(Shipment shipment)
@@ -86,7 +90,7 @@ namespace DAL
 			if (shipment.ShipmentID <= 0)
 			{
 				Sql = $"INSERT INTO Shipments (CustomerID, SourceAddress, SourceCity, DestinationAddress, " +
-					  $"DestinationCity, CustomerPhone, PickupDate, DeliveryDate, ShipmentDate, NumberOfPackages, DriverID, ShippingStatus, OrderDate, OrderNumber) " +
+					  $"DestinationCity, CustomerPhone, PickupDate, DeliveryDate, ShipmentDate, NumberOfPackages, DriverID, ShippingStatus, OrderDate, OrderNumber, Payment) " +
 					  $"VALUES ({shipment.CustomerID}, N'{shipment.SourceAddress}', N'{shipment.SourceCity}', " +
 					  $"N'{shipment.DestinationAddress}', N'{shipment.DestinationCity}', " +
 					  $"N'{shipment.CustomerPhone}', " +
@@ -96,7 +100,8 @@ namespace DAL
 					  $"{shipment.NumberOfPackages}, {shipment.DriverID}, " +
 					  $"N'{shipment.ShippingStatus}', " +
 					  $"{(shipment.OrderDate.Year > 1 ? $"'{shipment.OrderDate:yyyy-MM-dd HH:mm:ss}'" : "NULL")}, " +
-					  $"{shipment.OrderNumber})";  // Added OrderNumber
+					  $"{shipment.OrderNumber}, " +
+					  $"{shipment.Payment})";
 			}
 			else
 			{
@@ -114,13 +119,15 @@ namespace DAL
 					  $"DriverID = {shipment.DriverID}, " +
 					  $"ShippingStatus = N'{shipment.ShippingStatus}', " +
 					  $"OrderDate = {(shipment.OrderDate.Year > 1 ? $"'{shipment.OrderDate:yyyy-MM-dd HH:mm:ss}'" : "NULL")}, " +
-					  $"OrderNumber = {shipment.OrderNumber} " +  // Added OrderNumber
+					  $"OrderNumber = {shipment.OrderNumber}, " +
+					  $"Payment = {shipment.Payment} " + // הוספתי את השדה Payment בעדכון
 					  $"WHERE ShipmentID = {shipment.ShipmentID}";
 			}
 
 			Db.Execute(Sql);
 			Db.Close();
 		}
+
 
 		public static List<Shipment> GetShipmentsByUserId(int userId)
 		{
@@ -147,7 +154,8 @@ namespace DAL
 					DriverID = Convert.ToInt32(row["DriverID"]),
 					ShippingStatus = row["ShippingStatus"].ToString(),
 					OrderDate = row["OrderDate"] != DBNull.Value ? Convert.ToDateTime(row["OrderDate"]) : new DateTime(1, 1, 1),
-					OrderNumber = Convert.ToInt32(row["OrderNumber"])  // Added OrderNumber
+					OrderNumber = Convert.ToInt32(row["OrderNumber"]) , // Added OrderNumber
+					Payment = row["Payment"] != DBNull.Value ? Convert.ToInt32(row["Payment"]) : 0,
 				};
 				shipments.Add(shipment);
 			}
@@ -204,7 +212,8 @@ namespace DAL
 					DriverID = Convert.ToInt32(row["DriverID"]),
 					ShippingStatus = row["ShippingStatus"].ToString(),
 					OrderDate = row["OrderDate"] != DBNull.Value ? Convert.ToDateTime(row["OrderDate"]) : DateTime.MinValue,
-					OrderNumber = Convert.ToInt32(row["OrderNumber"]) // Assuming OrderNumber exists in your schema
+					OrderNumber = Convert.ToInt32(row["OrderNumber"]), // Assuming OrderNumber exists in your schema
+					Payment = row["Payment"] != DBNull.Value ? Convert.ToInt32(row["Payment"]) : 0,
 				};
 				shipments.Add(shipment);
 			}
@@ -256,7 +265,8 @@ namespace DAL
 					DriverID = Convert.ToInt32(row["DriverID"]),
 					ShippingStatus = row["ShippingStatus"].ToString(),
 					OrderDate = row["OrderDate"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(row["OrderDate"]),
-					OrderNumber = Convert.ToInt32(row["OrderNumber"])  // Added OrderNumber
+					OrderNumber = Convert.ToInt32(row["OrderNumber"]),  // Added OrderNumber
+					Payment = row["Payment"] != DBNull.Value ? Convert.ToInt32(row["Payment"]) : 0,
 				};
 				shipments.Add(shipment);
 			}

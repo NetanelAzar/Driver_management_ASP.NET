@@ -390,7 +390,7 @@
 
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">הצגת צאט</a>
+                                    <a href="AdminChat.aspx">הצגת צאט</a>
                                 </li>
                                 <li>
                                     <a href="#">הוספת משתמש חדש</a>
