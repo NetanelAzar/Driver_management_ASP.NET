@@ -111,5 +111,10 @@ namespace Driver_management.AdminManager
 			rptNotifications.DataSource = notifications;
 			rptNotifications.DataBind();
 		}
+
+		protected void rptNotifications_ItemCommand(object source, System.Web.UI.WebControls.RepeaterCommandEventArgs e)
+		{
+
+		}
 	}
 }

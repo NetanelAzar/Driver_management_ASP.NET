@@ -262,7 +262,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="../LoginRegister.aspx"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -360,7 +360,7 @@
 
                         <li>
                             <a href="#" class="map-link">
-                                <i class="fa fa-map-marker"></i>מפה <span class="fa arrow"></span>
+                                <i class="fa fa-map-marker"></i> מפה <span class="fa arrow"></span>
                             </a>
 
                             <ul class="nav nav-second-level">
@@ -385,7 +385,7 @@
 
                         <li>
                             <a href="#" class="map-link">
-                                <i class="fa fa-map-marker"></i>שירות לקוחות <span class="fa arrow"></span>
+                                <i class="fa fa-comments"></i> שירות לקוחות <span class="fa arrow"></span>
                             </a>
 
                             <ul class="nav nav-second-level">
@@ -409,7 +409,7 @@
 
                         <li>
                             <a href="#" class="map-link">
-                                <i class="fa fa-map-marker"></i>משכורות <span class="fa arrow"></span>
+                                <i class="fa fa-dollar"></i> משכורות <span class="fa arrow"></span>
                             </a>
 
                             <ul class="nav nav-second-level">
@@ -468,7 +468,15 @@
     <!-- Custom Theme JavaScript -->
     <script src="js/sb-admin-2.js"></script>
 
-
+    <script>   $(document).ready(function () {
+            // טיפול באירוע לחיצה על התנתקות
+       $('fa fa-sign-out fa-fw[href="~/LoginRegister.aspx"]').click(function (e) {
+                e.preventDefault(); // מניעת התנתקות קבועה
+                // ביצוע התנתקות
+                // הפניה לדף ההתחברות
+                window.location.href = '~/LoginRegister.aspx';
+            });
+        });</script>
 
     <asp:ContentPlaceHolder ID="underFooter" runat="server">
     </asp:ContentPlaceHolder>

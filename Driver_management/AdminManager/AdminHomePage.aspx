@@ -210,7 +210,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="list-group">
-                        <asp:Repeater ID="rptNotifications" runat="server">
+                        <asp:Repeater ID="rptNotifications" runat="server" OnItemCommand="rptNotifications_ItemCommand">
                             <ItemTemplate>
                                 <a href="#" class="list-group-item">
                                     <i class="fa fa-user fa-fw"></i>
@@ -225,7 +225,7 @@
                 </div>
             </div>
         </div>
-    </div>>
+    </div>
             <!-- -->
 
         <!-- גרף משלוחים לפי חודש -->
@@ -244,18 +244,88 @@
 
 
         <!-- גרף נוסף -->
-        <div class="col-lg-6 col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-bar-chart-o fa-fw"></i>Shipments per Month
-               
-                </div>
-                <div class="panel-body">
-                    <canvas id="CitisChart" width="400" height="200"></canvas>
-                </div>
-            </div>
+<!-- גרף Donut נוסף -->
+<div class="col-lg-6 col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-bar-chart-o fa-fw"></i> Shipments per Month (Donut)
         </div>
+        <div class="panel-body">
+            <canvas id="donutChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+</div>
           <!-- -->
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+    function loadChart(months, shipmentCounts) {
+        // גרף עמודות
+        var ctx1 = document.getElementById('shipmentsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: months.map(month => `Month ${month}`),
+                datasets: [{
+                    label: 'Shipments per Month',
+                    data: shipmentCounts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // גרף Donut
+        var ctx2 = document.getElementById('donutChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: months.map(month => `Month ${month}`),
+                datasets: [{
+                    label: 'Shipments per Month',
+                    data: shipmentCounts,
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return `Month ${tooltipItem.label}: ${tooltipItem.raw} shipments`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>
 
 
 
