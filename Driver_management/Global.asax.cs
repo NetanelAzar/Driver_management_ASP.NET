@@ -15,6 +15,7 @@ namespace Driver_management
 		{
 			Application["Drivers"] = Drivers.GetAll();
 			Application["Clients"] = Client.GetAll();
+			Application["Manager"] =Manager.GetAll();
 			
 		}
 

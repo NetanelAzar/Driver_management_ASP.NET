@@ -278,6 +278,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="uploads\ErrorRows.csv.Error.Txt" />
+    <Content Include="uploads\pics\Azar-removebg-preview.png" />
     <Content Include="uploads\pics\bread.jpg" />
     <Content Include="uploads\pics\eggs.jpg" />
     <Content Include="uploads\pics\milk.jpg" />

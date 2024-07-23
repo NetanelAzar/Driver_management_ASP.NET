@@ -39,6 +39,7 @@ namespace Driver_management.User_Controls
 
 			List<Drivers> LstDrivers = Application["Drivers"] as List<Drivers>;
 			List<Client> LstClients = Application["Clients"] as List<Client>;
+			List<Manager> LstAdmins = Application["Manager"] as List<Manager>; // Adding Admins
 
 			bool isValidUser = false;
 
@@ -82,6 +83,26 @@ namespace Driver_management.User_Controls
 				return;
 			}
 
+			if (!isValidUser && LstAdmins != null)
+			{
+				foreach (var admin in LstAdmins)
+				{
+					if (admin.Email.Equals(Email, StringComparison.OrdinalIgnoreCase) && admin.Password == Password)
+					{
+						Session["Login"] = admin;
+						AddLoginNotification($"{admin.Email} התחבר כמנהל");
+						Response.Redirect("~/AdminManager/AdminHomePage.aspx"); // דף המנהלים
+						isValidUser = true;
+						break;
+					}
+				}
+			}
+			else if (LstAdmins == null)
+			{
+				LtlMsg.Text = "<div class='alert alert-danger' role='alert'>אין נתוני מנהלים זמינים</div>";
+				return;
+			}
+
 			if (!isValidUser)
 			{
 				LtlMsg.Text = "<div class='alert alert-danger' role='alert'>שם וסיסמא אינם תקינים</div>";
@@ -103,8 +124,6 @@ namespace Driver_management.User_Controls
 
 			Session["LoginNotifications"] = notifications;
 		}
-
-
 
 		protected void BtnRegister_Click(object sender, EventArgs e)
 		{
@@ -142,7 +161,6 @@ namespace Driver_management.User_Controls
 			}
 		}
 
-
 		private void AddActiveUser(string username)
 		{
 			var activeUsers = Application["ActiveUsers"] as List<string> ?? new List<string>();
@@ -162,6 +180,5 @@ namespace Driver_management.User_Controls
 		{
 			MultiView1.ActiveViewIndex = 0;
 		}
-
 	}
 }
