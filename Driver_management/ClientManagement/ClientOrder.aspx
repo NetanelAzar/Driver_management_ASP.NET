@@ -7,18 +7,22 @@
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .card-header-modern {
             background: linear-gradient(to right, #0062E6, #33AEFF);
             border-radius: 15px 15px 0 0;
         }
+
         .btn-modern {
             background: linear-gradient(to right, #33AEFF, #0062E6);
             border: none;
             transition: background 0.3s ease;
         }
-        .btn-modern:hover {
-            background: linear-gradient(to right, #0062E6, #33AEFF);
-        }
+
+            .btn-modern:hover {
+                background: linear-gradient(to right, #0062E6, #33AEFF);
+            }
+
         .terms-conditions {
             max-height: 500px;
             overflow-y: auto;
@@ -26,8 +30,13 @@
             padding: 15px;
             border-radius: 5px;
             background-color: #f9f9f9;
+            direction: rtl;
+            text-align: right;
+            font-family: system-ui;
         }
     </style>
+
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainCnt" runat="server">
@@ -70,70 +79,86 @@
             </div>
             <div class="col-lg-6">
                 <div class="terms-conditions">
-                    <h1>Terms and Conditions</h1>
-                    <p>Last updated: June 08, 2024</p>
-                    <p>Please read these terms and conditions carefully before using Our Service.</p>
-                    <h2>Interpretation and Definitions</h2>
-                    <h3>Interpretation</h3>
-                    <p>The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>
-                    <h3>Definitions</h3>
-                    <p>For the purposes of these Terms and Conditions:</p>
+                    <h1>תנאים והגבלות</h1>
+                    <p>עדכון אחרון: 8 ביוני 2024</p>
+                    <p>אנא קרא בעיון את התנאים וההגבלות האלה לפני השימוש בשירות שלנו.</p>
+                    <h2>פרשנות והגדרות</h2>
+                    <h3>פרשנות</h3>
+                    <p>המילים שמתחילות באות גדולה מתפרשות בהתאם לתנאים הבאים. ההגדרות הבאות יהיו זהות בין אם מופיעות בלשון יחיד או רבים.</p>
+                    <h3>הגדרות</h3>
+                    <p>לצורך תנאים והגבלות אלה:</p>
                     <ul>
-                        <li><strong>Affiliate</strong> means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</li>
-                        <li><strong>Country</strong> refers to: Israel</li>
-                        <li><strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to SocialMedia.</li>
-                        <li><strong>Device</strong> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</li>
-                        <li><strong>Service</strong> refers to the Website.</li>
-                        <li><strong>Terms and Conditions</strong> (also referred as "Terms") mean these Terms and Conditions that form the entire agreement between You and the Company regarding the use of the Service. This Terms and Conditions agreement has been created with the help of the <a href="https://www.termsfeed.com/terms-conditions-generator/" target="_blank">Terms and Conditions Generator</a>.</li>
-                        <li><strong>Third-party Social Media Service</strong> means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.</li>
-                        <li><strong>Website</strong> refers to SocialMedia, accessible from <a href="http://localhost:11263/" rel="external nofollow noopener" target="_blank">http://localhost:11263/</a></li>
-                        <li><strong>You</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</li>
+                        <li>
+                            <p><strong>שותף</strong> משמעו ישות השולטת, נשלטת על ידי או שנמצאת בשליטה משותפת עם צד מסוים, כאשר "שליטה" משמעה בעלות על 50% או יותר מהמניות, ההון או ניירות הערך האחרים הזכאים להצביע בבחירות לדירקטורים או לגוף ניהולי אחר.</p>
+                        </li>
+                        <li>
+                            <p><strong>מדינה</strong> מתייחס ל: ישראל</p>
+                        </li>
+                        <li>
+                            <p><strong>חברה</strong> (המכונה "החברה", "אנחנו", "לנו" או "שלנו" בהסכם זה) מתייחסת ל-SocialMedia.</p>
+                        </li>
+                        <li>
+                            <p><strong>מכשיר</strong> משמעו כל מכשיר שיכול לגשת לשירות כגון מחשב, טלפון סלולרי או טאבלט דיגיטלי.</p>
+                        </li>
+                        <li>
+                            <p><strong>שירות</strong> מתייחס לאתר האינטרנט.</p>
+                        </li>
+                        <li>
+                            <p><strong>תנאים והגבלות</strong> (המכונים גם "תנאים") משמעם תנאים והגבלות אלה המהווים את ההסכם המלא בינך לבין החברה בנוגע לשימוש בשירות. הסכם תנאים והגבלות זה נוצר בעזרת <a href="https://www.termsfeed.com/terms-conditions-generator/" target="_blank">מחולל תנאים והגבלות</a>.</p>
+                        </li>
+                        <li>
+                            <p><strong>שירות מדיה חברתית של צד שלישי</strong> משמעו כל שירותים או תכנים (כולל נתונים, מידע, מוצרים או שירותים) הניתנים על ידי צד שלישי ועשויים להיות מוצגים, כלולים או זמינים על ידי השירות.</p>
+                        </li>
+                        <li>
+                            <p><strong>אתר האינטרנט</strong> מתייחס ל-SocialMedia, נגיש מ-<a href="http://localhost:11263/" rel="external nofollow noopener" target="_blank">http://localhost:11263/</a></p>
+                        </li>
+                        <li>
+                            <p><strong>אתה</strong> מתייחס לאדם הגולש או משתמש בשירות, או לחברה או לישות משפטית אחרת בשם מי שאדם זה גולש או משתמש בשירות, לפי העניין.</p>
+                        </li>
                     </ul>
-                    <h2>Acknowledgment</h2>
-                    <p>These are the Terms and Conditions governing the use of this Service and the agreement that operates between You and the Company. These Terms and Conditions set out the rights and obligations of all users regarding the use of the Service.</p>
-                    <p>Your access to and use of the Service is conditioned on Your acceptance of and compliance with these Terms and Conditions. These Terms and Conditions apply to all visitors, users and others who access or use the Service.</p>
-                    <p>By accessing or using the Service You agree to be bound by these Terms and Conditions. If You disagree with any part of these Terms and Conditions then You may not access the Service.</p>
-                    <p>You represent that you are over the age of 18. The Company does not permit those under 18 to use the Service.</p>
-                    <p>Your access to and use of the Service is also conditioned on Your acceptance of and compliance with the Privacy Policy of the Company. Our Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your personal information when You use the Application or the Website and tells You about Your privacy rights and how the law protects You. Please read Our Privacy Policy carefully before using Our Service.</p>
-                    <h2>Links to Other Websites</h2>
-                    <p>Our Service may contain links to third-party web sites or services that are not owned or controlled by the Company.</p>
-                    <p>The Company has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that the Company shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods or services available on or through any such web sites or services.</p>
-                    <p>We strongly advise You to read the terms and conditions and privacy policies of any third-party web sites or services that You visit.</p>
-                    <h2>Termination</h2>
-<p>We may terminate or suspend Your access immediately, without prior notice or liability, for any reason whatsoever, including without limitation if You breach these Terms and Conditions.</p>
-<p>Upon termination, Your right to use the Service will cease immediately.</p>
-<h2>Limitation of Liability</h2>
-<p>Notwithstanding any damages that You might incur, the entire liability of the Company and any of its suppliers under any provision of this Terms and Your exclusive remedy for all of the foregoing shall be limited to the amount actually paid by You through the Service or 100 USD if You haven't purchased anything through the Service.</p>
-<p>To the maximum extent permitted by applicable law, in no event shall the Company or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever (including, but not limited to, damages for loss of profits, loss of data or other information, for business interruption, for personal injury, loss of privacy arising out of or in any way related to the use of or inability to use the Service, third-party software and/or third-party hardware used with the Service, or otherwise in connection with any provision of this Terms), even if the Company or any supplier has been advised of the possibility of such damages and even if the remedy fails of its essential purpose.</p>
-<p>Some states do not allow the exclusion of implied warranties or limitation of liability for incidental or consequential damages, which means that some of the above limitations may not apply. In these states, each party's liability will be limited to the greatest extent permitted by law.</p>
-<h2>&quot;AS IS&quot; and &quot;AS AVAILABLE&quot; Disclaimer</h2>
-<p>The Service is provided to You &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; and with all faults and defects without warranty of any kind. To the maximum extent permitted under applicable law, the Company, on its own behalf and on behalf of its Affiliates and its and their respective licensors and service providers, expressly disclaims all warranties, whether express, implied, statutory or otherwise, with respect to the Service, including all implied warranties of merchantability, fitness for a particular purpose, title and non-infringement, and warranties that may arise out of course of dealing, course of performance, usage or trade practice. Without limitation to the foregoing, the Company provides no warranty or undertaking, and makes no representation of any kind that the Service will meet Your requirements, achieve any intended results, be compatible or work with any other software, applications, systems or services, operate without interruption, meet any performance or reliability standards or be error free or that any errors or defects can or will be corrected.</p>
-<p>Without limiting the foregoing, neither the Company nor any of the company's provider makes any representation or warranty of any kind, express or implied: (i) as to the operation or availability of the Service, or the information, content, and materials or products included thereon; (ii) that the Service will be uninterrupted or error-free; (iii) as to the accuracy, reliability, or currency of any information or content provided through the Service; or (iv) that the Service, its servers, the content, or e-mails sent from or on behalf of the Company are free of viruses, scripts, trojan horses, worms, malware, timebombs or other harmful components.</p>
-<p>Some jurisdictions do not allow the exclusion of certain types of warranties or limitations on applicable statutory rights of a consumer, so some or all of the above exclusions and limitations may not apply to You. But in such a case the exclusions and limitations set forth in this section shall be applied to the greatest extent enforceable under applicable law.</p>
-<h2>Governing Law</h2>
-<p>The laws of the Country, excluding its conflicts of law rules, shall govern this Terms and Your use of the Service. Your use of the Application may also be subject to other local, state, national, or international laws.</p>
-<h2>Disputes Resolution</h2>
-<p>If You have any concern or dispute about the Service, You agree to first try to resolve the dispute informally by contacting the Company.</p>
-<h2>For European Union (EU) Users</h2>
-<p>If You are a European Union consumer, you will benefit from any mandatory provisions of the law of the country in which You are resident.</p>
-<h2>United States Legal Compliance</h2>
-<p>You represent and warrant that (i) You are not located in a country that is subject to the United States government embargo, or that has been designated by the United States government as a &quot;terrorist supporting&quot; country, and (ii) You are not listed on any United States government list of prohibited or restricted parties.</p>
-<h2>Severability and Waiver</h2>
-<h3>Severability</h3>
-<p>If any provision of these Terms is held to be unenforceable or invalid, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law and the remaining provisions will continue in full force and effect.</p>
-<h3>Waiver</h3>
-<p>Except as provided herein, the failure to exercise a right or to require performance of an obligation under these Terms shall not affect a party's ability to exercise such right or require such performance at any time thereafter nor shall the waiver of a breach constitute a waiver of any subsequent breach.</p>
-<h2>Translation Interpretation</h2>
-<p>These Terms and Conditions may have been translated if We have made them available to You on our Service.
-You agree that the original English text shall prevail in the case of a dispute.</p>
-<h2>Changes to These Terms and Conditions</h2>
-<p>We reserve the right, at Our sole discretion, to modify or replace these Terms at any time. If a revision is material We will make reasonable efforts to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at Our sole discretion.</p>
-<p>By continuing to access or use Our Service after those revisions become effective, You agree to be bound by the revised terms. If You do not agree to the new terms, in whole or in part, please stop using the website and the Service.</p>
-<h2>Contact Us</h2>
-<p>If you have any questions about these Terms and Conditions, You can contact us:</p>
-<ul>
-<li>By email: netanelazar880@gmail.com</li>
-</ul>
+                    <h2>אישור</h2>
+                    <p>אלה הם התנאים וההגבלות המנהלים את השימוש בשירות וההסכם המופעל בינך לבין החברה. תנאים והגבלות אלה קובעים את הזכויות והחובות של כל המשתמשים בנוגע לשימוש בשירות.</p>
+                    <p>הגישה והשימוש שלך בשירות מותנים בקבלתך ובציותך לתנאים ולהגבלות אלה. תנאים והגבלות אלה חלים על כל המבקרים, המשתמשים ואחרים הגולשים או משתמשים בשירות.</p>
+                    <p>על ידי גישה או שימוש בשירות אתה מסכים להיות מחויב לתנאים ולהגבלות אלה. אם אינך מסכים עם כל חלק מהתנאים וההגבלות, אינך רשאי לגשת לשירות.</p>
+                    <p>אתה מצהיר שאתה מעל גיל 18. החברה אינה מתירה לאנשים מתחת לגיל 18 להשתמש בשירות.</p>
+                    <p>הגישה והשימוש שלך בשירות מותנים גם בקבלתך ובציותך למדיניות הפרטיות של החברה. מדיניות הפרטיות שלנו מתארת את המדיניות והנהלים שלנו בנוגע לאיסוף, שימוש וחשיפה של המידע האישי שלך בעת השימוש ביישום או באתר האינטרנט ומספרת לך על זכויות הפרטיות שלך וכיצד החוק מגן עליך. אנא קרא את מדיניות הפרטיות שלנו בעיון לפני השימוש בשירות שלנו.</p>
+                    <h2>קישורים לאתרים אחרים</h2>
+                    <p>השירות שלנו עשוי להכיל קישורים לאתרים או שירותים של צד שלישי שאינם בבעלות או בשליטת החברה.</p>
+                    <p>לחברה אין שליטה על, ואינה אחראית לתוכן, מדיניות פרטיות או נהלים של אתרים או שירותים של צד שלישי. בנוסף, אתה מאשר ומסכים כי החברה לא תהיה אחראית, במישרין או בעקיפין, לכל נזק או הפסד שנגרם או נטען שנגרם על ידי או בקשר לשימוש או הסתמכות על כל תוכן, מוצרים או שירותים הזמינים באתרי אינטרנט או שירותים כאלה.</p>
+                    <p>אנו ממליצים לך לקרוא את התנאים וההגבלות ומדיניות הפרטיות של כל אתר או שירות של צד שלישי שאתה מבקר.</p>
+                    <h2>סיום</h2>
+                    <p>אנו עשויים לסיים או להשעות את הגישה שלך מיד, ללא הודעה מוקדמת או אחריות, מכל סיבה שהיא, כולל אך לא מוגבל לכך, אם תפר תנאים והגבלות אלה.</p>
+                    <p>עם הסיום, זכותך להשתמש בשירות תחדל מיד.</p>
+                    <h2>הגבלת אחריות</h2>
+                    <p>למרות כל נזקים שאתה עלול להיתקל בהם, האחריות המלאה של החברה ושל כל אחד מספקיה על פי כל הוראה בתנאים אלה והתרופה הבלעדית שלך לכל האמור לעיל תוגבל לסכום ששולם בפועל על ידך דרך השירות או 100 דולר ארה"ב אם לא רכשת דבר דרך השירות.</p>
+                    <p>עד למקסימום המותר על פי החוק החל, בשום מקרה החברה או ספקיה לא יהיו אחראים לכל נזק מיוחד, מקרי, עקיף או תוצאתי מכל סוג (כולל, אך לא מוגבל לנזק בגין אובדן רווחים, אובדן נתונים או מידע אחר, להפסקת עסק, לפגיעה אישית, אובדן פרטיות הנובע או קשור בכל דרך לשימוש או לחוסר יכולת להשתמש בשירות, תוכנה של צד שלישי ו/או חומרה של צד שלישי המשמשים עם השירות, או אחרת בקשר לכל הוראה בתנאים אלה), אפילו אם החברה או כל ספק הוזהרו על האפשרות לנזקים כאלה ואפילו אם התרופה אינה מספקת.</p>
+                    <p>מדינות מסוימות אינן מתירות החרגה של אחריות משתמעת או הגבלת אחריות לנזקים מקריים או תוצאתיים, מה שאומר שחלק מהמגבלות האמורות עשויות שלא לחול. במדינות אלו, אחריות כל צד תוגבל עד למקסימום המותר על פי חוק.</p>
+                    <h2>הבהרה "AS IS" ו-"AS AVAILABLE"</h2>
+                    <p>השירות ניתן לך "AS IS" ו-"AS AVAILABLE" ועם כל הפגמים והליקויים ללא אחריות מכל סוג שהוא. עד למקסימום המותר על פי החוק החל, החברה, בשמה העצמי ובשם שותפיה ובשם מעניקי הרישיונות שלהם וספקי השירות שלהם, מסירה במפורש כל אחריות, בין אם מפורשת, משתמעת, סטטוטורית או אחרת, לגבי השירות, כולל כל אחריות משתמעת של סחירות, התאמה למטרה מסוימת, כותרת ואי-הפרה, ואחריות שעלולה לנבוע ממסחר, ביצוע, שימוש או נוהג סחר. ללא הגבלה למפורט לעיל, החברה אינה מספקת כל אחריות או התחייבות, ואינה מציגה כל הצהרה מכל סוג שהיא שהשירות יענה על דרישותיך, ישיג כל תוצאות מיועדות, יהיה תואם או יפעל עם תוכנה, יישומים, מערכות או שירותים אחרים, יפעל ללא הפרעה, יעמוד בכל תקני ביצועים או אמינות או יהיה נטול שגיאות או שכל שגיאה או ליקוי ניתנים או יתוקנו.</p>
+                    <p>ללא הגבלה למפורט לעיל, החברה או כל ספק החברה אינם מציגים כל הצהרה או אחריות מכל סוג, מפורשת או משתמעת: (i) לגבי פעולתו או זמינותו של השירות, או המידע, התוכן, החומרים או המוצרים הכלולים בו; (ii) שהשירות יהיה בלתי מופרע או נטול שגיאות; (iii) לגבי הדיוק, האמינות או התקופה של כל מידע או תוכן הניתן דרך השירות; או (iv) שהשירותים, השרתים שלו, התוכן או הודעות הדוא"ל הנשלחות על ידי או מטעם החברה נקיים מווירוסים, סקריפטים, סוסים טרויאנים, תולעים, תוכנות זדוניות, פצצות זמן או רכיבים מזיקים אחרים.</p>
+                    <p>מדינות מסוימות אינן מתירות החרגה של סוגים מסוימים של אחריות או מגבלות על זכויות סטטוטוריות חלות של צרכן, כך שחלק או כל ההחרגות והמגבלות האמורות עשויות שלא לחול עליך. אבל במקרה כזה, ההחרגות והמגבלות המפורטות בסעיף זה יוחלו עד למידה המרבית הניתנת לאכיפה על פי החוק החל.</p>
+                    <h2>חוק חל</h2>
+                    <p>החוקים של המדינה, למעט חוקי סתירות הדין שלה, יחולו על תנאים אלה והשימוש שלך בשירות. השימוש שלך ביישום עשוי גם להיות כפוף לחוקים מקומיים, לאומיים או בינלאומיים אחרים.</p>
+                    <h2>יישוב סכסוכים</h2>
+                    <p>אם יש לך חשש או סכסוך בנוגע לשירות, אתה מסכים לנסות לפתור את הסכסוך באופן לא פורמלי על ידי פנייה לחברה.</p>
+                    <h2>למשתמשים באיחוד האירופי (EU)</h2>
+                    <p>אם אתה צרכן של האיחוד האירופי, אתה תיהנה מכל הוראות חובה של החוק של המדינה שבה אתה תושב.</p>
+                    <h2>ציות לחוק ארצות הברית</h2>
+                    <p>אתה מצהיר ומתחייב כי (i) אינך ממוקם במדינה שהכפופה לאמברגו של ממשלת ארצות הברית, או שהוגדרה על ידי ממשלת ארצות הברית כמדינה "תומכת טרור", ו-(ii) אינך רשום ברשימה כלשהי של ממשלת ארצות הברית של צדדים אסורים או מוגבלים.</p>
+                    <h2>ניתוק והוויתור</h2>
+                    <h3>ניתוק</h3>
+                    <p>אם כל הוראה מתנאים אלה תחשב בלתי ניתנת לאכיפה או לא תקפה, הוראה זו תשתנה ותפורש כדי להשיג את מטרותיה של הוראה זו במידה המרבית האפשרית על פי החוק החל וההוראות הנותרות ימשיכו בתוקף מלא.</p>
+                    <h3>ויתור</h3>
+                    <p>למעט המפורט כאן, אי מימוש זכות או דרישה לקיום חובה על פי תנאים אלה לא ישפיע על יכולתו של צד לממש זכות זו או לדרוש קיום זה בכל עת לאחר מכן ולא יהיה ויתור על הפרה שיתפרש כויתור על כל הפרה עתידית.</p>
+                    <h2>שינויים בתנאים והגבלות אלו</h2>
+                    <p>אנו שומרים את הזכות, לפי שיקול דעתנו הבלעדי, לשנות או להחליף תנאים אלה בכל עת. אם התיקון הוא מהותי, אנו נעשה מאמצים סבירים להודיע לפחות 30 יום לפני כניסת כל תנאים חדשים לתוקף. מה מהווה שינוי מהותי ייקבע לפי שיקול דעתנו הבלעדי.</p>
+                    <p>על ידי המשך גישה או שימוש בשירות שלנו לאחר כניסת התיקונים לתוקף, אתה מסכים להיות מחויב לתנאים המתוקנים. אם אינך מסכים לתנאים החדשים, כולם או חלקם, אנא הפסק את השימוש באתר ובשירות.</p>
+                    <h2>צור קשר</h2>
+                    <p>אם יש לך שאלות לגבי תנאים והגבלות אלה, תוכל ליצור קשר איתנו:</p>
+                    <ul>
+                        <li>בדוא"ל: info@gmail.com</li>
+                    </ul>
+
                 </div>
             </div>
         </div>

@@ -21,12 +21,12 @@
             flex-direction: column;
         }
 
-        .chat-panel .panel-body {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            background-color: #f9f9f9;
-        }
+            .chat-panel .panel-body {
+                flex: 1;
+                overflow-y: auto;
+                padding: 15px;
+                background-color: #f9f9f9;
+            }
 
         .chat {
             list-style-type: none;
@@ -34,12 +34,12 @@
             margin: 0;
         }
 
-        .chat li {
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            position: relative;
-        }
+            .chat li {
+                padding: 10px;
+                border-radius: 8px;
+                margin-bottom: 10px;
+                position: relative;
+            }
 
         .customer-message {
             background-color: #e1f5fe;
@@ -118,7 +118,7 @@
     </div>
 
     <asp:HiddenField ID="hfSelectedCustomerID" runat="server" />
-    <asp:Button ID="btnPostBack" runat="server" Style="display:none;" OnClick="btnPostBack_Click" />
+    <asp:Button ID="btnPostBack" runat="server" Style="display: none;" OnClick="btnPostBack_Click" />
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="Footer" runat="server">
@@ -136,7 +136,7 @@
         }
 
         // Automatically show message panel when page loads if there is a selected customer
-        $(document).ready(function() {
+        $(document).ready(function () {
             if (document.getElementById('<%= hfSelectedCustomerID.ClientID %>').value) {
                 showMessagePanel();
             }

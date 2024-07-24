@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ClientManagement/ClientMaster.Master" AutoEventWireup="true" CodeBehind="ClientHome.aspx.cs" Inherits="Driver_management.ClientManagement.ClientHome" Async="true" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
@@ -6,21 +7,26 @@
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .card-header-custom {
             border-radius: 15px 15px 0 0;
             background: linear-gradient(to right, #007bff, #6610f2);
         }
+
         .btn-custom {
             border: none;
             transition: background 0.3s ease;
         }
-        .btn-custom:hover {
-            background: linear-gradient(to right, #6610f2, #007bff);
-        }
+
+            .btn-custom:hover {
+                background: linear-gradient(to right, #6610f2, #007bff);
+            }
+
         .header-title {
             text-align: center;
             margin-bottom: 30px;
         }
+
         .chat-panel {
             position: fixed;
             bottom: 0;
@@ -32,32 +38,39 @@
             border-radius: 15px 15px 0 0;
             display: none;
         }
-        .chat-panel .panel-heading {
-            border-radius: 15px 15px 0 0;
-            background: linear-gradient(to right, #007bff, #6610f2);
-            color: white;
-            padding: 10px 15px;
-        }
-        .chat-panel .panel-body {
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 15px;
-        }
-        .chat-panel .chat {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .chat-panel .chat li {
-            margin-bottom: 10px;
-        }
-        .chat-panel .chat li .chat-img {
-            width: 50px;
-            height: 50px;
-        }
-        .chat-panel .chat li .chat-body {
-            margin-left: 60px;
-        }
+
+            .chat-panel .panel-heading {
+                border-radius: 15px 15px 0 0;
+                background: linear-gradient(to right, #007bff, #6610f2);
+                color: white;
+                padding: 10px 15px;
+            }
+
+            .chat-panel .panel-body {
+                max-height: 300px;
+                overflow-y: auto;
+                padding: 15px;
+            }
+
+            .chat-panel .chat {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+                .chat-panel .chat li {
+                    margin-bottom: 10px;
+                }
+
+                    .chat-panel .chat li .chat-img {
+                        width: 50px;
+                        height: 50px;
+                    }
+
+                    .chat-panel .chat li .chat-body {
+                        margin-left: 60px;
+                    }
+
         .panel-footer {
             padding: 10px 15px;
         }
@@ -95,8 +108,7 @@
                                                 <td><%# FormatDate(Eval("OrderDate")) %></td>
                                                 <td><%# Eval("ShippingStatus") %></td>
                                                 <td>
-                                                    <a href='<%# "OrderDetails.aspx?OrderID=" + Eval("ShipmentID") %>' class="btn btn-primary btn-sm btn-custom">
-                                                        צפה בפרטים
+                                                    <a href='<%# "OrderDetails.aspx?OrderID=" + Eval("ShipmentID") %>' class="btn btn-primary btn-sm btn-custom">צפה בפרטים
                                                     </a>
                                                 </td>
                                             </tr>
@@ -162,102 +174,102 @@
 
 <asp:Content ID="Content4" ContentPlaceHolderID="underFooter" runat="server">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#btnOpenChat').click(function () {
-            $('#chatPanel').show();
-            loadMessages();
-        });
+    <script>
+        $(document).ready(function () {
+            $('#btnOpenChat').click(function () {
+                $('#chatPanel').show();
+                loadMessages();
+            });
 
-        $('#btnCloseChat').click(function () {
-            $('#chatPanel').hide();
-        });
+            $('#btnCloseChat').click(function () {
+                $('#chatPanel').hide();
+            });
 
-        $('#btnSendMessage').click(function (e) {
-            e.preventDefault();
+            $('#btnSendMessage').click(function (e) {
+                e.preventDefault();
 
-            var message = $('#messageInput').val().trim();
-            if (message === '') {
-                alert('אנא הקלד הודעה');
-                return;
+                var message = $('#messageInput').val().trim();
+                if (message === '') {
+                    alert('אנא הקלד הודעה');
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'ClientHome.aspx/SendMessage',
+                    data: JSON.stringify({ message: message }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (response) {
+                        $('#chatMessages').append('<li><strong>אני:</strong> ' + message + '</li>');
+                        $('#messageInput').val('');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error sending message: ", error);
+                    }
+                });
+            });
+
+
+
+            function loadMessages() {
+                $.ajax({
+                    type: "POST",
+                    url: "ClientHome.aspx/GetMessages",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        try {
+                            var messages = JSON.parse(response.d); // Ensure parsing response correctly
+                            if (Array.isArray(messages)) {
+                                $('#chatMessages').empty(); // Clear existing messages
+                                messages.forEach(function (msg) {
+                                    var sender = msg.IsFromCustomer ? 'לקוח' : 'מנהל';
+                                    var messageHtml = '<li><strong>' + sender + ':</strong> ' + msg.MessageText + ' <small>(' + new Date(parseInt(msg.SentDate.substr(6))).toLocaleString() + ')</small></li>';
+                                    $('#chatMessages').append(messageHtml);
+                                });
+                            } else {
+                                console.error("Unexpected response format: ", response.d);
+                            }
+                        } catch (e) {
+                            console.error("Error parsing JSON: ", e);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error loading messages: ", error);
+                    }
+                });
             }
 
-            $.ajax({
-                type: 'POST',
-                url: 'ClientHome.aspx/SendMessage',
-                data: JSON.stringify({ message: message }),
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                success: function (response) {
-                    $('#chatMessages').append('<li><strong>אני:</strong> ' + message + '</li>');
-                    $('#messageInput').val('');
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error sending message: ", error);
-                }
-            });
+
+
+
+            function sendMessage(message) {
+                $.ajax({
+                    type: "POST",
+                    url: "ClientHome.aspx/SendMessage",
+                    data: JSON.stringify({ message: message }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        try {
+                            var result = JSON.parse(response.d); // Ensure parsing response correctly
+                            if (result.success) {
+                                console.log(result.success);
+                            } else {
+                                console.error(result.error);
+                            }
+                        } catch (e) {
+                            console.error("Error parsing JSON: ", e);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error sending message: ", error);
+                    }
+                });
+            }
+
         });
-
-
-
-        function loadMessages() {
-            $.ajax({
-                type: "POST",
-                url: "ClientHome.aspx/GetMessages",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    try {
-                        var messages = JSON.parse(response.d); // Ensure parsing response correctly
-                        if (Array.isArray(messages)) {
-                            $('#chatMessages').empty(); // Clear existing messages
-                            messages.forEach(function (msg) {
-                                var sender = msg.IsFromCustomer ? 'לקוח' : 'מנהל';
-                                var messageHtml = '<li><strong>' + sender + ':</strong> ' + msg.MessageText + ' <small>(' + new Date(parseInt(msg.SentDate.substr(6))).toLocaleString() + ')</small></li>';
-                                $('#chatMessages').append(messageHtml);
-                            });
-                        } else {
-                            console.error("Unexpected response format: ", response.d);
-                        }
-                    } catch (e) {
-                        console.error("Error parsing JSON: ", e);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error loading messages: ", error);
-                }
-            });
-        }
-
-
-
-
-        function sendMessage(message) {
-            $.ajax({
-                type: "POST",
-                url: "ClientHome.aspx/SendMessage",
-                data: JSON.stringify({ message: message }),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    try {
-                        var result = JSON.parse(response.d); // Ensure parsing response correctly
-                        if (result.success) {
-                            console.log(result.success);
-                        } else {
-                            console.error(result.error);
-                        }
-                    } catch (e) {
-                        console.error("Error parsing JSON: ", e);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error sending message: ", error);
-                }
-            });
-        }
-
-    });
-</script>
+    </script>
 
 </asp:Content>

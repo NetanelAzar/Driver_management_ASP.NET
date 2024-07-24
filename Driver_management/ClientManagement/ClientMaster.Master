@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ClientMaster.master.cs" Inherits="Driver_management.ClientManagement.ClientMaster" %>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -11,20 +12,25 @@
             background-color: #f8f9fa;
             direction: rtl; /* יישור ימין לשמאל */
         }
+
         .navbar {
             margin-bottom: 20px;
         }
+
         .navbar-brand {
             font-weight: bold;
             color: #007bff; /* צבע ראשי של Bootstrap */
         }
+
         .navbar-nav .nav-link {
             color: #6c757d; /* צבע משני של Bootstrap */
         }
-        .navbar-nav .nav-link:hover {
-            color: #007bff; /* צבע ראשי של Bootstrap בהעברת עכבר */
-        }
+
+            .navbar-nav .nav-link:hover {
+                color: #007bff; /* צבע ראשי של Bootstrap בהעברת עכבר */
+            }
     </style>
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -36,7 +42,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto"> <!-- השינוי ב-ml-auto ל-mr-auto כדי ליצור יישור ימין -->
+                <ul class="navbar-nav mr-auto">
+                    <!-- השינוי ב-ml-auto ל-mr-auto כדי ליצור יישור ימין -->
                     <li class="nav-item">
                         <a class="nav-link" href="ClientHome.aspx">דף הבית</a>
                     </li>
@@ -56,7 +63,7 @@
             </div>
             <asp:Label ID="lblUsername" runat="server" CssClass="nav-link"></asp:Label>
         </nav>
-        
+
         <div class="container">
             <asp:ContentPlaceHolder ID="MainCnt" runat="server">
             </asp:ContentPlaceHolder>
@@ -64,133 +71,131 @@
 
 
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-    <footer class="bg-light text-dark py-4">
-        <div class="container">
-            <div class="row">
-                <!-- קישורים שימושיים -->
-                <div class="col-md-4 mb-4">
-                    <h5 class="text-uppercase font-weight-bold mb-3">קישורים שימושיים</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2">
-                            <a href="#!" class="text-dark text-decoration-none">דף הבית</a>
-                        </li>
-                        <li class="mb-2">
-                            <a href="#!" class="text-dark text-decoration-none">שירותים</a>
-                        </li>
-                        <li class="mb-2">
-                            <a href="#!" class="text-dark text-decoration-none">צור קשר</a>
-                        </li>
-                        <li>
-                            <a href="#!" class="text-dark text-decoration-none">אודות</a>
-                        </li>
-                    </ul>
-                </div>
+            <footer class="bg-light text-dark py-4">
+                <div class="container">
+                    <div class="row">
+                        <!-- קישורים שימושיים -->
+                        <div class="col-md-4 mb-4">
+                            <h5 class="text-uppercase font-weight-bold mb-3">קישורים שימושיים</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <a href="#!" class="text-dark text-decoration-none">דף הבית</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="#!" class="text-dark text-decoration-none">שירותים</a>
+                                </li>
+                                <li class="mb-2">
+                                    <a href="#!" class="text-dark text-decoration-none">צור קשר</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-dark text-decoration-none">אודות</a>
+                                </li>
+                            </ul>
+                        </div>
 
-                <!-- יצירת קשר -->
-                <div class="col-md-4 mb-4">
-                    <h5 class="text-uppercase font-weight-bold mb-3">יצירת קשר</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2">
-                            <p class="text-muted mb-0">כתובת: רחוב הדוגמה 123, תל אביב</p>
-                        </li>
-                        <li class="mb-2">
-                            <p class="text-muted mb-0">טלפון: 123-4567890</p>
-                        </li>
-                        <li>
-                            <p class="text-muted mb-0">דוא"ל: info@company.com</p>
-                        </li>
-                    </ul>
-                </div>
+                        <!-- יצירת קשר -->
+                        <div class="col-md-4 mb-4">
+                            <h5 class="text-uppercase font-weight-bold mb-3">יצירת קשר</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <p class="text-muted mb-0">כתובת: רחוב הדוגמה 123, תל אביב</p>
+                                </li>
+                                <li class="mb-2">
+                                    <p class="text-muted mb-0">טלפון: 123-4567890</p>
+                                </li>
+                                <li>
+                                    <p class="text-muted mb-0">דוא"ל: info@company.com</p>
+                                </li>
+                            </ul>
+                        </div>
 
-                <!-- רשתות חברתיות -->
-                <div class="col-md-4 mb-4">
-                    <h5 class="text-uppercase font-weight-bold mb-3 text-center">עקוב אחרינו</h5>
-                    <div class="d-flex justify-content-center">
-                        <a href="#" class="text-dark mx-2 social-icon"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-dark mx-2 social-icon"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-dark mx-2 social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-dark mx-2 social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <!-- רשתות חברתיות -->
+                        <div class="col-md-4 mb-4">
+                            <h5 class="text-uppercase font-weight-bold mb-3 text-center">עקוב אחרינו</h5>
+                            <div class="d-flex justify-content-center">
+                                <a href="#" class="text-dark mx-2 social-icon"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="text-dark mx-2 social-icon"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="text-dark mx-2 social-icon"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="text-dark mx-2 social-icon"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- זכויות שמורות -->
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4 border-top pt-3">
+                        <p class="mb-0 text-center text-md-left">© 2024 כל הזכויות שמורות</p>
+                        <a class="text-dark text-decoration-none" href="https://company.com/">company.com</a>
                     </div>
                 </div>
-            </div>
+            </footer>
 
-            <!-- זכויות שמורות -->
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4 border-top pt-3">
-                <p class="mb-0 text-center text-md-left">© 2024 כל הזכויות שמורות</p>
-                <a class="text-dark text-decoration-none" href="https://company.com/">company.com</a>
-            </div>
-        </div>
-    </footer>
+            <style>
+                footer {
+                    background-color: #f8f9fa;
+                    border-top: 1px solid #dee2e6;
+                }
 
-    <style>
-        footer {
-            background-color: #f8f9fa;
-            border-top: 1px solid #dee2e6;
-        }
+                    footer .text-uppercase {
+                        letter-spacing: 0.5px;
+                    }
 
-        footer .text-uppercase {
-            letter-spacing: 0.5px;
-        }
+                    footer ul {
+                        padding-left: 0;
+                    }
 
-        footer ul {
-            padding-left: 0;
-        }
+                        footer ul li {
+                            list-style: none;
+                        }
 
-        footer ul li {
-            list-style: none;
-        }
+                            footer ul li a:hover {
+                                color: #0056b3;
+                                text-decoration: underline;
+                                transition: color 0.2s;
+                            }
 
-        footer ul li a:hover {
-            color: #0056b3;
-            text-decoration: underline;
-            transition: color 0.2s;
-        }
+                .social-icon {
+                    font-size: 1.5rem;
+                    transition: color 0.3s;
+                }
 
-        .social-icon {
-            font-size: 1.5rem;
-            transition: color 0.3s;
-        }
+                    .social-icon:hover {
+                        color: #007bff;
+                    }
 
-        .social-icon:hover {
-            color: #007bff;
-        }
+                .bg-light {
+                    background-color: #f8f9fa !important;
+                }
 
-        .bg-light {
-            background-color: #f8f9fa !important;
-        }
+                .border-top {
+                    border-top: 1px solid #dee2e6;
+                }
+            </style>
 
-        .border-top {
-            border-top: 1px solid #dee2e6;
-        }
-    </style>
-
-    <!-- Add Font Awesome for social icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</asp:ContentPlaceHolder>
+            <!-- Add Font Awesome for social icons -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        </asp:ContentPlaceHolder>
 
 
-         <asp:ContentPlaceHolder ID="Footer" runat="server">
-
-
-             </asp:ContentPlaceHolder>
+        <asp:ContentPlaceHolder ID="Footer" runat="server">
+        </asp:ContentPlaceHolder>
 
         <asp:ContentPlaceHolder ID="underFooter" runat="server">
             <script>
-    $(document).ready(function () {
-        // טיפול באירוע לחיצה על התנתקות
-        $('a.nav-link[href="~/LoginRegister.aspx"]').click(function (e) {
-            e.preventDefault(); // מניעת התנתקות קבועה
-            // ביצוע התנתקות
-            // הפניה לדף ההתחברות
-            window.location.href = '~/LoginRegister.aspx';
-        });
-    });
+                $(document).ready(function () {
+                    // טיפול באירוע לחיצה על התנתקות
+                    $('a.nav-link[href="~/LoginRegister.aspx"]').click(function (e) {
+                        e.preventDefault(); // מניעת התנתקות קבועה
+                        // ביצוע התנתקות
+                        // הפניה לדף ההתחברות
+                        window.location.href = '~/LoginRegister.aspx';
+                    });
+                });
             </script>
 
         </asp:ContentPlaceHolder>
     </form>
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
