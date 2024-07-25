@@ -57,6 +57,7 @@ namespace Driver_management.ClientManagement
 
 			// Fetch orders for the logged-in client
 			List<Shipment> orders = BLL.Shipment.GetShipmentsByCustomerId(loggedInClient.ClientID);
+			orders.Reverse();
 
 			// Filter out orders with status "נמסר"
 			var filteredOrders = orders.Where(order => order.ShippingStatus != "נמסר").ToList();
