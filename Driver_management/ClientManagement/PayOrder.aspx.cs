@@ -10,27 +10,21 @@ namespace Driver_management.ClientManagement
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			if (!IsPostBack)
+			if (IsPostBack)
 			{
-				string numberOfPackages = Request.Form["numberOfPackages"];
-				string totalAmount = Request.Form["totalAmount"];
-				string destinationAddress = Request.Form["destinationAddress"];
-				string orderDate = Request.Form["orderDate"];
-				string destinationCity = Request.Form["destinationCity"];
-
-				if (string.IsNullOrWhiteSpace(numberOfPackages) || string.IsNullOrWhiteSpace(totalAmount) ||
-					string.IsNullOrWhiteSpace(destinationAddress) || string.IsNullOrWhiteSpace(orderDate) ||
-					string.IsNullOrWhiteSpace(destinationCity))
-				{
-					Response.Write("שגיאה: פרטי ההזמנה חסרים.");
-					return;
-				}
-
-				// הצגת הערכים בתוויות
-				LblNumberOfPackages.Text = numberOfPackages;
-				LblTotalAmount.Text = totalAmount + " ₪";
+				// הצגת הערכים בתוויות לאחר פוסטבק
+				LblNumberOfPackages.Text = ViewState["numberOfPackages"]?.ToString() ?? "לא זמין";
+				LblTotalAmount.Text = ViewState["totalAmount"]?.ToString() + " ₪" ?? "לא זמין";
 			}
 		}
+
+		protected void SomePostBackMethod(object sender, EventArgs e)
+		{
+			// שמירת הערכים ב-ViewState
+			ViewState["numberOfPackages"] = Request.Form["numberOfPackages"];
+			ViewState["totalAmount"] = Request.Form["totalAmount"];
+		}
+
 
 		protected void Page_PreRender(object sender, EventArgs e)
 		{
@@ -85,7 +79,7 @@ namespace Driver_management.ClientManagement
 
 					shipment.Save();
 
-					Response.Redirect("OrderConfirmation.aspx");
+					Response.Redirect("PastPayment.aspx");
 				}
 				else
 				{

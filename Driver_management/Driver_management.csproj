@@ -43,8 +43,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EPPlus, Version=7.2.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
-      <HintPath>..\packages\EPPlus.7.2.1\lib\net462\EPPlus.dll</HintPath>
+    <Reference Include="EPPlus, Version=7.2.2.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.7.2.2\lib\net462\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.Interfaces.6.1.1\lib\net462\EPPlus.Interfaces.dll</HintPath>
@@ -240,6 +240,9 @@
     <Content Include="AdminManager\UserList.aspx" />
     <Content Include="ClientManagement\ClientHome.aspx" />
     <Content Include="ClientManagement\ClientOrder.aspx" />
+    <Content Include="ClientManagement\NewsDetails.aspx" />
+    <Content Include="ClientManagement\OrderDetails.aspx" />
+    <Content Include="ClientManagement\PastPayment.aspx" />
     <Content Include="ClientManagement\PayOrder.aspx" />
     <Content Include="ClientManagement\TrackingOrders.aspx" />
     <Content Include="css\bootstrap-grid.css" />
@@ -408,6 +411,27 @@
     </Compile>
     <Compile Include="ClientManagement\ClientOrder.aspx.designer.cs">
       <DependentUpon>ClientOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientManagement\NewsDetails.aspx.cs">
+      <DependentUpon>NewsDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientManagement\NewsDetails.aspx.designer.cs">
+      <DependentUpon>NewsDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientManagement\OrderDetails.aspx.cs">
+      <DependentUpon>OrderDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientManagement\OrderDetails.aspx.designer.cs">
+      <DependentUpon>OrderDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClientManagement\PastPayment.aspx.cs">
+      <DependentUpon>PastPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClientManagement\PastPayment.aspx.designer.cs">
+      <DependentUpon>PastPayment.aspx</DependentUpon>
     </Compile>
     <Compile Include="ClientManagement\PayOrder.aspx.cs">
       <DependentUpon>PayOrder.aspx</DependentUpon>

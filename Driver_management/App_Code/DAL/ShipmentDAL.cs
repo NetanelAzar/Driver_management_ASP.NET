@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using DATA;
+using System.Data.SqlClient;
 
 namespace DAL
 {
@@ -222,18 +223,34 @@ namespace DAL
 			return shipments;
 		}
 
-
 		public static void UpdateDeliveryStatus(int shipmentId, string shippingStatus)
 		{
+			// יצירת אובייקט DbContext
 			DbContext Db = new DbContext();
-			string Sql = $@"
-        UPDATE Shipments
-        SET ShippingStatus = '{shippingStatus}'
-        WHERE ShipmentID = {shipmentId}";
 
-			Db.Execute(Sql);
-			Db.Close();
+			try
+			{
+				// שימוש בפרמטרים לשמירה על הטקסט בצורה נכונה
+				string Sql = @"
+            UPDATE Shipments
+            SET ShippingStatus = @ShippingStatus
+            WHERE ShipmentID = @ShipmentID";
+
+				// יצירת אובייקט SqlCommand והגדרת פרמטרים
+				SqlCommand Cmd = new SqlCommand(Sql, Db.Conn);
+				Cmd.Parameters.AddWithValue("@ShippingStatus", shippingStatus);
+				Cmd.Parameters.AddWithValue("@ShipmentID", shipmentId);
+
+				// ביצוע השאילתה
+				Cmd.ExecuteNonQuery();
+			}
+			finally
+			{
+				// סגירת החיבור
+				Db.Close();
+			}
 		}
+
 
 
 		public static List<Shipment> GetShipmentsByCustomerIdAndMonth(int customerId, int month)

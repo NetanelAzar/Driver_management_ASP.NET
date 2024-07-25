@@ -14,7 +14,6 @@ function payNow() {
             var destinationAddress = '<%= Request.QueryString["DestinationAddress"] %>';
             var orderDate = '<%= Request.QueryString["OrderDate"] %>';
             var destinationCity = '<%= Request.QueryString["DestinationCity"] %>';
-            var payment = '<%= Request.QueryString["Payment"] %>';
 
             var form = document.createElement('form');
             form.method = 'post';
@@ -26,8 +25,7 @@ function payNow() {
                 { name: 'totalAmount', value: totalAmount },
                 { name: 'destinationAddress', value: destinationAddress },
                 { name: 'orderDate', value: orderDate },
-                { name: 'destinationCity', value: destinationCity },
-                { name: 'Payment', value: payment }
+                { name: 'destinationCity', value: destinationCity }
             ];
 
             hiddenFields.forEach(function (field) {
