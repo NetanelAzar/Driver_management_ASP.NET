@@ -26,8 +26,10 @@
                                             <th>קוד נהג</th>
                                             <th>שם מלא</th>
                                             <th>כתובת</th>
+                                            <th>קוד עיר</th>
                                             <th>מייל</th>
                                             <th>מקסימום חבילות</th>
+                                            <th>מקום פנוי</th>
                                             <th>פלאפון</th>
                                             <th>ניהול</th>
                                         </tr>
@@ -39,10 +41,11 @@
                                 <td><%#Eval("DriverID")%></td>
                                 <td><%#Eval("DriverName")%></td>
                                 <td><%#Eval("Address")%></td>
+                                 <td><%#Eval("CityCode")%></td>
                                 <td><%#Eval("DriverMail")%></td>
                                 <td><%#Eval("MaxDeliveries")%></td>
+                                <td><%#Eval("CurrentDeliveries") %></td>
                                 <td><%#Eval("DriverPhone")%></td>
-                                <td class="center"><img src="/uploads/prods/<%#Eval("Picname")%>" width="30" /> </td>
                                 <td class="center"><a href="UserAddEdit.aspx?UserID=<%#Eval("DriverID")%>" >ערוך <span class="fa fa-pencil" /></a></td>
                             </tr>
                         </ItemTemplate>

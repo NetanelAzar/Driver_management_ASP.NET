@@ -2,79 +2,148 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <style>
-        .card-custom {
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        .card-header-custom {
-            border-radius: 15px 15px 0 0;
-            background: linear-gradient(to right, #007bff, #6610f2);
-        }
+    .card-custom {
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
 
-        .btn-custom {
-            border: none;
-            transition: background 0.3s ease;
-        }
+    .card-custom:hover {
+        transform: scale(1.02);
+    }
 
-            .btn-custom:hover {
-                background: linear-gradient(to right, #6610f2, #007bff);
-            }
+    .card-header-custom {
+        border-radius: 15px 15px 0 0;
+        background: linear-gradient(to right, #ff7e5f, #feb47b);
+        color: white;
+        padding: 10px 20px;
+    }
 
-        .header-title {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+כדי לשדרג את עיצוב הטבלה תחת "ההזמנות שלך", ניתן לשלב אלמנטים של עיצוב מודרני ואינטראקטיבי. הנה דוגמה לקוד CSS ולשינויים אפשריים שיכולים לשפר את מראה הטבלה:
 
-        .chat-panel {
-            position: fixed;
-            bottom: 0;
-            right: 20px;
-            width: 300px;
-            z-index: 1000;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 15px 15px 0 0;
-            display: none;
-        }
+html
+Copy code
+<style>
+    .table-responsive {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-            .chat-panel .panel-heading {
-                border-radius: 15px 15px 0 0;
-                background: linear-gradient(to right, #007bff, #6610f2);
-                color: white;
-                padding: 10px 15px;
-            }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 0;
+    }
 
-            .chat-panel .panel-body {
-                max-height: 300px;
-                overflow-y: auto;
-                padding: 15px;
-            }
+    thead {
+        background-color: #007bff;
+        color: white;
+    }
 
-            .chat-panel .chat {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
+    thead th {
+        padding: 12px 15px;
+        text-align: center;
+        font-weight: bold;
+    }
 
-                .chat-panel .chat li {
-                    margin-bottom: 10px;
-                }
+    tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
 
-                    .chat-panel .chat li .chat-img {
-                        width: 50px;
-                        height: 50px;
-                    }
+    tbody td {
+        padding: 10px 15px;
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
 
-                    .chat-panel .chat li .chat-body {
-                        margin-left: 60px;
-                    }
+    tbody tr:hover td {
+        background-color: #e9ecef;
+    }
 
-        .panel-footer {
-            padding: 10px 15px;
-        }
-    </style>
+    .btn-custom {
+        border: none;
+        padding: 5px 10px;
+        border-radius: 15px;
+        transition: background 0.3s ease, color 0.3s ease;
+        font-size: 14px;
+    }
+
+    .btn-custom:hover {
+        background: linear-gradient(to right, #6610f2, #007bff);
+        color: white;
+    }
+
+    .header-title {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+    }
+
+    .chat-panel {
+        position: fixed;
+        bottom: 0;
+        right: 20px;
+        width: 300px;
+        z-index: 1000;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 15px 15px 0 0;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-panel .panel-heading {
+        border-radius: 15px 15px 0 0;
+        background: linear-gradient(to right, #007bff, #6610f2);
+        color: white;
+        padding: 10px 15px;
+    }
+
+    .chat-panel .panel-body {
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 15px;
+    }
+
+    .chat-panel .chat {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .chat-panel .chat li {
+        margin-bottom: 10px;
+    }
+
+    .chat-panel .chat li .chat-img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .chat-panel .chat li .chat-body {
+        margin-left: 60px;
+    }
+
+    .panel-footer {
+        padding: 10px 15px;
+    }
+
+    .news-item h5 {
+        color: #007bff;
+    }
+
+    .news-item a {
+        color: #6610f2;
+    }
+</style>
+
 </asp:Content>
 
 <asp:Content ID="MainCnt" ContentPlaceHolderID="MainCnt" runat="server">
@@ -143,12 +212,13 @@
                     </div>
                     <div class="card-body p-4">
                         <p>יש לך שאלה או בעיה? צור איתנו קשר:</p>
-                        <button id="btnOpenChat" class="btn btn-warning btn-custom" type="button">צור קשר</button>
+                        <button id="btnOpenChat" class="btn btn-warning btn-custom" type="button">פתח צ'אט</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div id="chatPanel" class="chat-panel">
         <div class="panel-heading">
             <h4 class="panel-title">שוחח עם שירות הלקוחות</h4>

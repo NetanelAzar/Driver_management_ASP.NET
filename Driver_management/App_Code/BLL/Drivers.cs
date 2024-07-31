@@ -21,6 +21,7 @@ namespace BLL
 		public DateTime AddDate { get; set; }
 		public int Status { get; set; }
 		public int MaxDeliveries { get; set; }
+		public int CurrentDeliveries { get; set; } 
 
 		public static List<Drivers> GetAll()
 		{
@@ -61,7 +62,8 @@ namespace BLL
 					Picname = dr["Picname"].ToString(),
 					AddDate = Convert.ToDateTime(dr["AddDate"]),
 					Status = Convert.ToInt32(dr["Status"]),
-					MaxDeliveries = Convert.ToInt32(dr["MaxDeliveries"])
+					MaxDeliveries = Convert.ToInt32(dr["MaxDeliveries"]),
+					CurrentDeliveries = Convert.ToInt32(dr["CurrentDeliveries"])
 				};
 
 				LstDrivers.Add(driver);
@@ -69,6 +71,49 @@ namespace BLL
 
 			Db.Close();
 			return LstDrivers;
+		}
+
+
+
+
+		public static void UpdateDriverAvailableSpace(int driverId)
+		{
+			try
+			{
+				DbContext Db = new DbContext();
+
+				// Get all shipments for the driver that are not delivered
+				string sqlShipments = $"SELECT * FROM Shipments WHERE DriverID = {driverId} AND ShippingStatus != 'נמסר'";
+				DataTable dtShipments = Db.Execute(sqlShipments);
+
+				int undeliveredPackages = 0;
+
+				foreach (DataRow row in dtShipments.Rows)
+				{
+					undeliveredPackages += Convert.ToInt32(row["NumberOfPackages"]);
+				}
+
+				// Get driver details
+				string sqlDriver = $"SELECT MaxDeliveries FROM Drivers WHERE DriverID = {driverId}";
+				DataTable dtDriver = Db.Execute(sqlDriver);
+
+				if (dtDriver.Rows.Count > 0)
+				{
+					int maxDeliveries = Convert.ToInt32(dtDriver.Rows[0]["MaxDeliveries"]);
+					int availableSpace = maxDeliveries - undeliveredPackages;
+
+					// Update the driver's available space
+					string sqlUpdate = $"UPDATE Drivers SET CurrentDeliveries = {availableSpace} WHERE DriverID = {driverId}";
+					Db.ExecuteNonQuery(sqlUpdate);
+				}
+
+				Db.Close();
+			}
+			catch (Exception ex)
+			{
+				// Handle or log the error
+				Console.WriteLine($"Error updating driver available space: {ex.Message}");
+			}
 		}
 
 	}

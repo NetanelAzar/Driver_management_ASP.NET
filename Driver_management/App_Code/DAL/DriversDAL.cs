@@ -31,7 +31,8 @@ namespace DAL
 					Picname = dr["Picname"].ToString(),
 					AddDate = Convert.ToDateTime(dr["AddDate"]),
 					Status = Convert.ToInt32(dr["Status"]),
-					MaxDeliveries = Convert.ToInt32(dr["MaxDeliveries"])
+					MaxDeliveries = Convert.ToInt32(dr["MaxDeliveries"]),
+					CurrentDeliveries = Convert.ToInt32(dr["CurrentDeliveries"])
 				};
 
 				LstDrivers.Add(driver);
@@ -65,13 +66,19 @@ namespace DAL
 					Picname = dr["Picname"].ToString(),
 					AddDate = Convert.ToDateTime(dr["AddDate"]),
 					Status = Convert.ToInt32(dr["Status"]),
-					MaxDeliveries = Convert.ToInt32(dr["MaxDeliveries"])
+					MaxDeliveries = Convert.ToInt32(dr["MaxDeliveries"]),
+					CurrentDeliveries = Convert.ToInt32(dr["CurrentDeliveries"])
 				};
 			}
 
 			Db.Close();
 			return driver;
 		}
+
+
+
+
+
 
 		public static void Save(Drivers driver)
 		{
@@ -80,27 +87,30 @@ namespace DAL
 
 			if (driver.DriverID < 0)
 			{
-				Sql = $"INSERT INTO Drivers (DriverCode, DriverName, Address, CityCode,zoneID ,DriverMail, DriverPassword, Picname, Status, MaxDeliveries) " +
-					  $"VALUES ('{driver.DriverCode}', '{driver.DriverName}', '{driver.Address}', {driver.CityCode},'{driver.zoneID}', '{driver.DriverMail}', '{driver.DriverPassword}', '{driver.Picname}', {driver.Status}, {driver.MaxDeliveries})";
+				Sql = $"INSERT INTO Drivers (DriverCode,DriverPhone, DriverName, Address, CityCode, ZoneID, DriverMail, DriverPassword, Picname, Status, MaxDeliveries, CurrentDeliveries) " +
+					  $"VALUES ('{driver.DriverCode}','{driver.DriverPhone}', '{driver.DriverName}', '{driver.Address}', {driver.CityCode}, {driver.zoneID}, '{driver.DriverMail}', '{driver.DriverPassword}', '{driver.Picname}', {driver.Status}, {driver.MaxDeliveries}, {driver.CurrentDeliveries})";
 			}
 			else
 			{
 				Sql = $"UPDATE Drivers SET " +
 					  $"DriverCode = '{driver.DriverCode}', " +
 					  $"DriverName = '{driver.DriverName}', " +
+					  $"DriverPhone = '{driver.DriverPhone}', " + 
 					  $"Address = '{driver.Address}', " +
 					  $"CityCode = {driver.CityCode}, " +
-					  $"ZoneID = { driver.zoneID }, " +
+					  $"ZoneID = {driver.zoneID}, " +
 					  $"DriverMail = '{driver.DriverMail}', " +
 					  $"DriverPassword = '{driver.DriverPassword}', " +
 					  $"Picname = '{driver.Picname}', " +
 					  $"Status = {driver.Status}, " +
-					  $"MaxDeliveries = {driver.MaxDeliveries} " +
+					  $"MaxDeliveries = {driver.MaxDeliveries}, " +  // Note the comma here
+					  $"CurrentDeliveries = {driver.CurrentDeliveries} " +
 					  $"WHERE DriverID = {driver.DriverID}";
 			}
 
 			Db.Execute(Sql);
 			Db.Close();
 		}
+
 	}
 }

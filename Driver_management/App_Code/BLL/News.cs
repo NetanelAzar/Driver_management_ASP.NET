@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using DATA;
 
 namespace BLL
@@ -24,11 +25,11 @@ namespace BLL
 			{
 				News news = new News()
 				{
-					NewsID = Convert.ToInt32(dr["NewsID"]),
-					NewsTitle = dr["NewsTitle"].ToString(),
-					NewsSummary = dr["NewsSummary"].ToString(),
-					NewsContent = dr["NewsContent"].ToString(),
-					NewsDate = Convert.ToDateTime(dr["NewsDate"])
+					NewsID = dr["NewsID"] != DBNull.Value ? Convert.ToInt32(dr["NewsID"]) : 0,
+					NewsTitle = dr["NewsTitle"] != DBNull.Value ? dr["NewsTitle"].ToString() : string.Empty,
+					NewsSummary = dr["NewsSummary"] != DBNull.Value ? dr["NewsSummary"].ToString() : string.Empty,
+					NewsContent = dr["NewsContent"] != DBNull.Value ? dr["NewsContent"].ToString() : string.Empty,
+					NewsDate = dr["NewsDate"] != DBNull.Value ? Convert.ToDateTime(dr["NewsDate"]) : DateTime.MinValue
 				};
 
 				LstNews.Add(news);
@@ -37,6 +38,7 @@ namespace BLL
 			Db.Close();
 			return LstNews;
 		}
+
 
 		public static News GetById(int Id)
 		{
@@ -50,11 +52,11 @@ namespace BLL
 				DataRow dr = Dt.Rows[0];
 				news = new News()
 				{
-					NewsID = Convert.ToInt32(dr["NewsID"]),
-					NewsTitle = dr["NewsTitle"].ToString(),
-					NewsSummary = dr["NewsSummary"].ToString(),
-					NewsContent = dr["NewsContent"].ToString(),
-					NewsDate = Convert.ToDateTime(dr["NewsDate"])
+					NewsID = dr["NewsID"] != DBNull.Value ? Convert.ToInt32(dr["NewsID"]) : 0,
+					NewsTitle = dr["NewsTitle"] != DBNull.Value ? dr["NewsTitle"].ToString() : string.Empty,
+					NewsSummary = dr["NewsSummary"] != DBNull.Value ? dr["NewsSummary"].ToString() : string.Empty,
+					NewsContent = dr["NewsContent"] != DBNull.Value ? dr["NewsContent"].ToString() : string.Empty,
+					NewsDate = dr["NewsDate"] != DBNull.Value ? Convert.ToDateTime(dr["NewsDate"]) : DateTime.MinValue
 				};
 			}
 
@@ -62,28 +64,41 @@ namespace BLL
 			return news;
 		}
 
-		public void Save()
+
+
+
+
+
+		public static void Save(News news)
 		{
 			DbContext Db = new DbContext();
 			string Sql;
 
-			if (this.NewsID < 0)
+			if (news.NewsID <= 0) // אם NewsID קטן או שווה ל-0, אז הוספת חדשות חדשות
 			{
 				Sql = $"INSERT INTO News (NewsTitle, NewsSummary, NewsContent, NewsDate) " +
-					  $"VALUES ('{this.NewsTitle}', '{this.NewsSummary}', '{this.NewsContent}', '{this.NewsDate}')";
+					  $"VALUES (N'{news.NewsTitle.Replace("'", "''")}', " +
+					  $"N'{news.NewsSummary.Replace("'", "''")}', " +
+					  $"N'{news.NewsContent.Replace("'", "''")}', " +
+					  $"'{news.NewsDate:yyyy-MM-dd HH:mm:ss}')";
 			}
 			else
 			{
+				// עדכון חדשות קיימות
 				Sql = $"UPDATE News SET " +
-					  $"NewsTitle = '{this.NewsTitle}', " +
-					  $"NewsSummary = '{this.NewsSummary}', " +
-					  $"NewsContent = '{this.NewsContent}', " +
-					  $"NewsDate = '{this.NewsDate}' " +
-					  $"WHERE NewsID = {this.NewsID}";
+					  $"NewsTitle = N'{news.NewsTitle.Replace("'", "''")}', " +
+					  $"NewsSummary = N'{news.NewsSummary.Replace("'", "''")}', " +
+					  $"NewsContent = N'{news.NewsContent.Replace("'", "''")}', " +
+					  $"NewsDate = '{news.NewsDate:yyyy-MM-dd HH:mm:ss}' " +
+					  $"WHERE NewsID = {news.NewsID}";
 			}
 
 			Db.Execute(Sql);
 			Db.Close();
 		}
+
+
+
+
 	}
 }

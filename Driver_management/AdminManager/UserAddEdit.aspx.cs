@@ -26,12 +26,16 @@ namespace Driver_management.AdminManager
 					Drivers Tmp = Drivers.GetById(userID);
 					if (Tmp != null)
 					{
-						TxtFirstName.Text = Tmp.DriverName;
-						TxtPhone.Text = Tmp.DriverPhone;
-						TxtMail.Text = Tmp.DriverMail;
+						TxtUserFullName.Text = Tmp.DriverName;
+						TxtUserPhone.Text = Tmp.DriverPhone;
+						TxtUserMail.Text = Tmp.DriverMail;
+						TxtAddress.Text =Tmp.Address;
 						TxtPassword.Text = Tmp.DriverPassword;
-						ImgPicname.ImageUrl = "/uploads/prods/" + Tmp.Picname;
-						HidUser.Value = UserID;
+						TxtMax.Text = Tmp.MaxDeliveries.ToString();
+						TxtCityCode.Text = Tmp.CityCode.ToString();
+						TxtZoneID.Text = Tmp.zoneID.ToString();
+						TxtUserCode.Text = Tmp.DriverCode;
+						HidDriverID.Value = UserID;
 					}
 					else
 					{
@@ -44,25 +48,7 @@ namespace Driver_management.AdminManager
 
 		protected void BtnSave_Click(object sender, EventArgs e)
 		{
-			string Picname = "";
-			//נבדטק האם נבחקר קובץ תמונה
-			if (UploadPic.HasFile)
-			{
-				//נשמור תחת שם שאנחנו בוחרים באקראי
-				Picname = GlobFunk.GetRandStr(8);
-
-				string OriginalFileName = UploadPic.FileName;
-				string Ext = OriginalFileName.Substring(OriginalFileName.LastIndexOf('.'));//מהנקודה האחרונה עד הסוף
-				Picname += Ext;//השם המלר של הקובץ אחרי ההשינוי
-				string FullPath = Server.MapPath("/uploads/prods/");
-				UploadPic.SaveAs(FullPath + Picname);
-
-			}
-			else
-			{
-				Picname = ImgPicname.ImageUrl.Substring(ImgPicname.ImageUrl.LastIndexOf('/') + 1);
-			}
-
+		
 
 
 
@@ -72,18 +58,23 @@ namespace Driver_management.AdminManager
 
 			Drivers user = new Drivers
 			{
-				DriverID = int.Parse(HidUser.Value),
-				DriverName = TxtFirstName.Text,
-				DriverPhone = TxtPhone.Text,
-				DriverMail = TxtMail.Text,
+				DriverID = int.Parse(HidDriverID.Value),
+				DriverName = TxtUserFullName.Text,
+				DriverPhone = TxtUserPhone.Text,
+				DriverMail = TxtUserMail.Text,
+				Address = TxtAddress.Text,
 				DriverPassword = TxtPassword.Text,
-				Picname = Picname
+				zoneID = TxtZoneID.Text,
+				DriverCode = TxtUserCode.Text,
+				CityCode = int.Parse(TxtCityCode.Text),
+				MaxDeliveries = int.Parse(TxtMax.Text),
+				CurrentDeliveries = int.Parse(TxtMax.Text),
 			};
 
 			user.Save();
 
 			List<Drivers> LstClient = Drivers.GetAll();
-			Application["Users"] = LstClient;
+			Application["Drivers"] = LstClient;
 
 			Response.Redirect("UserList.aspx");
 

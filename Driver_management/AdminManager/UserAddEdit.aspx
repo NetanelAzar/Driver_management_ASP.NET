@@ -37,83 +37,71 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">ניהול משתמשים</h1>
+            <h1 class="page-header">ניהול לקוחות</h1>
         </div>
-        <!-- /.col-lg-12 -->
     </div>
-    <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    הוספה / עריכת משתמשים
-                       
+                    הוספה / עריכת לקוח
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-6">
-                            <asp:HiddenField ID="HidUser" runat="server" Value="-1" />
+                            <asp:HiddenField ID="HidDriverID" runat="server" Value="-1" />
                             <div class="form-group">
-                                <label>שם מלא</label>
-                                <asp:TextBox ID="TxtFirstName" CssClass="form-control" runat="server" placeholder="נא הזן שם מלא" />
+                                <label>שם לקוח</label>
+                                <asp:TextBox ID="TxtUserFullName" CssClass="form-control" runat="server" placeholder="הזן שם נהג" />
+                            </div>
+                            <div class="form-group">
+                                <label>דוא"ל לקוח</label>
+                                <asp:TextBox ID="TxtUserMail" CssClass="form-control" runat="server" placeholder="הזן איימיל" />
+                            </div>
+                            <div class="form-group">
+                                <label>פלאפון</label>
+                                <asp:TextBox ID="TxtUserPhone" CssClass="form-control" runat="server" placeholder="הזן טלפון נהג" />
+                            </div>
+                            <div class="form-group">
+                                <label>קוד נהג</label>
+                                <asp:TextBox ID="TxtUserCode" CssClass="form-control" runat="server" placeholder="הזן שם חברה" />
+                            </div>
+                            <div class="form-group">
+                                <label>עיר</label>
+                                <asp:TextBox ID="TxtCityCode" CssClass="form-control" runat="server" placeholder="הזן עיר" />
+                            </div>
 
+                            <div class="form-group">
+                                <label>אזור</label>
+                                <asp:TextBox ID="TxtZoneID" CssClass="form-control" runat="server" placeholder="הזן אזור" />
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>מקסימום מקום</label>
+                                <asp:TextBox ID="TxtMax" CssClass="form-control" runat="server" placeholder="הזןמקסימום" />
                             </div>
 
                             <div class="form-group">
                                 <label>כתובת</label>
-                                <asp:TextBox ID="TxtLastName" CssClass="form-control" runat="server" placeholder="נא הזן כתובת" />
-
-                            </div>
-
-                            <div class="form-group">
-                                <label>פלאפון</label>
-                                <asp:TextBox ID="TxtPhone" CssClass="form-control" runat="server" placeholder="נא הזן פלאפון" />
-                            </div>
-
-                            <div class="form-group">
-                                <label>מייל</label>
-                                <asp:TextBox ID="TxtMail" CssClass="form-control" runat="server" placeholder="נא הזן קטגורית אב" />
-
+                                <asp:TextBox ID="TxtAddress" CssClass="form-control" runat="server" placeholder="הזן כתובת" />
                             </div>
 
 
                             <div class="form-group">
                                 <label>סיסמא</label>
-                                <asp:TextBox ID="TxtPassword" CssClass="form-control" runat="server"  placeholder="נא הזן קטגורית אב" />
-
+                                <asp:TextBox ID="TxtPassword" CssClass="form-control" runat="server" placeholder="הזן סיסמא" />
                             </div>
 
-                            <div class="form-group">
-                                <label>שם תמונה</label>
-                                <asp:Image ID="ImgPicname" CssClass="form-control" runat="server" style="width: 200px; height: 200px;" />
-
-                            </div>
-
-
-                            <div class="form-group">
-                                <label>מוצר תמונה</label>
-                                <asp:FileUpload ID="UploadPic" runat="server" />
-
-                            </div>
 
 
                             <asp:Button ID="BtnSave" class="btn btn-primary" OnClick="BtnSave_Click" runat="server" Text="שמירה" />
-
-
                         </div>
-                        <!-- /.col-lg-6 (nested) -->
-
                     </div>
-                    <!-- /.row (nested) -->
                 </div>
-                <!-- /.panel-body -->
             </div>
-            <!-- /.panel -->
         </div>
-        <!-- /.col-lg-12 -->
     </div>
-    <!-- /.row -->
-
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="Footer" runat="server">
 </asp:Content>

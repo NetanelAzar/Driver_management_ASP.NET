@@ -61,7 +61,6 @@ namespace Driver_management.AdminManager
 				}
 			}
 		}
-
 		protected void BtnSave_Click(object sender, EventArgs e)
 		{
 			Shipment shipment = new Shipment();
@@ -95,8 +94,28 @@ namespace Driver_management.AdminManager
 			shipment.ShippingStatus = DdlShipmentStatus.SelectedValue;
 			shipment.OrderNumber = int.Parse(TxtOrderNumber.Text); // Adding OrderNumber field
 
+			// שמור את הסטטוס הקודם של המשלוח
+			string previousStatus = shipment.ShippingStatus;
+
+			// קבל את המשלוח הישן עבור סטטוס ונהג
+			Shipment oldShipment = Shipment.GetById(shipment.ShipmentID);
+			int oldDriverId = oldShipment?.DriverID ?? 0;
+			string oldStatus = oldShipment?.ShippingStatus ?? "";
+
 			// Save or update the shipment
 			shipment.Save();
+
+			// Update the available space for the driver
+			if (oldDriverId != 0 && oldStatus != "נמסר" && shipment.ShippingStatus == "נמסר")
+			{
+				// Restore available space if the shipment is delivered
+				ShipmentDAL.RestoreDriverAvailableSpace(shipment.ShipmentID, oldDriverId);
+			}
+			else if (oldDriverId == 0 || (oldStatus != "נמסר" && shipment.ShippingStatus != "נמסר"))
+			{
+				// Update available space if the shipment is no longer delivered
+				Drivers.UpdateDriverAvailableSpace(shipment.DriverID);
+			}
 
 			// Update application-level variable
 			Application["Shipments"] = Shipment.GetAll();
@@ -104,5 +123,6 @@ namespace Driver_management.AdminManager
 			// Redirect to shipment list page
 			Response.Redirect("AddressList.aspx");
 		}
+
 	}
 }

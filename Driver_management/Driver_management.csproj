@@ -235,6 +235,7 @@
     <Content Include="AdminManager\js\raphael\raphael.min.js" />
     <Content Include="AdminManager\js\sb-admin-2.js" />
     <Content Include="AdminManager\js\ShipmentsChart.js" />
+    <Content Include="AdminManager\ManageNews.aspx" />
     <Content Include="AdminManager\NewsList.aspx" />
     <Content Include="AdminManager\UserAddEdit.aspx" />
     <Content Include="AdminManager\UserList.aspx" />
@@ -263,6 +264,7 @@
     <Content Include="css\bootstrap.rtl.min.css" />
     <Content Include="DriverManagement\DriverHome.aspx" />
     <Content Include="DriverManagement\ShowMap.aspx" />
+    <Content Include="js\chatPanel.js" />
     <Content Include="js\PayOrder.js" />
     <Content Include="LoginRegister.aspx" />
     <Content Include="DriverManagement\MyShipments.aspx" />
@@ -339,6 +341,13 @@
     </Compile>
     <Compile Include="AdminManager\ClientsAddEdit.aspx.designer.cs">
       <DependentUpon>ClientsAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminManager\ManageNews.aspx.cs">
+      <DependentUpon>ManageNews.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminManager\ManageNews.aspx.designer.cs">
+      <DependentUpon>ManageNews.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminManager\NewsList.aspx.cs">
       <DependentUpon>NewsList.aspx</DependentUpon>

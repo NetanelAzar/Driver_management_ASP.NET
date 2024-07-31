@@ -1,8 +1,6 @@
 ﻿using BLL;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -12,10 +10,19 @@ namespace Driver_management.AdminManager
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			///חיבור מאגר המוצרים לרפיטר
+			if (!IsPostBack)
+			{
+				LoadUsers();
+			}
+		}
+
+		private void LoadUsers()
+		{
+			// קבלת רשימת הנהגים מה-Application
 			List<Drivers> LstUser = (List<Drivers>)Application["Drivers"];
 			RptUser.DataSource = LstUser;
 			RptUser.DataBind();
 		}
+
 	}
 }

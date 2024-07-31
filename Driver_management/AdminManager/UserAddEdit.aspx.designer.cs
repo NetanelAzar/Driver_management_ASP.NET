@@ -15,49 +15,85 @@ namespace Driver_management.AdminManager
 	{
 
 		/// <summary>
-		/// HidUser control.
+		/// HidDriverID control.
 		/// </summary>
 		/// <remarks>
 		/// Auto-generated field.
 		/// To modify move field declaration from designer file to code-behind file.
 		/// </remarks>
-		protected global::System.Web.UI.WebControls.HiddenField HidUser;
+		protected global::System.Web.UI.WebControls.HiddenField HidDriverID;
 
 		/// <summary>
-		/// TxtFirstName control.
+		/// TxtUserFullName control.
 		/// </summary>
 		/// <remarks>
 		/// Auto-generated field.
 		/// To modify move field declaration from designer file to code-behind file.
 		/// </remarks>
-		protected global::System.Web.UI.WebControls.TextBox TxtFirstName;
+		protected global::System.Web.UI.WebControls.TextBox TxtUserFullName;
 
 		/// <summary>
-		/// TxtLastName control.
+		/// TxtUserMail control.
 		/// </summary>
 		/// <remarks>
 		/// Auto-generated field.
 		/// To modify move field declaration from designer file to code-behind file.
 		/// </remarks>
-		protected global::System.Web.UI.WebControls.TextBox TxtLastName;
+		protected global::System.Web.UI.WebControls.TextBox TxtUserMail;
 
 		/// <summary>
-		/// TxtPhone control.
+		/// TxtUserPhone control.
 		/// </summary>
 		/// <remarks>
 		/// Auto-generated field.
 		/// To modify move field declaration from designer file to code-behind file.
 		/// </remarks>
-		protected global::System.Web.UI.WebControls.TextBox TxtPhone;
+		protected global::System.Web.UI.WebControls.TextBox TxtUserPhone;
 
 		/// <summary>
-		/// TxtMail control.
+		/// TxtUserCode control.
 		/// </summary>
 		/// <remarks>
 		/// Auto-generated field.
 		/// To modify move field declaration from designer file to code-behind file.
 		/// </remarks>
-		protected global::System.Web.UI.WebControls.TextBox TxtMail;
+		protected global::System.Web.UI.WebControls.TextBox TxtUserCode;
+
+		/// <summary>
+		/// TxtCityCode control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.TextBox TxtCityCode;
+
+		/// <summary>
+		/// TxtZoneID control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.TextBox TxtZoneID;
+
+		/// <summary>
+		/// TxtMax control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.TextBox TxtMax;
+
+		/// <summary>
+		/// TxtAddress control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.TextBox TxtAddress;
 
 		/// <summary>
 		/// TxtPassword control.
@@ -67,24 +103,6 @@ namespace Driver_management.AdminManager
 		/// To modify move field declaration from designer file to code-behind file.
 		/// </remarks>
 		protected global::System.Web.UI.WebControls.TextBox TxtPassword;
-
-		/// <summary>
-		/// ImgPicname control.
-		/// </summary>
-		/// <remarks>
-		/// Auto-generated field.
-		/// To modify move field declaration from designer file to code-behind file.
-		/// </remarks>
-		protected global::System.Web.UI.WebControls.Image ImgPicname;
-
-		/// <summary>
-		/// UploadPic control.
-		/// </summary>
-		/// <remarks>
-		/// Auto-generated field.
-		/// To modify move field declaration from designer file to code-behind file.
-		/// </remarks>
-		protected global::System.Web.UI.WebControls.FileUpload UploadPic;
 
 		/// <summary>
 		/// BtnSave control.

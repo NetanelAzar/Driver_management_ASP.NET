@@ -223,6 +223,61 @@ namespace DAL
 			return shipments;
 		}
 
+
+
+
+
+
+
+
+
+		public static void RestoreDriverAvailableSpace(int shipmentId, int driverId)
+		{
+			try
+			{
+				DbContext Db = new DbContext();
+
+				// שליפת מספר החבילות במשלוח
+				string sqlShipment = $"SELECT NumberOfPackages FROM Shipments WHERE ShipmentID = {shipmentId} AND DriverID = {driverId}";
+				DataTable dtShipment = Db.Execute(sqlShipment);
+
+				if (dtShipment.Rows.Count > 0)
+				{
+					int numberOfPackages = Convert.ToInt32(dtShipment.Rows[0]["NumberOfPackages"]);
+
+					// שליפת פרטי הנהג
+					string sqlDriver = $"SELECT MaxDeliveries, CurrentDeliveries FROM Drivers WHERE DriverID = {driverId}";
+					DataTable dtDriver = Db.Execute(sqlDriver);
+
+					if (dtDriver.Rows.Count > 0)
+					{
+						int currentDeliveries = Convert.ToInt32(dtDriver.Rows[0]["CurrentDeliveries"]);
+						int updatedDeliveries = currentDeliveries + numberOfPackages; // הפחתת המקום המנוצל
+
+						// עדכון המקום הפנוי של הנהג
+						string sqlUpdate = $"UPDATE Drivers SET CurrentDeliveries = {updatedDeliveries} WHERE DriverID = {driverId}";
+						Db.ExecuteNonQuery(sqlUpdate);
+					}
+				}
+
+				Db.Close();
+			}
+			catch (Exception ex)
+			{
+				// טיפול או רישום השגיאה
+				Console.WriteLine($"Error restoring driver available space: {ex.Message}");
+			}
+		}
+
+
+
+
+
+
+
+
+
+
 		public static void UpdateDeliveryStatus(int shipmentId, string shippingStatus)
 		{
 			// יצירת אובייקט DbContext
@@ -232,9 +287,9 @@ namespace DAL
 			{
 				// שימוש בפרמטרים לשמירה על הטקסט בצורה נכונה
 				string Sql = @"
-            UPDATE Shipments
-            SET ShippingStatus = @ShippingStatus
-            WHERE ShipmentID = @ShipmentID";
+        UPDATE Shipments
+        SET ShippingStatus = @ShippingStatus
+        WHERE ShipmentID = @ShipmentID";
 
 				// יצירת אובייקט SqlCommand והגדרת פרמטרים
 				SqlCommand Cmd = new SqlCommand(Sql, Db.Conn);
@@ -243,6 +298,27 @@ namespace DAL
 
 				// ביצוע השאילתה
 				Cmd.ExecuteNonQuery();
+
+				// שליפת המשלוח מהנתונים הקודמים כדי למצוא את ה-DriverID
+				string sqlGetDriverId = "SELECT DriverID, ShippingStatus FROM Shipments WHERE ShipmentID = @ShipmentID";
+				SqlCommand getDriverCmd = new SqlCommand(sqlGetDriverId, Db.Conn);
+				getDriverCmd.Parameters.AddWithValue("@ShipmentID", shipmentId);
+
+				using (SqlDataReader reader = getDriverCmd.ExecuteReader())
+				{
+					if (reader.Read())
+					{
+						int driverId = reader.GetInt32(reader.GetOrdinal("DriverID"));
+						string oldStatus = reader.GetString(reader.GetOrdinal("ShippingStatus"));
+
+						// בדוק אם הסטטוס השתנה ל"נמסר" 
+						if (oldStatus != "נמסר" && shippingStatus == "נמסר")
+						{
+							// קריאה לפונקציה להחזרת המקום הפנוי לנהג המסוים
+							RestoreDriverAvailableSpace(shipmentId, driverId);
+						}
+					}
+				}
 			}
 			finally
 			{
@@ -250,6 +326,20 @@ namespace DAL
 				Db.Close();
 			}
 		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

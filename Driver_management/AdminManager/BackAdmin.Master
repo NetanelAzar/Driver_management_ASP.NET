@@ -349,7 +349,7 @@
                                     <a href="UserList.aspx">רשימת נהגים</a>
                                 </li>
                                 <li>
-                                    <a href="#">הוספת נהג חדש</a>
+                                    <a href="UserAddEdit.aspx">הוספת נהג חדש</a>
                                 </li>
 
                             </ul>
@@ -399,6 +399,37 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+
+
+
+
+
+
+
+
+
+
+                                                <li>
+                            <a href="#" class="map-link">
+                                <i class="fa fa-comments"></i> חדשות ועדכונים <span class="fa arrow"></span>
+                            </a>
+
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="NewsList.aspx">חדשות / עדכונים</a>
+                                </li>
+                                <li>
+                                    <a href="ManageNews.aspx">הוספה </a>
+                                </li>
+
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+
+
+
+
 
 
 
