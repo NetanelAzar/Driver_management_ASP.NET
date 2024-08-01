@@ -34,13 +34,13 @@ namespace Driver_management.DriverManagement
 
 			lblUsername.Text = "שלום, " + loggedInDriver.DriverName;
 
-			// Load today's deliveries
+			// טוען את ההובלות להיום
 			var today = DateTime.Today;
 			var deliveriesToday = BLL.Shipment.GetAll().Where(s => s.DriverID == loggedInDriver.DriverID && s.OrderDate.Date == today).ToList();
 			RptDeliveriesToday.DataSource = deliveriesToday;
 			RptDeliveriesToday.DataBind();
 
-			// Load number of deliveries made this month
+			// טוען את מספר ההובלות שביצע הנהג החודש
 			var deliveriesThisMonth = BLL.Shipment.GetAll().Where(s => s.DriverID == loggedInDriver.DriverID && s.OrderDate.Month == today.Month && s.OrderDate.Year == today.Year).Count();
 			LblDeliveriesThisMonth.Text = deliveriesThisMonth.ToString();
 		}
@@ -51,7 +51,6 @@ namespace Driver_management.DriverManagement
 			RptNews.DataSource = newsList;
 			RptNews.DataBind();
 		}
-
 
 		private void LoadMonthlyShipments()
 		{
@@ -65,9 +64,9 @@ namespace Driver_management.DriverManagement
 				return;
 			}
 
-			int driverId = loggedInDriver.DriverID; // קבלת מזהה הנהג מה־Session
+			int driverId = loggedInDriver.DriverID; // קבלת מזהה הנהג מה-Session
 
-			// יצירת השאילתא עם פרמטרים משולבים ישירות במחרוזת השאילתא
+			// יצירת השאילתה עם פרמטרים ישירות במחרוזת השאילתה
 			string sql = $@"SELECT MONTH(OrderDate) AS Month, COUNT(*) AS ShipmentCount 
                    FROM Shipments 
                    WHERE YEAR(OrderDate) = {currentYear} 
@@ -97,7 +96,5 @@ namespace Driver_management.DriverManagement
 				$"window.onload = function() {{ loadChart({monthsJson}, {shipmentCountsJson}); }};",
 				true);
 		}
-
-
 	}
 }

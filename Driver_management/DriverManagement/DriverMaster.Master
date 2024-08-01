@@ -26,7 +26,7 @@
                         <a class="nav-link" href="ShowMap.aspx">מפה</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">משכורת</a>
+                        <a class="nav-link" href="Salary.aspx">משכורת</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="MyShipments.aspx">הכתובות שלי</a>

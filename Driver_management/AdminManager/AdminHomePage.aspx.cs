@@ -1,35 +1,36 @@
-﻿using DATA;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Web.Script.Serialization;
-using System.Web.UI;
+﻿using DATA; // ייבוא שכבת הנתונים (Data Layer)
+using System; // ייבוא הספרייה הבסיסית של .NET
+using System.Collections.Generic; // ייבוא של רשימות ודומיהן
+using System.Data; // ייבוא של אובייקטים לעבודה עם נתונים
+using System.Web.Script.Serialization; // ייבוא של אובייקט JSON Serializer
+using System.Web.UI; // ייבוא של רכיבי Web Forms
 
 namespace Driver_management.AdminManager
 {
-	public partial class AdminHomePage : System.Web.UI.Page
+	public partial class AdminHomePage : System.Web.UI.Page // הגדרת דף ASP.NET
 	{
-		protected void Page_Load(object sender, EventArgs e)
+		protected void Page_Load(object sender, EventArgs e) // אירוע טעינת הדף
 		{
 			// Update active users count only if not a postback
-			if (!IsPostBack)
+			if (!IsPostBack) // בדיקה אם הדף לא נטען מחדש (כפתור שליחה וכו')
 			{
 				// Initialize session if needed
-				if (Session["Login"] == null)
+				if (Session["Login"] == null) // אם אין מידע על כניסות כרגע
 				{
-					Session["Login"] = new List<string>();
+					Session["Login"] = new List<string>(); // יצירת רשימה חדשה למעקב אחרי משתמשים מחוברים
 				}
 
 				// Update label with active users count
-				lblActiveUsersCount.Text = GetActiveUsersCount().ToString();
-				LoadMonthlyShipments();
-				LoadNotifications();
+				lblActiveUsersCount.Text = GetActiveUsersCount().ToString(); // הצגת מספר המשתמשים הפעילים
+				LoadMonthlyShipments(); // טעינת נתוני השילוחים החודשיים
+				LoadNotifications(); // טעינת התראות
 			}
 		}
-		private void LoadMonthlyShipments()
+
+		private void LoadMonthlyShipments() // פונקציה לטעינת נתוני שילוחים חודשיים
 		{
-			DbContext Db = new DbContext();
-			int currentYear = DateTime.Now.Year;
+			DbContext Db = new DbContext(); // יצירת אובייקט DbContext לניהול חיבורי נתונים
+			int currentYear = DateTime.Now.Year; // קבלת השנה הנוכחית
 
 			string Sql = $@"SELECT MONTH(OrderDate) AS Month, COUNT(*) AS ShipmentCount 
                     FROM Shipments 
@@ -37,82 +38,79 @@ namespace Driver_management.AdminManager
                     GROUP BY MONTH(OrderDate) 
                     ORDER BY MONTH(OrderDate)";
 
-			DataTable Dt = Db.Execute(Sql);
+			DataTable Dt = Db.Execute(Sql); // הרצת השאילתה לקבלת נתונים
 
-			List<int> months = new List<int>();
-			List<int> shipmentCounts = new List<int>();
+			List<int> months = new List<int>(); // רשימה לחודשים
+			List<int> shipmentCounts = new List<int>(); // רשימה למספרי השילוחים
 
-			foreach (DataRow row in Dt.Rows)
+			foreach (DataRow row in Dt.Rows) // עבור כל שורה בתוצאות
 			{
-				int month = Convert.ToInt32(row["Month"]);
-				int count = Convert.ToInt32(row["ShipmentCount"]);
+				int month = Convert.ToInt32(row["Month"]); // קבלת החודש
+				int count = Convert.ToInt32(row["ShipmentCount"]); // קבלת מספר השילוחים
 
 				// עבור כל חודש, הדפס את הנתונים למעקב
 				Console.WriteLine($"Month: {month}, ShipmentCount: {count}");
 
-				months.Add(month);
-				shipmentCounts.Add(count);
+				months.Add(month); // הוספת חודש לרשימה
+				shipmentCounts.Add(count); // הוספת מספר שילוחים לרשימה
 			}
 
-			JavaScriptSerializer serializer = new JavaScriptSerializer();
-			string monthsJson = serializer.Serialize(months);
-			string shipmentCountsJson = serializer.Serialize(shipmentCounts);
+			JavaScriptSerializer serializer = new JavaScriptSerializer(); // יצירת אובייקט Serializer להמרת נתונים ל-JSON
+			string monthsJson = serializer.Serialize(months); // המרת רשימת החודשים ל-JSON
+			string shipmentCountsJson = serializer.Serialize(shipmentCounts); // המרת רשימת מספרי השילוחים ל-JSON
 
 			ClientScript.RegisterStartupScript(this.GetType(), "loadChart",
-				$"window.onload = function() {{ loadChart({monthsJson}, {shipmentCountsJson}); }};",
+				$"window.onload = function() {{ loadChart({monthsJson}, {shipmentCountsJson}); }};", // הוספת קוד JS להרצת פונקציית chart בטעינת הדף
 				true);
 		}
 
-
-
-		public void UserLogin(string username)
+		public void UserLogin(string username) // פונקציה להוספת משתמש לרשימת המשתמשים המחוברים
 		{
-			var loggedInUsers = Session["Login"] as List<string>;
+			var loggedInUsers = Session["Login"] as List<string>; // קבלת רשימת המשתמשים המחוברים מה-session
 
-			if (loggedInUsers == null)
+			if (loggedInUsers == null) // אם הרשימה לא קיימת
 			{
-				loggedInUsers = new List<string>();
-				Session["Login"] = loggedInUsers;
+				loggedInUsers = new List<string>(); // יצירת רשימה חדשה
+				Session["Login"] = loggedInUsers; // עדכון ה-session
 			}
 
-			if (!loggedInUsers.Contains(username))
+			if (!loggedInUsers.Contains(username)) // אם המשתמש לא ברשימה
 			{
-				loggedInUsers.Add(username);
-			}
-
-			// Debugging output to trace issue
-			System.Diagnostics.Debug.WriteLine($"User logged in: {username}. Total active users: {loggedInUsers.Count}");
-		}
-
-		public void UserLogout(string username)
-		{
-			var loggedInUsers = Session["Login"] as List<string>;
-
-			if (loggedInUsers != null)
-			{
-				loggedInUsers.Remove(username);
+				loggedInUsers.Add(username); // הוספת המשתמש לרשימה
 			}
 
 			// Debugging output to trace issue
-			System.Diagnostics.Debug.WriteLine($"User logged out: {username}. Total active users: {loggedInUsers?.Count ?? 0}");
+			System.Diagnostics.Debug.WriteLine($"User logged in: {username}. Total active users: {loggedInUsers.Count}"); // רישום הודעת שגיאה
 		}
 
-		public int GetActiveUsersCount()
+		public void UserLogout(string username) // פונקציה להסרת משתמש מרשימת המשתמשים המחוברים
 		{
-			var activeUsers = Application["Login"] as List<string>;
-			return activeUsers != null ? activeUsers.Count : 0;
+			var loggedInUsers = Session["Login"] as List<string>; // קבלת רשימת המשתמשים המחוברים מה-session
+
+			if (loggedInUsers != null) // אם הרשימה קיימת
+			{
+				loggedInUsers.Remove(username); // הסרת המשתמש מהרשימה
+			}
+
+			// Debugging output to trace issue
+			System.Diagnostics.Debug.WriteLine($"User logged out: {username}. Total active users: {loggedInUsers?.Count ?? 0}"); // רישום הודעת שגיאה
 		}
 
-
-		private void LoadNotifications()
+		public int GetActiveUsersCount() // פונקציה לקבלת מספר המשתמשים הפעילים
 		{
-			var notifications = Session["LoginNotifications"] as List<string> ?? new List<string>();
-
-			rptNotifications.DataSource = notifications;
-			rptNotifications.DataBind();
+			var activeUsers = Application["Login"] as List<string>; // קבלת רשימת המשתמשים הפעילים מה-Application
+			return activeUsers != null ? activeUsers.Count : 0; // החזרת מספר המשתמשים הפעילים
 		}
 
-		protected void rptNotifications_ItemCommand(object source, System.Web.UI.WebControls.RepeaterCommandEventArgs e)
+		private void LoadNotifications() // פונקציה לטעינת התראות
+		{
+			var notifications = Session["LoginNotifications"] as List<string> ?? new List<string>(); // קבלת התראות מה-session או יצירת רשימה ריקה
+
+			rptNotifications.DataSource = notifications; // הגדרת מקור הנתונים ל-Repeater
+			rptNotifications.DataBind(); // הצגת ההתראות ב-Repeater
+		}
+
+		protected void rptNotifications_ItemCommand(object source, System.Web.UI.WebControls.RepeaterCommandEventArgs e) // אירוע עבור פעולות ב-Repeater
 		{
 
 		}

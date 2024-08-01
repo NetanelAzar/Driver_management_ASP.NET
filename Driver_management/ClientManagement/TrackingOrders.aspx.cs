@@ -1,4 +1,4 @@
-﻿using BLL;
+﻿using BLL; // שימוש ב-Business Logic Layer
 using System;
 using System.Collections.Generic;
 using System.Web.UI;
@@ -18,25 +18,25 @@ namespace Driver_management.ClientManagement
 
 		private void LoadOrders()
 		{
-			// Retrieve logged-in client information from session or wherever it's stored
+			// קבלת פרטי הלקוח המחובר מה-session או ממקום אחר שבו הם נשמרים
 			Client loggedInClient = Session["Login"] as Client;
 
 			if (loggedInClient == null)
 			{
-				// Handle case where logged-in client is not found
-				Response.Write("Error: Logged-in client information not found.");
+				// טיפול במקרה שבו פרטי הלקוח המחובר לא נמצאו
+				Response.Write("שגיאה: לא נמצאו פרטי הלקוח המחובר.");
 				return;
 			}
 
-			// Fetch orders for the logged-in client
+			// שליפת ההזמנות עבור הלקוח המחובר
 			List<Shipment> orders = BLL.Shipment.GetShipmentsByCustomerId(loggedInClient.ClientID);
 
-			// Bind orders to Repeater
+			// קישור ההזמנות ל-Repeater
 			RptOrders.DataSource = orders;
 			RptOrders.DataBind();
 		}
 
-		// Helper method to format city names
+		// פונקציה לעזור לעצב את שמות הערים
 		protected string GetCityNameById(object cityIdObj)
 		{
 			if (cityIdObj == null || cityIdObj == DBNull.Value)
@@ -45,7 +45,7 @@ namespace Driver_management.ClientManagement
 			int cityId;
 			if (int.TryParse(cityIdObj.ToString(), out cityId))
 			{
-				City city = BLL.City.GetById(cityId); // Assuming this method exists in BLL
+				City city = BLL.City.GetById(cityId); // הנחה שיש שיטה כזו ב-BLL
 				if (city != null)
 				{
 					return city.CityName;
@@ -54,7 +54,7 @@ namespace Driver_management.ClientManagement
 			return string.Empty;
 		}
 
-		// Function to format date
+		// פונקציה לעצב תאריך
 		public string FormatDate(object date)
 		{
 			if (date != null && DateTime.TryParse(date.ToString(), out DateTime dt))

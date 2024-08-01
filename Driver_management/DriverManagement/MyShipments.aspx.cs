@@ -24,15 +24,15 @@ namespace Driver_management.DriverManagement
 			Button btnConfirmDelivery = (Button)sender;
 			int shipmentId = Convert.ToInt32(btnConfirmDelivery.CommandArgument);
 
-			// Update shipment status to "Delivered"
+			// עדכון מצב ההובלה ל"נמסר"
 			string Status = "נמסר";
 			Shipment.UpdateDeliveryStatus(shipmentId, Status);
 
-			// Update delivery date to current date
+			// עדכון תאריך ההובלה לתאריך הנוכחי
 			DateTime deliveryDate = DateTime.Now;
 			ShipmentDAL.UpdateDeliveryDate(shipmentId, deliveryDate);
 
-			// Refresh the list after update
+			// רענון הרשימה לאחר העדכון
 			LoadMyShipments();
 		}
 
@@ -48,26 +48,22 @@ namespace Driver_management.DriverManagement
 			else
 			{
 				Response.Redirect("~/LoginRegister.aspx");
-
 			}
 		}
-
 
 		protected void BtnConfirmPickup_Click(object sender, EventArgs e)
 		{
 			Button btnConfirmPickup = (Button)sender;
 			int shipmentId = Convert.ToInt32(btnConfirmPickup.CommandArgument);
 
-			// Update shipment status to "On the way to destination"
+			// עדכון מצב ההובלה ל"נאסף על ידי השליח"
 			Shipment.UpdateDeliveryStatus(shipmentId, "נאסף על ידי השליח");
 
-			// Update pickup date to current date
+			// עדכון תאריך האיסוף לתאריך הנוכחי
 			DateTime pickupDate = DateTime.Now;
 			ShipmentDAL.UpdatePickupDate(shipmentId, pickupDate);
 
-
-
-			// Refresh the list after update
+			// רענון הרשימה לאחר העדכון
 			LoadMyShipments();
 		}
 
@@ -76,10 +72,10 @@ namespace Driver_management.DriverManagement
 			Button btnSendWhatsApp = (Button)sender;
 			string customerPhone = btnSendWhatsApp.CommandArgument;
 
-			// Create WhatsApp message link
+			// יצירת לינק לשליחת הודעה ב-WhatsApp
 			string whatsappLink = $"https://wa.me/{customerPhone}?text=Your shipment is ready for pickup.";
 
-			// Open a new browser window with the link
+			// פתיחת חלון דפדפן חדש עם הלינק
 			ScriptManager.RegisterStartupScript(this, GetType(), "OpenWhatsApp", $"window.open('{whatsappLink}','_blank');", true);
 		}
 
@@ -90,27 +86,25 @@ namespace Driver_management.DriverManagement
 			string destinationAddress = args[0];
 			int cityId = Convert.ToInt32(args[1]);
 
-			// Get city name by ID
+			// קבלת שם העיר לפי מזהה
 			string destinationCity = City.GetCityNameById(cityId);
 
-			// Prepare the Waze navigation link
+			// הכנת לינק ניווט ל-Waze
 			string wazeLink = GetWazeNavigationLink(destinationAddress, destinationCity);
 
-			// Open a new browser window with the link
+			// פתיחת חלון דפדפן חדש עם הלינק
 			ScriptManager.RegisterStartupScript(this, GetType(), "OpenWaze", $"window.open('{wazeLink}','_blank');", true);
 		}
 
 		private string GetWazeNavigationLink(string destinationAddress, string destinationCity)
 		{
-			// Construct the Waze navigation link
+			// בניית לינק ניווט ל-Waze
 			string wazeBaseUri = "https://waze.com/ul";
 			string queryParams = $"?q={Uri.EscapeDataString(destinationAddress)}, {Uri.EscapeDataString(destinationCity)}, Israel";
 			string wazeLink = $"{wazeBaseUri}{queryParams}";
 
 			return wazeLink;
 		}
-
-
 
 		private int GetCurrentUserId()
 		{

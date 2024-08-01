@@ -1,7 +1,7 @@
-﻿using BLL;
+﻿using BLL; // שימוש במחלקות מהשכבת BLL
 using System;
-using System.Linq;
-using System.Web.UI;
+using System.Linq; // שימוש ב-LINQ לסינון וסידור נתונים
+using System.Web.UI; // לשימוש בעמודי ASP.NET
 
 namespace Driver_management.ClientManagement
 {
@@ -11,20 +11,21 @@ namespace Driver_management.ClientManagement
 		{
 			if (!IsPostBack)
 			{
-				// Populate dropdown with cities from database
+				// ממלא את רשימת הערים בתיבת הבחירה מהמסד נתונים
 				var cities = BLL.City.GetAll().OrderBy(c => c.CityName).ToList();
 				DdlCityDestination.DataSource = cities;
 				DdlCityDestination.DataTextField = "CityName";
 				DdlCityDestination.DataValueField = "CityID";
 				DdlCityDestination.DataBind();
 
-				// Set current date on the Order Date field
+				// קובע את התאריך הנוכחי בשדה תאריך ההזמנה
 				TxtOrderDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
 			}
 		}
 
 		protected void TxtNumberOfPackages_TextChanged(object sender, EventArgs e)
 		{
+			// מחשב את הסכום הכולל על פי מספר החבילות שהוזן
 			int numberOfPackages;
 			if (int.TryParse(TxtNumberOfPackages.Text, out numberOfPackages))
 			{
@@ -36,6 +37,7 @@ namespace Driver_management.ClientManagement
 		{
 			try
 			{
+				// בודק אם מספר החבילות חוקי
 				int numberOfPackages;
 				if (!int.TryParse(TxtNumberOfPackages.Text, out numberOfPackages) || numberOfPackages <= 0)
 				{
@@ -43,6 +45,7 @@ namespace Driver_management.ClientManagement
 					return;
 				}
 
+				// בודק אם תאריך ההזמנה חוקי
 				DateTime orderDate;
 				if (!DateTime.TryParse(TxtOrderDate.Text, out orderDate))
 				{
@@ -50,6 +53,7 @@ namespace Driver_management.ClientManagement
 					return;
 				}
 
+				// מקבל את פרטי הלקוח המחובר מהסשן
 				Client loggedInClient = Session["Login"] as Client;
 
 				if (loggedInClient == null)
@@ -58,12 +62,13 @@ namespace Driver_management.ClientManagement
 					return;
 				}
 
-				// Redirect to payment page with order details
+				// מבצע הפניה לדף התשלום עם פרטי ההזמנה
 				string paymentUrl = $"PayOrder.aspx?NumberOfPackages={numberOfPackages}&TotalAmount={numberOfPackages * 60}&DestinationAddress={TxtDestinationAddress.Text}&OrderDate={orderDate.ToString("yyyy-MM-dd")}&DestinationCity={DdlCityDestination.SelectedValue}";
 				Response.Redirect(paymentUrl);
 			}
 			catch (Exception ex)
 			{
+				// מציג את השגיאה במקרה של שגיאה
 				Response.Write($"שגיאה: {ex.Message}");
 			}
 		}

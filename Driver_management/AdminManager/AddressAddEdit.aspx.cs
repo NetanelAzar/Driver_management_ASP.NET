@@ -1,128 +1,128 @@
-﻿using System;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using BLL;
-using DAL;
+﻿using System; // ייבוא הספרייה הבסיסית של .NET
+using System.Web.UI; // ייבוא של רכיבי UI של ASP.NET
+using System.Web.UI.WebControls; // ייבוא של רכיבי Web Controls כמו DropDownList
+using BLL; // ייבוא של השכבת העסקית (Business Logic Layer)
+using DAL; // ייבוא של השכבת הנתונים (Data Access Layer)
 
 namespace Driver_management.AdminManager
 {
-	public partial class AddressAddEdit : System.Web.UI.Page
+	public partial class AddressAddEdit : System.Web.UI.Page // הגדרת דף ASP.NET
 	{
-		protected void Page_Load(object sender, EventArgs e)
+		protected void Page_Load(object sender, EventArgs e) // אירוע טוען דף
 		{
-			if (!IsPostBack)
+			if (!IsPostBack) // בדיקה אם הדף לא נטען מחדש (כפתור שליחה וכו')
 			{
-				// Populate dropdowns with data
-				DdlDestinationCity.DataSource = City.GetAll();
-				DdlDestinationCity.DataTextField = "CityName";
-				DdlDestinationCity.DataValueField = "CityId";
-				DdlDestinationCity.DataBind();
+				// הוספת ערכים ל-DropDownList של ערים
+				DdlDestinationCity.DataSource = City.GetAll(); // קבלת כל הערים מה-BLL
+				DdlDestinationCity.DataTextField = "CityName"; // הגדרת שם השדה שיוצג למשתמש
+				DdlDestinationCity.DataValueField = "CityId"; // הגדרת שם השדה שישמש כערך פנימי
+				DdlDestinationCity.DataBind(); // הצגת הנתונים ב-DropDownList
 
-				DdlDriverID.DataSource = Drivers.GetAll();
-				DdlDriverID.DataTextField = "DriverName";
-				DdlDriverID.DataValueField = "DriverID";
-				DdlDriverID.DataBind();
+				// הוספת ערכים ל-DropDownList של נהגים
+				DdlDriverID.DataSource = Drivers.GetAll(); // קבלת כל הנהגים מה-BLL
+				DdlDriverID.DataTextField = "DriverName"; // הגדרת שם השדה שיוצג למשתמש
+				DdlDriverID.DataValueField = "DriverID"; // הגדרת שם השדה שישמש כערך פנימי
+				DdlDriverID.DataBind(); // הצגת הנתונים ב-DropDownList
 
-				// Populate shipment status dropdown
-				DdlShipmentStatus.Items.Clear();
-				DdlShipmentStatus.Items.Add(new ListItem("-- בחר סטאטוס משלוח --"));
-				DdlShipmentStatus.Items.Add(new ListItem("התקבל במערכת"));
+				// הוספת ערכים ל-DropDownList של סטטוס המשלוח
+				DdlShipmentStatus.Items.Clear(); // ניקוי פריטים קיימים
+				DdlShipmentStatus.Items.Add(new ListItem("-- בחר סטאטוס משלוח --")); // פריט ראשוני
+				DdlShipmentStatus.Items.Add(new ListItem("התקבל במערכת")); // סטטוסים שונים
 				DdlShipmentStatus.Items.Add(new ListItem("נאסף על ידי השליח"));
 				DdlShipmentStatus.Items.Add(new ListItem("בדרך ליעד"));
 				DdlShipmentStatus.Items.Add(new ListItem("נמסר"));
 
-				// Check if there's a shipment ID in query string
-				string shipmentID = Request["ShipmentID"];
-				if (!string.IsNullOrEmpty(shipmentID))
+				// בדיקת קיום מזהה משלוח ב-Query String
+				string shipmentID = Request["ShipmentID"]; // קבלת מזהה משלוח מה-Query String
+				if (!string.IsNullOrEmpty(shipmentID)) // בדיקת אם המזהה אינו ריק
 				{
-					if (int.TryParse(shipmentID, out int parsedShipmentID))
+					if (int.TryParse(shipmentID, out int parsedShipmentID)) // המרת המזהה למספר שלם
 					{
-						// Load shipment details
-						Shipment shipment = Shipment.GetById(parsedShipmentID);
-						if (shipment != null)
+						// טעינת פרטי המשלוח
+						Shipment shipment = Shipment.GetById(parsedShipmentID); // קבלת פרטי המשלוח לפי מזהה
+						if (shipment != null) // בדיקת אם המשלוח נמצא
 						{
-							HidShipmentID.Value = shipmentID;
-							TxtSourceAddress.Text = shipment.SourceAddress;
-							TxtSourceCity.Text = shipment.SourceCity;
-							TxtDestinationAddress.Text = shipment.DestinationAddress;
-							DdlDestinationCity.SelectedValue = shipment.DestinationCity.ToString();
-							TxtCustomerPhone.Text = shipment.CustomerPhone;
-							TxtPickupDate.Text = shipment.PickupDate.ToString("yyyy-MM-dd");
-							TxtDeliveryDate.Text = shipment.DeliveryDate.ToString("yyyy-MM-dd");
-							TxtShipmentDate.Text = shipment.ShipmentDate.ToString("yyyy-MM-dd");
-							TxtOrderDate.Text = shipment.OrderDate.ToString("yyyy-MM-dd");
-							TxtNumberOfPackages.Text = shipment.NumberOfPackages.ToString();
-							DdlDriverID.SelectedValue = shipment.DriverID.ToString();
-							TxtCustomerID.Text = shipment.CustomerID.ToString();
-							DdlShipmentStatus.SelectedValue = shipment.ShippingStatus;
-							TxtOrderNumber.Text = shipment.OrderNumber.ToString(); // Adding OrderNumber field
+							HidShipmentID.Value = shipmentID; // הגדרת מזהה המשלוח בשדה החבוי
+							TxtSourceAddress.Text = shipment.SourceAddress; // הגדרת כתובת מקור
+							TxtSourceCity.Text = shipment.SourceCity; // הגדרת עיר מקור
+							TxtDestinationAddress.Text = shipment.DestinationAddress; // הגדרת כתובת יעד
+							DdlDestinationCity.SelectedValue = shipment.DestinationCity.ToString(); // הגדרת עיר יעד שנבחרה
+							TxtCustomerPhone.Text = shipment.CustomerPhone; // הגדרת טלפון הלקוח
+							TxtPickupDate.Text = shipment.PickupDate.ToString("yyyy-MM-dd"); // הגדרת תאריך איסוף
+							TxtDeliveryDate.Text = shipment.DeliveryDate.ToString("yyyy-MM-dd"); // הגדרת תאריך משלוח
+							TxtShipmentDate.Text = shipment.ShipmentDate.ToString("yyyy-MM-dd"); // הגדרת תאריך המשלוח
+							TxtOrderDate.Text = shipment.OrderDate.ToString("yyyy-MM-dd"); // הגדרת תאריך ההזמנה
+							TxtNumberOfPackages.Text = shipment.NumberOfPackages.ToString(); // הגדרת מספר החבילות
+							DdlDriverID.SelectedValue = shipment.DriverID.ToString(); // הגדרת נהג שנבחר
+							TxtCustomerID.Text = shipment.CustomerID.ToString(); // הגדרת מזהה הלקוח
+							DdlShipmentStatus.SelectedValue = shipment.ShippingStatus; // הגדרת סטטוס המשלוח
+							TxtOrderNumber.Text = shipment.OrderNumber.ToString(); // הגדרת מספר ההזמנה
 						}
 					}
 				}
 			}
 		}
-		protected void BtnSave_Click(object sender, EventArgs e)
+		protected void BtnSave_Click(object sender, EventArgs e) // אירוע לחיצה על כפתור שמירה
 		{
-			Shipment shipment = new Shipment();
+			Shipment shipment = new Shipment(); // יצירת אובייקט משלוח חדש
 
-			// Populate shipment object with form data
-			shipment.ShipmentID = int.Parse(HidShipmentID.Value);
-			shipment.SourceAddress = TxtSourceAddress.Text;
-			shipment.SourceCity = TxtSourceCity.Text;
-			shipment.DestinationAddress = TxtDestinationAddress.Text;
+			// הזנת נתוני הטופס לאובייקט המשלוח
+			shipment.ShipmentID = int.Parse(HidShipmentID.Value); // הגדרת מזהה המשלוח
+			shipment.SourceAddress = TxtSourceAddress.Text; // הגדרת כתובת מקור
+			shipment.SourceCity = TxtSourceCity.Text; // הגדרת עיר מקור
+			shipment.DestinationAddress = TxtDestinationAddress.Text; // הגדרת כתובת יעד
 
-			// Parsing DestinationCity to int
+			// המרת עיר היעד למספר שלם
 			if (int.TryParse(DdlDestinationCity.SelectedValue, out int cityId))
 			{
-				shipment.DestinationCity = cityId;
+				shipment.DestinationCity = cityId; // הגדרת עיר היעד
 			}
 
-			shipment.CustomerPhone = TxtCustomerPhone.Text;
-			shipment.PickupDate = DateTime.Parse(TxtPickupDate.Text);
-			shipment.DeliveryDate = DateTime.Parse(TxtDeliveryDate.Text);
-			shipment.ShipmentDate = DateTime.Parse(TxtShipmentDate.Text);
-			shipment.OrderDate = DateTime.Parse(TxtOrderDate.Text);
-			shipment.NumberOfPackages = int.Parse(TxtNumberOfPackages.Text);
+			shipment.CustomerPhone = TxtCustomerPhone.Text; // הגדרת טלפון הלקוח
+			shipment.PickupDate = DateTime.Parse(TxtPickupDate.Text); // הגדרת תאריך איסוף
+			shipment.DeliveryDate = DateTime.Parse(TxtDeliveryDate.Text); // הגדרת תאריך משלוח
+			shipment.ShipmentDate = DateTime.Parse(TxtShipmentDate.Text); // הגדרת תאריך המשלוח
+			shipment.OrderDate = DateTime.Parse(TxtOrderDate.Text); // הגדרת תאריך ההזמנה
+			shipment.NumberOfPackages = int.Parse(TxtNumberOfPackages.Text); // הגדרת מספר החבילות
 
-			// Parsing DriverID to int
+			// המרת מזהה הנהג למספר שלם
 			if (int.TryParse(DdlDriverID.SelectedValue, out int driverId))
 			{
-				shipment.DriverID = driverId;
+				shipment.DriverID = driverId; // הגדרת מזהה הנהג
 			}
 
-			shipment.CustomerID = int.Parse(TxtCustomerID.Text);
-			shipment.ShippingStatus = DdlShipmentStatus.SelectedValue;
-			shipment.OrderNumber = int.Parse(TxtOrderNumber.Text); // Adding OrderNumber field
+			shipment.CustomerID = int.Parse(TxtCustomerID.Text); // הגדרת מזהה הלקוח
+			shipment.ShippingStatus = DdlShipmentStatus.SelectedValue; // הגדרת סטטוס המשלוח
+			shipment.OrderNumber = int.Parse(TxtOrderNumber.Text); // הגדרת מספר ההזמנה
 
-			// שמור את הסטטוס הקודם של המשלוח
+			// שמירה של הסטטוס הקודם של המשלוח
 			string previousStatus = shipment.ShippingStatus;
 
-			// קבל את המשלוח הישן עבור סטטוס ונהג
-			Shipment oldShipment = Shipment.GetById(shipment.ShipmentID);
-			int oldDriverId = oldShipment?.DriverID ?? 0;
-			string oldStatus = oldShipment?.ShippingStatus ?? "";
+			// קבלת פרטי המשלוח הקודם עבור סטטוס ונהג
+			Shipment oldShipment = Shipment.GetById(shipment.ShipmentID); // קבלת המשלוח הישן לפי מזהה
+			int oldDriverId = oldShipment?.DriverID ?? 0; // קבלת מזהה הנהג הישן (אם קיים)
+			string oldStatus = oldShipment?.ShippingStatus ?? ""; // קבלת הסטטוס הישן (אם קיים)
 
-			// Save or update the shipment
-			shipment.Save();
+			// שמירה או עדכון של המשלוח
+			shipment.Save(); // שמירת המשלוח
 
-			// Update the available space for the driver
+			// עדכון המקום הזמין לנהג
 			if (oldDriverId != 0 && oldStatus != "נמסר" && shipment.ShippingStatus == "נמסר")
 			{
-				// Restore available space if the shipment is delivered
+				// החזרת מקום פנוי אם המשלוח נמסר
 				ShipmentDAL.RestoreDriverAvailableSpace(shipment.ShipmentID, oldDriverId);
 			}
 			else if (oldDriverId == 0 || (oldStatus != "נמסר" && shipment.ShippingStatus != "נמסר"))
 			{
-				// Update available space if the shipment is no longer delivered
+				// עדכון מקום פנוי אם המשלוח כבר לא נמסר
 				Drivers.UpdateDriverAvailableSpace(shipment.DriverID);
 			}
 
-			// Update application-level variable
-			Application["Shipments"] = Shipment.GetAll();
+			// עדכון משתנה ברמת האפליקציה
+			Application["Shipments"] = Shipment.GetAll(); // ריענון רשימת המשלוחים
 
-			// Redirect to shipment list page
-			Response.Redirect("AddressList.aspx");
+			// הפניית המשתמש לדף רשימת המשלוחים
+			Response.Redirect("AddressList.aspx"); // הפניית המשתמש לדף אחר
 		}
-
 	}
 }

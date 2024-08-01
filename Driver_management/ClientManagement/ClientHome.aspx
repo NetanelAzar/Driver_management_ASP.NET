@@ -242,74 +242,74 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
+            // פתיחת הפאנל של הצ'אט כאשר לוחצים על כפתור הפתיחה
             $('#btnOpenChat').click(function () {
-                $('#chatPanel').show();
-                loadMessages();
+                $('#chatPanel').show(); // מציג את הפאנל של הצ'אט
+                loadMessages(); // טוען את ההודעות הקיימות
             });
 
+            // סגירת הפאנל של הצ'אט כאשר לוחצים על כפתור הסגירה
             $('#btnCloseChat').click(function () {
-                $('#chatPanel').hide();
+                $('#chatPanel').hide(); // מסתיר את הפאנל של הצ'אט
             });
 
+            // שליחת הודעה כאשר לוחצים על כפתור השליחה
             $('#btnSendMessage').click(function (e) {
-                e.preventDefault();
+                e.preventDefault(); // מונע את ברירת המחדל של הטופס
 
-                var message = $('#messageInput').val().trim();
+                var message = $('#messageInput').val().trim(); // מקבל את הטקסט מהקלט
                 if (message === '') {
-                    alert('אנא הקלד הודעה');
+                    alert('אנא הקלד הודעה'); // מציג הודעת שגיאה אם השדה ריק
                     return;
                 }
 
                 $.ajax({
                     type: 'POST',
-                    url: 'ClientHome.aspx/SendMessage',
-                    data: JSON.stringify({ message: message }),
+                    url: 'ClientHome.aspx/SendMessage', // כתובת ה-URL לשימוש בפונקציה בשרת
+                    data: JSON.stringify({ message: message }), // שולח את ההודעה בפורמט JSON
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     success: function (response) {
-                        $('#chatMessages').append('<li><strong>אני:</strong> ' + message + '</li>');
-                        $('#messageInput').val('');
+                        $('#chatMessages').append('<li><strong>אני:</strong> ' + message + '</li>'); // מציג את ההודעה שנשלחה
+                        $('#messageInput').val(''); // מנקה את שדה הקלט
                     },
                     error: function (xhr, status, error) {
-                        console.error("Error sending message: ", error);
+                        console.error("Error sending message: ", error); // מדפיס שגיאה בקונסולה במקרה של תקלה
                     }
                 });
             });
 
-
-
+            // פונקציה לטעינת הודעות מהשרת
             function loadMessages() {
                 $.ajax({
                     type: "POST",
-                    url: "ClientHome.aspx/GetMessages",
+                    url: "ClientHome.aspx/GetMessages", // כתובת ה-URL לשימוש בפונקציה בשרת
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (response) {
                         try {
-                            var messages = JSON.parse(response.d); // Ensure parsing response correctly
+                            var messages = JSON.parse(response.d); // מוודא שהתגובה מפורקת כראוי
                             if (Array.isArray(messages)) {
-                                $('#chatMessages').empty(); // Clear existing messages
+                                $('#chatMessages').empty(); // מנקה את רשימת ההודעות הקיימות
                                 messages.forEach(function (msg) {
-                                    var sender = msg.IsFromCustomer ? 'לקוח' : 'מנהל';
+                                    var sender = msg.IsFromCustomer ? 'לקוח' : 'מנהל'; // קובע מי שלח את ההודעה
                                     var messageHtml = '<li><strong>' + sender + ':</strong> ' + msg.MessageText + ' <small>(' + new Date(parseInt(msg.SentDate.substr(6))).toLocaleString() + ')</small></li>';
-                                    $('#chatMessages').append(messageHtml);
+                                    $('#chatMessages').append(messageHtml); // מוסיף את ההודעה לרשימה
                                 });
                             } else {
-                                console.error("Unexpected response format: ", response.d);
+                                console.error("Unexpected response format: ", response.d); // מדפיס שגיאה בקונסולה במקרה של פורמט לא צפוי
                             }
                         } catch (e) {
-                            console.error("Error parsing JSON: ", e);
+                            console.error("Error parsing JSON: ", e); // מדפיס שגיאה בקונסולה במקרה של בעיה בפריסת JSON
                         }
                     },
                     error: function (xhr, status, error) {
-                        console.error("Error loading messages: ", error);
+                        console.error("Error loading messages: ", error); // מדפיס שגיאה בקונסולה במקרה של תקלה בטעינת ההודעות
                     }
                 });
             }
 
-
-
-
+            // פונקציה לשליחת הודעה (לא בשימוש בקוד הנוכחי)
             function sendMessage(message) {
                 $.ajax({
                     type: "POST",
@@ -319,23 +319,23 @@
                     dataType: "json",
                     success: function (response) {
                         try {
-                            var result = JSON.parse(response.d); // Ensure parsing response correctly
+                            var result = JSON.parse(response.d); // מוודא שהתגובה מפורקת כראוי
                             if (result.success) {
-                                console.log(result.success);
+                                console.log(result.success); // מדפיס הודעה בהצלחה לקונסולה
                             } else {
-                                console.error(result.error);
+                                console.error(result.error); // מדפיס שגיאה בקונסולה במקרה של כישלון
                             }
                         } catch (e) {
-                            console.error("Error parsing JSON: ", e);
+                            console.error("Error parsing JSON: ", e); // מדפיס שגיאה בקונסולה במקרה של בעיה בפריסת JSON
                         }
                     },
                     error: function (xhr, status, error) {
-                        console.error("Error sending message: ", error);
+                        console.error("Error sending message: ", error); // מדפיס שגיאה בקונסולה במקרה של תקלה בשליחת הודעה
                     }
                 });
             }
-
         });
+
     </script>
 
 </asp:Content>

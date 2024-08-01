@@ -264,6 +264,7 @@
     <Content Include="css\bootstrap.rtl.css" />
     <Content Include="css\bootstrap.rtl.min.css" />
     <Content Include="DriverManagement\DriverHome.aspx" />
+    <Content Include="DriverManagement\Salary.aspx" />
     <Content Include="DriverManagement\ShowMap.aspx" />
     <Content Include="js\chatPanel.js" />
     <Content Include="js\PayOrder.js" />
@@ -477,6 +478,13 @@
     </Compile>
     <Compile Include="DriverManagement\DriverMaster.Master.designer.cs">
       <DependentUpon>DriverMaster.Master</DependentUpon>
+    </Compile>
+    <Compile Include="DriverManagement\Salary.aspx.cs">
+      <DependentUpon>Salary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DriverManagement\Salary.aspx.designer.cs">
+      <DependentUpon>Salary.aspx</DependentUpon>
     </Compile>
     <Compile Include="DriverManagement\ShowMap.aspx.cs">
       <DependentUpon>ShowMap.aspx</DependentUpon>

@@ -14,6 +14,7 @@ namespace Driver_management.DriverManagement
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			// אם המשתמש לא מחובר, הפניה לדף התחברות
 			if (Session["Login"] == null)
 			{
 				Response.Redirect("~/LoginRegister.aspx");
@@ -22,6 +23,7 @@ namespace Driver_management.DriverManagement
 
 		private static Drivers GetCurrentDriver()
 		{
+			// קבלת המידע על הנהג הנוכחי מה-Session
 			if (HttpContext.Current.Session["Login"] != null)
 			{
 				return (Drivers)HttpContext.Current.Session["Login"];
@@ -39,7 +41,7 @@ namespace Driver_management.DriverManagement
 			Drivers currentUser = GetCurrentDriver();
 			if (currentUser == null)
 			{
-				return new List<object>(); // Return an empty list if no user is logged in
+				return new List<object>(); // החזרת רשימה ריקה אם אין משתמש מחובר
 			}
 
 			List<Shipment> shipments = Shipment.GetShipmentsByUserId(currentUser.DriverID);
@@ -50,7 +52,6 @@ namespace Driver_management.DriverManagement
 				dynamic location = GetGeoLocation(shipment);
 				if (location != null)
 				{
-
 					result.Add(new
 					{
 						City = shipment.DestinationCity,
@@ -65,7 +66,8 @@ namespace Driver_management.DriverManagement
 
 		private static dynamic GetGeoLocation(Shipment shipment)
 		{
-			string city = City.GetCityNameById(shipment.DestinationCity); // Get city name by ID
+			// קבלת שם העיר לפי מזהה
+			string city = City.GetCityNameById(shipment.DestinationCity);
 			string query = $"{shipment.DestinationAddress}, {city}, Israel";
 			string url = $"https://nominatim.openstreetmap.org/search?q={HttpUtility.UrlEncode(query)}&format=json&addressdetails=1";
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -101,7 +103,6 @@ namespace Driver_management.DriverManagement
 			return null;
 		}
 
-
 		[WebMethod]
 		public static string DownloadAddresses()
 		{
@@ -112,6 +113,7 @@ namespace Driver_management.DriverManagement
 			{
 				ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Shipments");
 
+				// כותרות העמודות
 				worksheet.Cells[1, 1].Value = "ShipmentID";
 				worksheet.Cells[1, 2].Value = "CustomerID";
 				worksheet.Cells[1, 3].Value = "SourceAddress";
