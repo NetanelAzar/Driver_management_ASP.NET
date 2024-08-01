@@ -35,12 +35,16 @@
 
 ## 🛠️ התקנה והרצה
 
-### 4. התקן את התלויות
+## 4. **שכפל את הריפוזיטורי**:
+   ```bash
+   git clone https://github.com/NetanelAzar/Driver_management_ASP.NET.git
+```
+### 5. התקן את התלויות
 
 פתח את הפרויקט ב-Visual Studio ועבור ל-**Tools** > **NuGet Package Manager** > **Manage NuGet Packages for Solution**. לחץ על **Restore** כדי להתקין את כל התלויות הנדרשות.
 
 
-### 5. הגדר את חיבורי הנתונים
+### 6. הגדר את חיבורי הנתונים
 
 פתח את הקובץ `Web.config` והגדר את חיבורי הנתונים שלך:
 ```json
@@ -51,7 +55,7 @@
 }
 
 ```
-### 6. הרץ את האפליקציה
+### 7. הרץ את האפליקציה
 לחץ על כפתור Start ב-Visual Studio או הרץ את הפרויקט באמצעות הפקודה הבאה בקונסול:
 ```bash
 dotnet run
