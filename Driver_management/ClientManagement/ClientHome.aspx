@@ -25,11 +25,7 @@
         padding: 10px 20px;
     }
 
-כדי לשדרג את עיצוב הטבלה תחת "ההזמנות שלך", ניתן לשלב אלמנטים של עיצוב מודרני ואינטראקטיבי. הנה דוגמה לקוד CSS ולשינויים אפשריים שיכולים לשפר את מראה הטבלה:
 
-html
-Copy code
-<style>
     .table-responsive {
         border-radius: 15px;
         overflow: hidden;

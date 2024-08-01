@@ -1,5 +1,6 @@
 ﻿using BLL;
 using DAL;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,9 +38,96 @@ namespace Driver_management.ClientManagement
 				{
 					lblUsername.Text = loggedInAdmin.Name; // הנחה שהמאפיין AdminName קיים במחלקת Admin
 				}
+
+
+
+				if (!IsPostBack)
+				{
+					SyncClientsWithStripe();
+				}
+
+
+
 			}
 		}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		private void SyncClientsWithStripe()
+		{
+			try
+			{
+				StripeConfiguration.ApiKey = "sk_test_51PdnnDCGGvtn75QCMzNS6MyqelYDtwVcloq4UWvnaucr0nS4iVjnK1drXlXFNhXbwZWMP4ABw07ZgTrTYTmoATTC00i6f3nHbM";
+				var customerService = new CustomerService();
+
+				var clients = Client.GetAll(); // מקבל את כל הלקוחות מה-DAL
+				var stripeCustomerIds = new Dictionary<int, string>();
+
+				foreach (var client in clients)
+				{
+					// חיפוש לקוח קיים ב-Stripe לפי Email
+					var existingCustomer = FindStripeCustomerByEmail(client.ClientMail);
+
+					if (existingCustomer == null)
+					{
+						// יצירת לקוח חדש ב-Stripe אם הוא לא קיים
+						var customerOptions = new CustomerCreateOptions
+						{
+							Name = client.ClientName,
+							Email = client.ClientMail,
+							Phone = client.ClientPhone,
+							Description = $"Client ID: {client.ClientID}"
+						};
+
+						var customer = customerService.Create(customerOptions);
+
+						// שמירה במילון של מזהים
+						stripeCustomerIds[client.ClientID] = customer.Id;
+					}
+					else
+					{
+						// לקוח קיים - עדכון מזהה בנתוני הלקוח שלך (אם נדרש)
+						stripeCustomerIds[client.ClientID] = existingCustomer.Id;
+					}
+				}
+
+				// שמור את מזהי הלקוחות בסשן או בצורה אחרת אם דרוש
+				Session["StripeCustomerIds"] = stripeCustomerIds;
+			}
+			catch (Exception ex)
+			{
+				Response.Write($"שגיאה במהלך סנכרון לקוחות עם Stripe: {ex.Message}");
+			}
+		}
+
+		private Customer FindStripeCustomerByEmail(string email)
+		{
+			var customerService = new CustomerService();
+			var customers = customerService.List(new CustomerListOptions
+			{
+				Email = email
+			});
+
+			// החזרת הלקוח הראשון שנמצא אם קיים
+			return customers.Data.Count > 0 ? customers.Data[0] : null;
+		}
 
 
 	}

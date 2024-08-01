@@ -16,7 +16,8 @@ namespace Driver_management
 			Application["Drivers"] = Drivers.GetAll();
 			Application["Clients"] = Client.GetAll();
 			Application["Manager"] =Manager.GetAll();
-			
+			string morningSecret = System.Configuration.ConfigurationManager.AppSettings["MorningSecretKey"];
+
 		}
 
 		protected void Session_Start(object sender, EventArgs e)
