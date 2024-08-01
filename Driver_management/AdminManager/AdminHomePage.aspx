@@ -19,7 +19,7 @@
         <!-- כותרת -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Dashboard</h1>
+                <h1 class="page-header">דף ראשי</h1>
             </div>
         </div>
         <!--  -->
@@ -44,6 +44,28 @@
                     </div>
                 </div>
             </div>
+
+
+                        <div class="col-lg-3 col-md-6">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <i class="fa fa-shopping-cart fa-5x"></i>
+                            </div>
+                            <div class="col-xs-8 text-right">
+                                <div class="huge">
+                                    <asp:Label ID="lblDailyOrdersCount" runat="server"></asp:Label>
+                                </div>
+                                <div>הזמנות היום!</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
             <div class="col-lg-3 col-md-6">
                 <div class="panel panel-green">
                     <div class="panel-heading">
@@ -66,28 +88,9 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <i class="fa fa-shopping-cart fa-5x"></i>
-                            </div>
-                            <div class="col-xs-8 text-right">
-                                <div class="huge">124</div>
-                                <div>New Orders!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#">
-                        <div class="panel-footer">
-                            <span class="pull-left">View Details</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+
+
+
             <div class="col-lg-3 col-md-6">
                 <div class="panel panel-red">
                     <div class="panel-heading">
@@ -113,92 +116,77 @@
         </div>
         <!-- -->
 
+
+
+
         <!--הזמנות יומיות -->
         <div class="panel panel-default panel panel-default col-lg-6 col-md-3">
             <div class="panel-heading">
-                <i class="fa fa-bar-chart-o fa-fw"></i>Bar Chart Example
+                <i class="fa fa-bar-chart-o fa-fw"></i>משלוחים שהתקבלו היום
                             <div class="pull-left">
                             </div>
             </div>
+<div class="panel-body">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Destination Address</th>
+                            <th>Destination City</th>
+  
+                            <th>Number of Packages</th>
 
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>3326</td>
-                                        <td>10/21/2013</td>
-                                        <td>3:29 PM</td>
-                                        <td>$321.33</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3325</td>
-                                        <td>10/21/2013</td>
-                                        <td>3:20 PM</td>
-                                        <td>$234.34</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3324</td>
-                                        <td>10/21/2013</td>
-                                        <td>3:03 PM</td>
-                                        <td>$724.17</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3323</td>
-                                        <td>10/21/2013</td>
-                                        <td>3:00 PM</td>
-                                        <td>$23.71</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3322</td>
-                                        <td>10/21/2013</td>
-                                        <td>2:49 PM</td>
-                                        <td>$8345.23</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3321</td>
-                                        <td>10/21/2013</td>
-                                        <td>2:23 PM</td>
-                                        <td>$245.12</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3320</td>
-                                        <td>10/21/2013</td>
-                                        <td>2:15 PM</td>
-                                        <td>$5663.54</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3319</td>
-                                        <td>10/21/2013</td>
-                                        <td>2:13 PM</td>
-                                        <td>$943.45</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.table-responsive -->
-                    </div>
-                    <!-- /.col-lg-4 (nested) -->
-                    <div class="col-lg-8">
-                        <div id="morris-bar-chart"></div>
-                    </div>
-                    <!-- /.col-lg-8 (nested) -->
-                </div>
-                <!-- /.row -->
+                            <th>Order Date</th>
+
+                            <th>Payment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <asp:Repeater ID="rptShipments" runat="server">
+                            <ItemTemplate>
+                                <tr>
+                                    <td><%# Eval("ShipmentID") %></td>
+                                    
+                                   
+                                    <td><%# Eval("DestinationAddress") %></td>
+                                    <td><%# Eval("DestinationCity") %></td>
+                                    
+                                
+                                    
+                                  
+                                    <td><%# Eval("NumberOfPackages") %></td>
+                                    
+                                 
+                                    <td><%# Eval("OrderDate", "{0:MM/dd/yyyy}") %></td>
+                                    
+                                    <td><%# Eval("Payment", "{0:C}") %></td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </tbody>
+                </table>
             </div>
+            <!-- /.table-responsive -->
+        </div>
+        <!-- /.col-lg-4 (nested) -->
+        <div class="col-lg-8">
+            <div id="morris-bar-chart"></div>
+        </div>
+        <!-- /.col-lg-8 (nested) -->
+    </div>
+    <!-- /.row -->
+</div>
+
+
             <!-- /.panel-body -->
         </div>
         <!-- -->
+
+
+
 
         <!--הודעות מערככת -->
         <div class="row">
@@ -206,7 +194,7 @@
             <div class="col-lg-4 col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-bell fa-fw"></i>Login Notifications
+                        <i class="fa fa-bell fa-fw"></i>הודעות מערכת
                     </div>
                     <div class="panel-body">
                         <div class="list-group">
@@ -221,18 +209,20 @@
                             </asp:Repeater>
                         </div>
                         <!-- /.list-group -->
-                        <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+
                     </div>
                 </div>
             </div>
         </div>
         <!-- -->
 
+
+
         <!-- גרף משלוחים לפי חודש -->
         <div class="col-lg-6 col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-bar-chart-o fa-fw"></i>Shipments per Month
+                    <i class="fa fa-bar-chart-o fa-fw"></i>משלוחים לחודש
                
                 </div>
                 <div class="panel-body">
@@ -248,7 +238,7 @@
         <div class="col-lg-6 col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-bar-chart-o fa-fw"></i>Shipments per Month (Donut)
+                    <i class="fa fa-bar-chart-o fa-fw"></i>משלוחים לחודש (סופגנייה)
                 </div>
                 <div class="panel-body">
                     <canvas id="donutChart" width="400" height="200"></canvas>

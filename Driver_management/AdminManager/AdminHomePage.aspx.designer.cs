@@ -24,6 +24,24 @@ namespace Driver_management.AdminManager
 		protected global::System.Web.UI.WebControls.Label lblActiveUsersCount;
 
 		/// <summary>
+		/// lblDailyOrdersCount control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.Label lblDailyOrdersCount;
+
+		/// <summary>
+		/// rptShipments control.
+		/// </summary>
+		/// <remarks>
+		/// Auto-generated field.
+		/// To modify move field declaration from designer file to code-behind file.
+		/// </remarks>
+		protected global::System.Web.UI.WebControls.Repeater rptShipments;
+
+		/// <summary>
 		/// rptNotifications control.
 		/// </summary>
 		/// <remarks>

@@ -1,7 +1,9 @@
-﻿using DATA; // ייבוא שכבת הנתונים (Data Layer)
+﻿using BLL;
+using DATA; // ייבוא שכבת הנתונים (Data Layer)
 using System; // ייבוא הספרייה הבסיסית של .NET
 using System.Collections.Generic; // ייבוא של רשימות ודומיהן
 using System.Data; // ייבוא של אובייקטים לעבודה עם נתונים
+using System.Data.SqlClient;
 using System.Web.Script.Serialization; // ייבוא של אובייקט JSON Serializer
 using System.Web.UI; // ייבוא של רכיבי Web Forms
 
@@ -24,6 +26,8 @@ namespace Driver_management.AdminManager
 				lblActiveUsersCount.Text = GetActiveUsersCount().ToString(); // הצגת מספר המשתמשים הפעילים
 				LoadMonthlyShipments(); // טעינת נתוני השילוחים החודשיים
 				LoadNotifications(); // טעינת התראות
+				LoadDailyShipments();
+				LoadDailyOrdersCount(); // הוספת שורה זו
 			}
 		}
 
@@ -114,5 +118,94 @@ namespace Driver_management.AdminManager
 		{
 
 		}
+
+
+
+
+
+
+
+
+
+
+
+		private void LoadDailyOrdersCount()
+		{
+			DbContext Db = new DbContext();
+			DateTime today = DateTime.Now.Date;
+
+			string Sql = $@"SELECT COUNT(*) AS OrderCount
+                    FROM Shipments
+                    WHERE OrderDate = '{today:yyyy-MM-dd}'";
+
+			DataTable Dt = Db.Execute(Sql);
+
+			int orderCount = 0;
+			if (Dt.Rows.Count > 0)
+			{
+				orderCount = Convert.ToInt32(Dt.Rows[0]["OrderCount"]);
+			}
+
+			lblDailyOrdersCount.Text = orderCount.ToString();
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		private void LoadDailyShipments()
+		{
+			DbContext Db = new DbContext();
+			DateTime today = DateTime.Now.Date;
+
+			string Sql = $@"SELECT ShipmentID, OrderDate, DestinationAddress, DestinationCity, NumberOfPackages, Payment
+                    FROM Shipments
+                    WHERE OrderDate = '{today:yyyy-MM-dd}'";
+
+			DataTable Dt = Db.Execute(Sql);
+
+			List<Shipment> shipments = new List<Shipment>();
+
+			foreach (DataRow row in Dt.Rows)
+			{
+				var shipment = new Shipment
+				{
+					ShipmentID = row.IsNull("ShipmentID") ? 0 : Convert.ToInt32(row["ShipmentID"]),
+					DestinationAddress = row.IsNull("DestinationAddress") ? string.Empty : Convert.ToString(row["DestinationAddress"]),
+					DestinationCity = row.IsNull("DestinationCity") ? 0 : Convert.ToInt32(row["DestinationCity"]),
+					OrderDate = row.IsNull("OrderDate") ? DateTime.MinValue : Convert.ToDateTime(row["OrderDate"]),
+					NumberOfPackages = row.IsNull("NumberOfPackages") ? 0 : Convert.ToInt32(row["NumberOfPackages"]),
+					Payment = row.IsNull("Payment") ? 0m : Convert.ToDecimal(row["Payment"])
+				};
+
+				shipments.Add(shipment);
+			}
+
+			rptShipments.DataSource = shipments;
+			rptShipments.DataBind();
+		}
+
+
+
+
+
+
+
 	}
 }
