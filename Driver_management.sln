@@ -5,8 +5,6 @@ VisualStudioVersion = 17.11.35017.193
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Driver_management", "Driver_management\Driver_management.csproj", "{1965DEFC-BDE1-4E4E-82BF-17DDD1267E69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DriverManagementAPI", "DriverManagementAPI\DriverManagementAPI.csproj", "{D6FF8A79-210B-426C-9EC9-BEA903C9592C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{1965DEFC-BDE1-4E4E-82BF-17DDD1267E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1965DEFC-BDE1-4E4E-82BF-17DDD1267E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1965DEFC-BDE1-4E4E-82BF-17DDD1267E69}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6FF8A79-210B-426C-9EC9-BEA903C9592C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6FF8A79-210B-426C-9EC9-BEA903C9592C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6FF8A79-210B-426C-9EC9-BEA903C9592C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6FF8A79-210B-426C-9EC9-BEA903C9592C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
