@@ -49,3 +49,10 @@
     "DefaultConnection": "Server=YOUR_SERVER;Database=YOUR_DATABASE;User Id=YOUR_USERNAME;Password=YOUR_PASSWORD;"
   }
 }
+
+
+### 6. הרץ את האפליקציה
+לחץ על כפתור Start ב-Visual Studio או הרץ את הפרויקט באמצעות הפקודה הבאה בקונסול:
+
+dotnet run
+האפליקציה תיפתח בדפדפן ברירת המחדל שלך.
