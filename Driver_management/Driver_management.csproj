@@ -207,6 +207,7 @@
     <Content Include="AdminManager\css\rtl\bootstrap.min.css" />
     <Content Include="AdminManager\css\rtl\bootstrap.rtl.css" />
     <Content Include="AdminManager\css\rtl\sb-admin-2.css" />
+    <Content Include="AdminManager\DriverSalaries.aspx" />
     <Content Include="AdminManager\extras\image-samples\buttons.png" />
     <Content Include="AdminManager\extras\image-samples\tables.png" />
     <Content Include="AdminManager\extras\image-samples\typography.png" />
@@ -341,6 +342,13 @@
     </Compile>
     <Compile Include="AdminManager\ClientsAddEdit.aspx.designer.cs">
       <DependentUpon>ClientsAddEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminManager\DriverSalaries.aspx.cs">
+      <DependentUpon>DriverSalaries.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminManager\DriverSalaries.aspx.designer.cs">
+      <DependentUpon>DriverSalaries.aspx</DependentUpon>
     </Compile>
     <Compile Include="AdminManager\ManageNews.aspx.cs">
       <DependentUpon>ManageNews.aspx</DependentUpon>

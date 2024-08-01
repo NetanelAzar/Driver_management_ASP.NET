@@ -445,7 +445,7 @@
 
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">הצגת כתובות על מפה</a>
+                                    <a href="DriverSalaries.aspx">הצגת כתובות על מפה</a>
                                 </li>
                                 <li>
                                     <a href="#">הוספת משתמש חדש</a>
