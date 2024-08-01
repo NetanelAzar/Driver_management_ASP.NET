@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web.UI;
+using System.Diagnostics;
 
 namespace Driver_management.ClientManagement
 {
@@ -133,6 +134,8 @@ namespace Driver_management.ClientManagement
 			try
 			{
 				var customerService = new CustomerService();
+				var invoiceItemService = new InvoiceItemService();
+				var invoiceService = new InvoiceService();
 
 				// בדוק אם הלקוח כבר קיים
 				var existingCustomer = customerService.List(new CustomerListOptions { Email = client.ClientMail }).FirstOrDefault();
@@ -157,18 +160,24 @@ namespace Driver_management.ClientManagement
 				var invoiceItemOptions = new InvoiceItemCreateOptions
 				{
 					Customer = customer.Id,
-					Amount = Convert.ToInt64(totalAmount * 100), // amount in cents
-					Currency = "ILS",
+					Amount = Convert.ToInt64(totalAmount * 100), // סכום בסנטים
+					Currency = "ILS", // ודא שהמטבע תומך על ידי Stripe
 					Description = $"תשלום עבור הזמנה עם פרטים: כתובת יעד - {shipment.DestinationAddress}, מספר חבילות - {shipment.NumberOfPackages}",
 				};
 
-				var invoiceItemService = new InvoiceItemService();
+				// הדפסת פרטי פריט החשבונית לקונסול של Visual Studio
+				Debug.WriteLine("Creating Invoice Item with the following details:");
+				Debug.WriteLine($"Customer ID: {invoiceItemOptions.Customer}");
+				Debug.WriteLine($"Amount: {invoiceItemOptions.Amount}");
+				Debug.WriteLine($"Currency: {invoiceItemOptions.Currency}");
+				Debug.WriteLine($"Description: {invoiceItemOptions.Description}");
+
 				var invoiceItem = invoiceItemService.Create(invoiceItemOptions);
 
-				// בדוק האם הפריט נוצר בהצלחה
+				// בדוק אם פריט החשבונית נוצר בהצלחה
 				if (invoiceItem == null || invoiceItem.Amount <= 0)
 				{
-					Response.Write("שגיאה: פריט החשבונית לא נוצר כראוי.");
+					Debug.Write("שגיאה: פריט החשבונית לא נוצר כראוי.");
 					return;
 				}
 
@@ -178,16 +187,16 @@ namespace Driver_management.ClientManagement
 					Customer = customer.Id,
 					CollectionMethod = "send_invoice", // שליחת החשבונית ללקוח בדוא"ל
 					DaysUntilDue = 30, // תאריך התשלום עד 30 יום
-
+									   // קישור לפריט החשבונית
+					AutoAdvance = true, // מאפשר את התהליך האוטומטי
 				};
 
-				var invoiceService = new InvoiceService();
 				var invoice = invoiceService.Create(invoiceOptions);
 
-				// בדוק האם החשבונית נוצרה בהצלחה
+				// בדוק אם החשבונית נוצרה בהצלחה
 				if (invoice == null)
 				{
-					Response.Write("שגיאה: החשבונית לא נוצרה.");
+					Debug.Write("שגיאה: החשבונית לא נוצרה.");
 					return;
 				}
 
@@ -198,19 +207,33 @@ namespace Driver_management.ClientManagement
 				if (finalizedInvoice.Status == "open")
 				{
 					// שליחת החשבונית ללקוח
-					invoiceService.SendInvoice(invoice.Id);
-					Response.Write("חשבונית נשלחה ללקוח בהצלחה.");
+					var sentInvoice = invoiceService.SendInvoice(invoice.Id);
+					if (sentInvoice.Status == "sent")
+					{
+						Debug.Write("חשבונית נשלחה ללקוח בהצלחה.");
+					}
+					else
+					{
+						Debug.Write($"שגיאה בשליחת החשבונית: מצב החשבונית הוא {sentInvoice.Status}");
+					}
 				}
 				else
 				{
-					Response.Write($"שגיאה ביצירת החשבונית: מצב החשבונית הוא {finalizedInvoice.Status}");
+					Debug.Write($"שגיאה ביצירת החשבונית: מצב החשבונית הוא {finalizedInvoice.Status}");
 				}
+			}
+			catch (StripeException ex)
+			{
+				// ניהול שגיאות ספציפיות של Stripe
+				Debug.Write($"שגיאה ביצירת החשבונית: {ex.StripeError.Message}");
 			}
 			catch (Exception ex)
 			{
-				Response.Write($"שגיאה ביצירת החשבונית: {ex.Message}");
+				// ניהול שגיאות כלליות
+				Debug.Write($"שגיאה ביצירת החשבונית: {ex.Message}");
 			}
 		}
+
 
 
 

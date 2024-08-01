@@ -39,36 +39,12 @@ namespace Driver_management.ClientManagement
 					lblUsername.Text = loggedInAdmin.Name; // הנחה שהמאפיין AdminName קיים במחלקת Admin
 				}
 
-
-
 				if (!IsPostBack)
 				{
 					SyncClientsWithStripe();
 				}
-
-
-
 			}
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		private void SyncClientsWithStripe()
 		{
@@ -128,7 +104,5 @@ namespace Driver_management.ClientManagement
 			// החזרת הלקוח הראשון שנמצא אם קיים
 			return customers.Data.Count > 0 ? customers.Data[0] : null;
 		}
-
-
 	}
 }
